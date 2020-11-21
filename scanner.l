@@ -3,14 +3,15 @@ digit [0-9]
 
 %% 
 
-{digit}+	yylval=atoi(yytext); return DIGIT;
-{alpha}+	yylval=yytext; return ALPHA;
-"."           return END;
+{digit}+	        yylval=atoi(yytext); return DIGIT;
+{alpha}+{digit}*	yylval=yytext; return ALPHA;
+"."         return END;
 [ \t]+      ;
-"("        return CONDITION; 
+"("         return CONDITION; 
 ")?"        return END_CONDITION;
+"{"         return EXEC; 
+"}"         return END_EXEC;
 "->"        return IF; 
-":"         return ELSE;
 "'"         return ESCAPE;
 "-->"       return WHILE;
 "<"         return L;
@@ -24,8 +25,10 @@ digit [0-9]
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
+[+-*/]      yylval=yytext; return OP;
+R[{alpha}+ | {digit}*]+.   return RETURN;  
 
-
+ 
 %%
 
 int yywrap(void){
