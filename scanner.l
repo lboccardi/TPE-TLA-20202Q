@@ -1,10 +1,14 @@
+%{
+#include "y.tab.h"
+%}
+
 alpha [A-Za-z]
 digit [0-9]
 
 %% 
 
 {digit}+	        yylval=atoi(yytext); return DIGIT;
-{alpha}+{digit}*	yylval=yytext; return ALPHA;
+{alpha}({alpha}|{digit})*	yylval=atoi(yytext); return ALPHA;
 "."         return END;
 [ \t]+      ;
 "("         return CONDITION; 
@@ -25,16 +29,9 @@ digit [0-9]
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
-[+-*/]      yylval=yytext; return OP;
+[+\-*/]      yylval=atoi(yytext); return OP;
 R[{alpha}+ | {digit}*]+.   return RETURN;  
 
  
 %%
-
-int yywrap(void){
-    return 1;
-}
-int main(void){
-    yylex();
-    return 0;
-}
+ 

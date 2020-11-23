@@ -1,4 +1,23 @@
-%token DIGIT;
+%{
+#include <ctype.h>
+#include <stdio.h>
+
+#ifdef E_PARSE_DEBUG
+// Some yacc (bison) defines
+#define YYDEBUG 1       // Generate debug code; needed for YYERROR_VERBOSE
+#define YYERROR_VERBOSE // Give a more specific parse error message 
+#endif
+
+int yylex();
+
+void yyerror(const char *str)
+{
+  fprintf(stderr,"error: %s\n",str);
+} 
+%}
+
+
+%token  DIGIT;
 %token  ALPHA;
 %token  END; 
 %token  CONDITION; 
@@ -21,9 +40,19 @@
 %token  INT; 
 %token  STRING; 
 %token  OP; 
+%token  RETURN;
+
+%start program
 
 %%
 
-main(){
-    yyparser(); 
+program 
+    : ALPHA 
+    ;
+
+
+%%
+
+int main(){
+    yyparse(); 
 }
