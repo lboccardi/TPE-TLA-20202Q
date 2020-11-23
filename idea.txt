@@ -53,4 +53,7 @@ RULE-> (RULE OPERATOR RULE) | ASSIGNMENT | S
 ARROW -> WHILE | IF
 OPERATOR -> OP | L | G| LE|GE|EQ|NOT|OR|AND 
 
- 
+
+
+//Examples
+i$a=1.(a~1)?-->{a=a+1.Ra.}.

@@ -8,7 +8,7 @@ digit [0-9]
 %% 
 
 {digit}+	        yylval=atoi(yytext); return DIGIT;
-{alpha}({alpha}|{digit})*	yylval=atoi(yytext); return ALPHA;
+{alpha}+	yylval=atoi(yytext); return ALPHA;
 "."         return END;
 [ \t]+      ;
 "("         return CONDITION; 

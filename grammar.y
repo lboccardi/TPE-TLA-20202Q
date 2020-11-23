@@ -47,12 +47,45 @@ void yyerror(const char *str)
 %%
 
 program 
-    : ALPHA 
+    : var END {printf("%d", $1); }
+    | var END program
+    | CONDITION rule operator rule END_CONDITION arrow EXEC program END_EXEC END 
+    | RETURN
     ;
 
+var
+    : INT ALPHA ASSIGN assignment 
+    | STRING ALPHA ASSIGN assignment
+    | ALPHA ASSIGN assignment
+    | ALPHA ASSIGN assignment OP assignment { $$ = $3+$5; printf("Found %d\n", $3+$5);   };
+    ; 
+
+assignment
+    : ALPHA 
+    | DIGIT { $$ = $1; printf("Found %d\n", $1);   };
+
+rule
+    : CONDITION rule operator rule END_CONDITION 
+    | assignment; 
+
+arrow
+    : WHILE 
+    | IF; 
+
+operator
+    : OP 
+    | L 
+    | G
+    | LE
+    | GE
+    | EQ
+    | NOT
+    | OR
+    | AND; 
 
 %%
 
 int main(){
+     printf("Enter the expression:\n");
     yyparse(); 
 }
