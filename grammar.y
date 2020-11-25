@@ -41,17 +41,62 @@ void yyerror(const char *str)
 %token  STRING; 
 %token  OP; 
 %token  RETURN;
+%token  MAIN; 
+%token  STDIN; 
+%token  STDOUT; 
+%token  FUNCTION; 
+%token  COMMA;
 
-%start program
+%start start
 
 %%
 
-program 
-    : var END {printf("%d", $1); }
-    | var END program
-    | CONDITION rule operator rule END_CONDITION arrow EXEC program END_EXEC END 
-    | RETURN
+start 
+    : MAIN EXEC program END_EXEC
+    | function start 
     ;
+
+function
+    : type FUNCTION ALPHA CONDITION params END_CONDITION EXEC program END_EXEC
+    ;
+
+call 
+    : ALPHA ASSIGN ALPHA CONDITION args END_CONDITION END
+    | ALPHA CONDITION args END_CONDITION END { printf("call");   };
+    ;
+
+type
+    : INT 
+    | STRING
+    ;
+
+params 
+    : type ALPHA 
+    | type ALPHA COMMA params 
+    | /* lambda */
+    ;
+
+args 
+    : ALPHA 
+    | ALPHA COMMA args 
+    | /* lambda */
+    ;
+
+program 
+    : var END program
+    | CONDITION rule operator rule END_CONDITION arrow EXEC program END_EXEC program 
+    | RETURN END 
+    | call program 
+    | STDIN CONDITION ALPHA END_CONDITION END program 
+    | STDOUT CONDITION out END_CONDITION END program  
+    | /* lambda */  
+    ;
+
+out 
+    : ALPHA out
+    | ESCAPE ALPHA ESCAPE out
+    | /* lambda */
+    ; 
 
 var
     : INT ALPHA ASSIGN assignment 
