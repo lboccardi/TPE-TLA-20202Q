@@ -1,6 +1,8 @@
 %{
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #ifdef E_PARSE_DEBUG
 // Some yacc (bison) defines
@@ -16,12 +18,20 @@ void yyerror(const char *str)
 } 
 %}
 
+%union {
+    int intValue;
+	char * stringValue;
+}
+
+%type<stringValue> ALPHA OP;
+%type<intValue> DIGIT;
 
 %token  DIGIT;
 %token  ALPHA;
 %token  END; 
-%token  CONDITION; 
-%token  END_CONDITION;
+%token  OPEN_P; 
+%token  CLOSE_P;
+%token  CONDITIONAL;
 %token  EXEC; 
 %token  END_EXEC;
 %token  IF; 
@@ -41,31 +51,90 @@ void yyerror(const char *str)
 %token  STRING; 
 %token  OP; 
 %token  RETURN;
+%token  MAIN; 
+%token  STDIN; 
+%token  STDOUT; 
+%token  FUNCTION; 
+%token  COMMA;
 
-%start program
+%start start
 
 %%
 
-program 
-    : var END {printf("%d", $1); }
-    | var END program
-    | CONDITION rule operator rule END_CONDITION arrow EXEC program END_EXEC END 
-    | RETURN
+start 
+    : MAIN EXEC program END_EXEC {printf("int main(){ }\n");}
+    | function start
     ;
 
-var
-    : INT ALPHA ASSIGN assignment 
-    | STRING ALPHA ASSIGN assignment
-    | ALPHA ASSIGN assignment
-    | ALPHA ASSIGN assignment OP assignment { $$ = $3+$5; printf("Found %d\n", $3+$5);   };
+function
+    : type FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC {printf("int %s(){ }\n",$3);}
+    ;
+
+type
+    : INT 
+    | STRING
+    ;
+
+params 
+    : type ALPHA 
+    | type ALPHA COMMA params 
+    | /* lambda */
+    ;
+
+args 
+    : assignment 
+    | assignment COMMA args 
+    | ALPHA OPEN_P args CLOSE_P
+    | /* lambda */
+    ;
+
+
+program 
+    : var END program  {printf(";\n");}
+    | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program 
+    | RETURN assignment END 
+    | STDIN OPEN_P ALPHA CLOSE_P END program 
+    | STDOUT OPEN_P out CLOSE_P END program  
+    | /* lambda */  
+    ;
+
+out 
+    : ALPHA out
+    | ESCAPE ALPHA ESCAPE out
+    | /* lambda */
     ; 
+
+var
+    : INT ALPHA creation {printf("int %s\n",$2);}
+    | STRING ALPHA ASSIGN assignment
+    | ALPHA botch 
+    ; 
+creation
+    :ASSIGN action {printf("=\n");}
+    |/*lambda*/ 
+    ;
+botch
+    : ASSIGN action
+    | OPEN_P  args CLOSE_P     
+    ;
+
+action
+    : assignment call
+    | ALPHA OPEN_P args CLOSE_P
+    ;
+
+call
+    : OP assignment
+    | /* lambda */
+    ;
 
 assignment
     : ALPHA 
-    | DIGIT { $$ = $1; printf("Found %d\n", $1);   };
+    | DIGIT {printf("%d\n",$1);}
+    ;
 
 rule
-    : CONDITION rule operator rule END_CONDITION 
+    : OPEN_P rule operator rule CLOSE_P
     | assignment; 
 
 arrow

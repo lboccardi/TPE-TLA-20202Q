@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.4.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -52,58 +52,80 @@ extern int yydebug;
     DIGIT = 258,
     ALPHA = 259,
     END = 260,
-    CONDITION = 261,
-    END_CONDITION = 262,
-    EXEC = 263,
-    END_EXEC = 264,
-    IF = 265,
-    ELSE = 266,
-    ESCAPE = 267,
-    WHILE = 268,
-    L = 269,
-    G = 270,
-    LE = 271,
-    GE = 272,
-    EQ = 273,
-    NOT = 274,
-    OR = 275,
-    AND = 276,
-    ASSIGN = 277,
-    INT = 278,
-    STRING = 279,
-    OP = 280,
-    RETURN = 281
+    OPEN_P = 261,
+    CLOSE_P = 262,
+    CONDITIONAL = 263,
+    EXEC = 264,
+    END_EXEC = 265,
+    IF = 266,
+    ELSE = 267,
+    ESCAPE = 268,
+    WHILE = 269,
+    L = 270,
+    G = 271,
+    LE = 272,
+    GE = 273,
+    EQ = 274,
+    NOT = 275,
+    OR = 276,
+    AND = 277,
+    ASSIGN = 278,
+    INT = 279,
+    STRING = 280,
+    OP = 281,
+    RETURN = 282,
+    MAIN = 283,
+    STDIN = 284,
+    STDOUT = 285,
+    FUNCTION = 286,
+    COMMA = 287
   };
 #endif
 /* Tokens.  */
 #define DIGIT 258
 #define ALPHA 259
 #define END 260
-#define CONDITION 261
-#define END_CONDITION 262
-#define EXEC 263
-#define END_EXEC 264
-#define IF 265
-#define ELSE 266
-#define ESCAPE 267
-#define WHILE 268
-#define L 269
-#define G 270
-#define LE 271
-#define GE 272
-#define EQ 273
-#define NOT 274
-#define OR 275
-#define AND 276
-#define ASSIGN 277
-#define INT 278
-#define STRING 279
-#define OP 280
-#define RETURN 281
+#define OPEN_P 261
+#define CLOSE_P 262
+#define CONDITIONAL 263
+#define EXEC 264
+#define END_EXEC 265
+#define IF 266
+#define ELSE 267
+#define ESCAPE 268
+#define WHILE 269
+#define L 270
+#define G 271
+#define LE 272
+#define GE 273
+#define EQ 274
+#define NOT 275
+#define OR 276
+#define AND 277
+#define ASSIGN 278
+#define INT 279
+#define STRING 280
+#define OP 281
+#define RETURN 282
+#define MAIN 283
+#define STDIN 284
+#define STDOUT 285
+#define FUNCTION 286
+#define COMMA 287
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 21 "grammar.y"
+
+    int intValue;
+	char * stringValue;
+
+#line 126 "y.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

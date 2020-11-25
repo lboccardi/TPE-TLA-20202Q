@@ -27,14 +27,14 @@ Bloque Do-While (repetici´on hasta condici´on).
 Tener un mecanismo para indicar cu´al es el punto de entrada (i.e. el main).
 S{
     //todo el codigo
-    i F name (i a, s c){
+    i$ F name (i a12, s c){
         R a. (return a;)
     }
 }
 
 Proveer un mecanismo de entrada de datos: T´ıpicamente una funci´on o m´etodo tipo que permita ingresar
 informaci´on por teclado o STDIN.
-G(buffer) me deja en buffer el STDIN 
+G(buffer). me deja en buffer el STDIN 
 buffer puede ser int o string 
 
 Proveer un mecanismo de salida de datos: una funci´on tipo printchar que permita desplegar informaci´on
@@ -57,3 +57,38 @@ OPERATOR -> OP | L | G| LE|GE|EQ|NOT|OR|AND
 
 //Examples
 i$a=1.(a~1)?-->{a=a+1.Ra.}.
+i$ F pipo(i$a, i$b){a=a+b.Ra.} S{pipo(1,2).}
+
+
+var -> ALPHA ASSIGN assignment
+var ->  ALPHA ASSIGN assignment OP assignment { $$ = $3+$5; printf("Found %d\n", $3+$5);   };
+call -> ALPHA ASSIGN ALPHA CONDITION args END_CONDITION END
+call -> ALPHA CONDITION args END_CONDITION END { printf("call");   };
+
+
+action -> ALPHA botch 
+botch -> ASSIGN pero | CONDITION  args END_CONDITION END 
+pero -> assignment gato | ALPHA CONDITION args END_CONDITION END
+gato -> OP assignment  | LAM
+
+
+reading order?
+Enter the expression:
+S{i$a=2. i$b=3. i$c=4. i$d=5.}
+2
+=
+int a
+3
+=
+int b
+4
+=
+int c
+5
+=
+int d
+;
+;
+;
+;
+int main(){ }
