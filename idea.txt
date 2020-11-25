@@ -71,3 +71,24 @@ botch -> ASSIGN pero | CONDITION  args END_CONDITION END
 pero -> assignment gato | ALPHA CONDITION args END_CONDITION END
 gato -> OP assignment  | LAM
 
+
+reading order?
+Enter the expression:
+S{i$a=2. i$b=3. i$c=4. i$d=5.}
+2
+=
+int a
+3
+=
+int b
+4
+=
+int c
+5
+=
+int d
+;
+;
+;
+;
+int main(){ }

@@ -4,6 +4,7 @@
 
 alpha [A-Za-z]
 digit [0-9]
+varname {alpha}({alpha}|{digit})*
 
 %% 
 
@@ -11,9 +12,13 @@ digit [0-9]
 "G"           return STDIN; 
 "P"           return STDOUT; 
 "F"           return FUNCTION; 
-R[{alpha}+ | {digit}*]+   return RETURN;
-{digit}+	        yylval=atoi(yytext); return DIGIT;
-{alpha}+	yylval=atoi(yytext); return ALPHA;
+"R"           return RETURN;
+{digit}+	{ yylval.intValue = atoi(yytext);}; return DIGIT;
+{varname}   {char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				return ALPHA;
+            }
 "."         return END;
 [ \t]+      ;
 "("         return OPEN_P; 
@@ -35,7 +40,11 @@ R[{alpha}+ | {digit}*]+   return RETURN;
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
-[+\-*/]      yylval=atoi(yytext); return OP;
+[+\-*/]		{	char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				return OP;
+            }
 ","         return COMMA;
 
  

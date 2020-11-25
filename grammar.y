@@ -1,6 +1,8 @@
 %{
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #ifdef E_PARSE_DEBUG
 // Some yacc (bison) defines
@@ -16,6 +18,13 @@ void yyerror(const char *str)
 } 
 %}
 
+%union {
+    int intValue;
+	char * stringValue;
+}
+
+%type<stringValue> ALPHA OP;
+%type<intValue> DIGIT;
 
 %token  DIGIT;
 %token  ALPHA;
@@ -53,12 +62,12 @@ void yyerror(const char *str)
 %%
 
 start 
-    : MAIN EXEC program END_EXEC
-    | function start 
+    : MAIN EXEC program END_EXEC {printf("int main(){ }\n");}
+    | function start
     ;
 
 function
-    : type FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC
+    : type FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC {printf("int %s(){ }\n",$3);}
     ;
 
 type
@@ -81,9 +90,9 @@ args
 
 
 program 
-    : var END program
+    : var END program  {printf(";\n");}
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program 
-    | RETURN END 
+    | RETURN assignment END 
     | STDIN OPEN_P ALPHA CLOSE_P END program 
     | STDOUT OPEN_P out CLOSE_P END program  
     | /* lambda */  
@@ -96,13 +105,13 @@ out
     ; 
 
 var
-    : INT ALPHA creation
+    : INT ALPHA creation {printf("int %s\n",$2);}
     | STRING ALPHA ASSIGN assignment
     | ALPHA botch 
     ; 
 creation
-    :ASSIGN action
-    |/*lambda*/
+    :ASSIGN action {printf("=\n");}
+    |/*lambda*/ 
     ;
 botch
     : ASSIGN action
@@ -121,12 +130,8 @@ call
 
 assignment
     : ALPHA 
-    | DIGIT { $$ = $1; printf("Found %d\n", $1);   }
+    | DIGIT {printf("%d\n",$1);}
     ;
-
-/*
-2.
-*/
 
 rule
     : OPEN_P rule operator rule CLOSE_P
