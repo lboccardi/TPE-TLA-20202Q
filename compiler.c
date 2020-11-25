@@ -58,3 +58,4 @@ extern void generateIntermediateCodeFile()
     }
 
     // sprintf(buffer, "gcc -c intermediate.s -o compiled"); //compiled file generated
+}
