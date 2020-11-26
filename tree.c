@@ -81,7 +81,7 @@ void addVar(char *name, char *type)
     var *aux = malloc(sizeof(var));
     /** save type **/
     char *aux_type;
-    if (strcmp(type, "i$") == 0)
+    if (strcmp(type, "int") == 0)
     {
         aux_type = "%d";
     }
@@ -116,8 +116,11 @@ char *printfParser(char *s)
     name[0] = 0;
     while (s[i] != '\0')
     {
-
-        if (s[i] != '\'')
+        if (s[i] == '[' || s[i] == ']')
+        {
+            i++;
+        }
+        else if (s[i] != '\'')
         {
             ans[j++] = s[i++];
         }
@@ -139,9 +142,11 @@ char *printfParser(char *s)
             {
                 name[k++] = s[i++];
             }
+            i++;
             name[k] = 0;
             var *curr = var_list.first;
-            while (curr != NULL)
+            bool flag = true;
+            while (curr != NULL && flag)
             {
                 var *aux = curr->next;
 
@@ -149,12 +154,14 @@ char *printfParser(char *s)
                 {
                     strcpy(ans + j, curr->type);
                     j += 2;
+                    flag = false;
                 }
                 curr = aux;
             }
-            if (curr == NULL)
+            if (flag)
             {
-                sprintf(ans, "\"%s\"", s);
+                s[strlen(s) - 1] = 0;
+                sprintf(ans, "\"%s\"", s + 1);
                 printf("%s", ans);
                 return ans;
             }

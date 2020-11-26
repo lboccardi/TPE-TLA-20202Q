@@ -6,7 +6,7 @@
 alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
-space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" ")*[\]]
+space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\]]
 
 
 
