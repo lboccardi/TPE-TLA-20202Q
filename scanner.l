@@ -38,7 +38,7 @@ space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\]]
 				return SPACE_ALPHA;
             }
 "."         return END;
-[ \t]+      ;
+[ \t \n]+      ;
 "("         return OPEN_P; 
 ")"         return CLOSE_P;
 "?"         return CONDITIONAL;

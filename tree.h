@@ -41,5 +41,6 @@ void addVar(char *name, char *type);
 extern code program;
 extern variables var_list;
 char *printfParser(char *s);
+bool isString(char *s);
 
 #endif

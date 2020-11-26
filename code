@@ -1,1 +1,8 @@
-S{s$a=chau.P[hola 'a']. R 0.}
+S{
+    s$a. 
+    a=chau. 
+    i$b. 
+    b=2. 
+    P[hola 'a' 'b'\n]. 
+    R b.
+}

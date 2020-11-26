@@ -118,8 +118,8 @@ out
     ; 
 
 var
-    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);add($$,true); addVar($2, $1);} 
-    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+2);  sprintf($$, "%s=%s%s", $1, $3, $4);add($$,true);}
+    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+6+strlen($4)+strlen($5)); if(strcmp($1,"int") == 0) {sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);}else{sprintf($$,"%s %s=\"%s\"%s",$1,$2,$4,$5);}add($$,true); addVar($2, $1);} 
+    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+5);  if(isString($1)){sprintf($$, "%s=\"%s\"%s", $1, $3, $4);}else{sprintf($$, "%s=%s%s", $1, $3, $4);}add($$,true);}
     | type ALPHA                                { $$ = malloc(strlen($1)+strlen($2)+2); sprintf($$,"%s %s",$1,$2);add($$,true); addVar($2, $1);}
     | type ALPHA ASSIGN call                    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s",$1,$2,$4); add($$,true); addVar($2, $1);}
     | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);add($$,true);}

@@ -57,38 +57,16 @@ OPERATOR -> OP | L | G| LE|GE|EQ|NOT|OR|AND
 
 //Examples
 i$a=1.(a~1)?-->{a=a+1.Ra.}.
+---------
 i$ F pipo(i$a, i$b){a=a+b.Ra.} S{pipo(1,2).}
+--------------
+S{
+    s$a. 
+    a=chau. 
+    i$b. 
+    b=2. 
+    P[hola 'a' 'b'\n]. 
+    R b.
+}
 
-
-var -> ALPHA ASSIGN assignment
-var ->  ALPHA ASSIGN assignment OP assignment { $$ = $3+$5; printf("Found %d\n", $3+$5);   };
-call -> ALPHA ASSIGN ALPHA CONDITION args END_CONDITION END
-call -> ALPHA CONDITION args END_CONDITION END { printf("call");   };
-
-
-action -> ALPHA botch 
-botch -> ASSIGN pero | CONDITION  args END_CONDITION END 
-pero -> assignment gato | ALPHA CONDITION args END_CONDITION END
-gato -> OP assignment  | LAM
-
-
-reading order?
-Enter the expression:
-S{i$a=2. i$b=3. i$c=4. i$d=5.}
-2
-=
-int a
-3
-=
-int b
-4
-=
-int c
-5
-=
-int d
-;
-;
-;
-;
-int main(){ }
+ 

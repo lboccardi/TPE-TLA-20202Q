@@ -106,9 +106,9 @@ void addVar(char *name, char *type)
 
 char *printfParser(char *s)
 { /** hola ''a12b5'' como estas --> \"hola %d como estas\",a12b5  **/
-    /** hola ''a12b5' como estas --> \"hola %d como estas\",a12b5  **/
+
     char *ans = malloc(strlen(s) * 2 + 5);
-    //ans[0] = '\\';
+
     ans[0] = '\"';
 
     int i = 0, j = 1, k = 0;
@@ -162,7 +162,7 @@ char *printfParser(char *s)
             {
                 s[strlen(s) - 1] = 0;
                 sprintf(ans, "\"%s\"", s + 1);
-                printf("%s", ans);
+
                 return ans;
             }
         }
@@ -172,6 +172,25 @@ char *printfParser(char *s)
     if (name[0] != 0)
         sprintf(ans + j, "\",%s", name);
 
-    printf("\n%s\n", ans);
     return ans;
+}
+
+bool isString(char *s)
+{
+    var *curr = var_list.first;
+    while (curr != NULL)
+    {
+        var *aux = curr->next;
+
+        if (strcmp(curr->name, s) == 0)
+        {
+            if (strcmp(curr->type, "%d") == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        curr = aux;
+    }
+    return false;
 }
