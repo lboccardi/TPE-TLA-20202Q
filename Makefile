@@ -4,6 +4,6 @@ YLFLAGS= -lfl -ll
 all:
 	lex scanner.l
 	yacc -v -d grammar.y
-	gcc -o parser lex.yy.c y.tab.c $(YLFLAGS) $(CCFLAGS)
+	gcc -o parser lex.yy.c y.tab.c tree.c $(YLFLAGS) $(CCFLAGS)
 clean: 
-	rm lex.yy.c y.tab.c y.tab.h *.out
+	rm lex.yy.c y.tab.c y.tab.h parser

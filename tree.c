@@ -2,27 +2,63 @@
 #include <stdlib.h>
 #include "tree.h"
 
-code coding;
+code program;
 
-void initialize(){
-    coding.root = malloc(sizeof(node));  
-    coding.curr = coding.root;  
-    coding.curr->size = 0;
+void initialize()
+{
+    program.error = false;
 }
-void add(char * information, stage s){
-    switch (s)
+
+void add(char *information, bool free)
+{
+    node *aux = malloc(sizeof(node));
+    aux->free = free;
+    aux->next = NULL;
+    aux->information = information;
+    if (program.first == NULL)
     {
-    case TERMINAL: /* Build branch */
-        coding.curr->size++;
-        coding.curr->children = realloc(coding.curr->children, coding.curr->size * sizeof(node));
-        coding.curr->children[coding.curr->size-1].parent = coding.curr;
-        coding.curr = &coding.curr->children[coding.curr->size-1];
-        strcpy(coding.curr->information,information);
-        coding.curr->size = 0; 
-        break;
-    case EQUAL: /* Assign */
-        coding.curr->children = realloc(coding.curr->children, coding.curr->size * sizeof(node));
-    default:
-        break;
+        program.first = aux;
+    }
+    else
+    {
+        program.last->next = aux;
+    }
+    program.last = aux;
+}
+
+void freeResources(bool error)
+{
+    node *curr = program.first;
+
+    if (curr == NULL)
+    {
+        return;
+    }
+
+    while (curr->next != NULL)
+    {
+        node *aux = curr->next;
+        if (curr->free)
+        {
+            free(curr->information);
+        }
+        free(curr);
+        curr = aux;
+    }
+    if (error)
+    {
+        if (curr->free)
+        {
+            free(curr->information);
+        }
+        free(curr);
+        program.error = true;
+        program.first = NULL;
+        program.last = NULL;
+    }
+    else
+    {
+        program.first = curr;
+        program.last = curr;
     }
 }

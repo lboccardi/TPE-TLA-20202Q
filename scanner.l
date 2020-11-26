@@ -1,5 +1,6 @@
 %{
 #include "y.tab.h"
+#include "tree.h"
 %}
 
 alpha [A-Za-z]
@@ -16,11 +17,13 @@ varname {alpha}({alpha}|{digit})*
 {digit}+	{char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
+				add(str,true);
 				return DIGIT;
             }
 {varname}   {char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
+				add(str,true);
 				return ALPHA;
             }
 "."         return END;
@@ -50,6 +53,6 @@ varname {alpha}({alpha}|{digit})*
 "/"         return DIV; 
 ","         return COMMA;
 "_"         return ARRAY;
- 
+<<EOF>>                         { yyterminate(); return 1; }
 %%
  

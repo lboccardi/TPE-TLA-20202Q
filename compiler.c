@@ -19,15 +19,16 @@ int main(int argc, char *argv[])
 
     char *input_file_path = argv[1];
 
-    FILE *clux_file = fopen(input_file_path, "r");          //Read clux file
-    FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
-
+    FILE *clux_file = fopen(input_file_path, "r"); //Read clux file
     if (clux_file == NULL)
     {
         perror("Error opening clux file");
         exit(1);
     }
 
+    yyin = clux_file;
+
+    FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
     if (intermediate_file == NULL)
     {
         perror("Error creating intermediate code file");
@@ -39,6 +40,7 @@ int main(int argc, char *argv[])
     generateIntermediateCodeFile();
 
     fclose(clux_file);
+    fclose(yyin);
     fclose(intermediate_file);
 
     return 0;

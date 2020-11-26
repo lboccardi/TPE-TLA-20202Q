@@ -72,11 +72,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tree.h"
 
 #ifdef E_PARSE_DEBUG
 // Some yacc (bison) defines
 #define YYDEBUG 1       // Generate debug code; needed for YYERROR_VERBOSE
 #define YYERROR_VERBOSE // Give a more specific parse error message 
+#define YYACCEPT 0
 #endif
 
 int yylex();
@@ -84,9 +86,10 @@ int yylex();
 void yyerror(const char *str)
 {
   fprintf(stderr,"error: %s\n",str);
+  freeResources(true); 
 } 
 
-#line 90 "y.tab.c"
+#line 93 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -210,11 +213,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "grammar.y"
+#line 24 "grammar.y"
 
 	char * stringValue;
 
-#line 218 "y.tab.c"
+#line 221 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -593,12 +596,12 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    68,    68,    69,    73,    77,    78,    82,    83,    84,
-      88,    89,    90,    91,    95,    99,   100,   101,   102,   103,
-     104,   105,   109,   110,   111,   115,   116,   117,   118,   119,
-     123,   124,   128,   129,   133,   134,   138,   139,   143,   144,
-     145,   146,   147,   148,   149,   150,   151,   155,   156,   157,
-     158
+       0,    71,    71,    72,    76,    80,    81,    85,    86,    87,
+      91,    92,    93,    94,    98,   102,   103,   104,   105,   106,
+     107,   108,   112,   113,   114,   118,   119,   120,   121,   122,
+     126,   127,   131,   132,   136,   137,   141,   142,   146,   147,
+     148,   149,   150,   151,   152,   153,   154,   158,   159,   160,
+     161
 };
 #endif
 
@@ -1453,301 +1456,301 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 68 "grammar.y"
-                                 {printf("int main(){ %s }\n",(yyvsp[-1].stringValue));free((yyvsp[-1].stringValue));}
-#line 1459 "y.tab.c"
+#line 71 "grammar.y"
+                                 { (yyval.stringValue) = malloc(16 +  strlen((yyvsp[-1].stringValue))); sprintf((yyval.stringValue), "int main(){ %s }\n",(yyvsp[-1].stringValue)); add((yyval.stringValue), true);  }
+#line 1462 "y.tab.c"
     break;
 
   case 3:
-#line 69 "grammar.y"
-                     {printf("%s\n",(yyvsp[-1].stringValue));free((yyvsp[-1].stringValue));}
-#line 1465 "y.tab.c"
+#line 72 "grammar.y"
+                     { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+3); sprintf((yyval.stringValue),"%s\n%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1468 "y.tab.c"
     break;
 
   case 4:
-#line 73 "grammar.y"
-                                                                      { (yyval.stringValue) = malloc(strlen((yyvsp[-8].stringValue))+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-1].stringValue))+ 8); sprintf((yyval.stringValue), "%s %s(%s){\n%s}\n", (yyvsp[-8].stringValue), (yyvsp[-6].stringValue), (yyvsp[-4].stringValue), (yyvsp[-1].stringValue)); if(strlen((yyvsp[-4].stringValue))){free((yyvsp[-4].stringValue));}; if(strlen((yyvsp[-1].stringValue))){free((yyvsp[-1].stringValue));};}
-#line 1471 "y.tab.c"
+#line 76 "grammar.y"
+                                                                      { (yyval.stringValue) = malloc(strlen((yyvsp[-8].stringValue))+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-1].stringValue))+ 8); sprintf((yyval.stringValue), "%s %s(%s){\n%s}\n", (yyvsp[-8].stringValue), (yyvsp[-6].stringValue), (yyvsp[-4].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1474 "y.tab.c"
     break;
 
   case 5:
-#line 77 "grammar.y"
+#line 80 "grammar.y"
                 {(yyval.stringValue) = "int";}
-#line 1477 "y.tab.c"
+#line 1480 "y.tab.c"
     break;
 
   case 6:
-#line 78 "grammar.y"
+#line 81 "grammar.y"
                 {(yyval.stringValue) = "char *";}
-#line 1483 "y.tab.c"
+#line 1486 "y.tab.c"
     break;
 
   case 7:
-#line 82 "grammar.y"
-                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue)) +2); sprintf((yyval.stringValue), "%s %s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); }
-#line 1489 "y.tab.c"
+#line 85 "grammar.y"
+                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue)) +2); sprintf((yyval.stringValue), "%s %s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1492 "y.tab.c"
     break;
 
   case 8:
-#line 83 "grammar.y"
-                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-2].stringValue))+4+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s %s, %s", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} }
-#line 1495 "y.tab.c"
+#line 86 "grammar.y"
+                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-2].stringValue))+4+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s %s, %s", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1498 "y.tab.c"
     break;
 
   case 9:
-#line 84 "grammar.y"
+#line 87 "grammar.y"
                                 { (yyval.stringValue) = ""; }
-#line 1501 "y.tab.c"
+#line 1504 "y.tab.c"
     break;
 
   case 10:
-#line 88 "grammar.y"
-                                { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue));free((yyvsp[0].stringValue));}
-#line 1507 "y.tab.c"
+#line 91 "grammar.y"
+                                { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1510 "y.tab.c"
     break;
 
   case 11:
-#line 89 "grammar.y"
-                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s,%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));}free((yyvsp[-2].stringValue));}
-#line 1513 "y.tab.c"
+#line 92 "grammar.y"
+                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s,%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1516 "y.tab.c"
     break;
 
   case 12:
-#line 90 "grammar.y"
+#line 93 "grammar.y"
                                 { (yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1519 "y.tab.c"
+#line 1522 "y.tab.c"
     break;
 
   case 13:
-#line 91 "grammar.y"
+#line 94 "grammar.y"
                                 { (yyval.stringValue) = "";}
-#line 1525 "y.tab.c"
+#line 1528 "y.tab.c"
     break;
 
   case 14:
-#line 95 "grammar.y"
-                                 { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+3+strlen((yyvsp[-1].stringValue))); sprintf((yyval.stringValue),"%s(%s)",(yyvsp[-3].stringValue),(yyvsp[-1].stringValue)); if(strlen((yyvsp[-1].stringValue))){free((yyvsp[-1].stringValue));}}
-#line 1531 "y.tab.c"
+#line 98 "grammar.y"
+                                 { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+3+strlen((yyvsp[-1].stringValue))); sprintf((yyval.stringValue),"%s(%s)",(yyvsp[-3].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1534 "y.tab.c"
     break;
 
   case 15:
-#line 99 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} if(strlen((yyvsp[-2].stringValue))){free((yyvsp[-2].stringValue));}}
-#line 1537 "y.tab.c"
+#line 102 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1540 "y.tab.c"
     break;
 
   case 16:
-#line 100 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} if(strlen((yyvsp[-2].stringValue))){free((yyvsp[-2].stringValue));}}
-#line 1543 "y.tab.c"
+#line 103 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1546 "y.tab.c"
     break;
 
   case 17:
-#line 101 "grammar.y"
-                                                                                        {printf("%s(%s %s %s){%s}\n%s ",(yyvsp[-4].stringValue),(yyvsp[-9].stringValue),(yyvsp[-8].stringValue),(yyvsp[-7].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));free((yyvsp[-9].stringValue));free((yyvsp[-7].stringValue));}
-#line 1549 "y.tab.c"
+#line 104 "grammar.y"
+                                                                                        {(yyval.stringValue) = malloc(strlen((yyvsp[-9].stringValue))+10+strlen((yyvsp[-8].stringValue))+strlen((yyvsp[-7].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s(%s %s %s){%s}\n%s ",(yyvsp[-4].stringValue),(yyvsp[-9].stringValue),(yyvsp[-8].stringValue),(yyvsp[-7].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1552 "y.tab.c"
     break;
 
   case 18:
-#line 102 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue)) +9); sprintf((yyval.stringValue), "return %s;", (yyvsp[-1].stringValue)); free((yyvsp[-1].stringValue));}
-#line 1555 "y.tab.c"
+#line 105 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue)) +9); sprintf((yyval.stringValue), "return %s;", (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1558 "y.tab.c"
     break;
 
   case 19:
-#line 103 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[0].stringValue))+ 11); sprintf((yyval.stringValue),"sscanf(%s);\n%s",(yyvsp[-3].stringValue),(yyvsp[0].stringValue)); free((yyvsp[-3].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));}}
-#line 1561 "y.tab.c"
+#line 106 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[0].stringValue))+ 11); sprintf((yyval.stringValue),"sscanf(%s);\n%s",(yyvsp[-3].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1564 "y.tab.c"
     break;
 
   case 20:
-#line 104 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[0].stringValue))+ 11); sprintf((yyval.stringValue), "printf(%s);\n%s", (yyvsp[-3].stringValue), (yyvsp[0].stringValue)); if(strlen((yyvsp[-3].stringValue))){free((yyvsp[-3].stringValue));}if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} }
-#line 1567 "y.tab.c"
+#line 107 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[0].stringValue))+ 11); sprintf((yyval.stringValue), "printf(%s);\n%s", (yyvsp[-3].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1570 "y.tab.c"
     break;
 
   case 21:
-#line 105 "grammar.y"
-                    {(yyval.stringValue)="";}
-#line 1573 "y.tab.c"
+#line 108 "grammar.y"
+                                                { (yyval.stringValue)="";}
+#line 1576 "y.tab.c"
     break;
 
   case 22:
-#line 109 "grammar.y"
-                                { (yyval.stringValue) = malloc(1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); if (strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} }
-#line 1579 "y.tab.c"
+#line 112 "grammar.y"
+                                { (yyval.stringValue) = malloc(1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1582 "y.tab.c"
     break;
 
   case 23:
-#line 110 "grammar.y"
-                                { (yyval.stringValue) = malloc(3 + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\'%s", (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));} }
-#line 1585 "y.tab.c"
+#line 113 "grammar.y"
+                                { (yyval.stringValue) = malloc(3 + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\'%s", (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1588 "y.tab.c"
     break;
 
   case 24:
-#line 111 "grammar.y"
+#line 114 "grammar.y"
                                 { (yyval.stringValue) = ""; }
-#line 1591 "y.tab.c"
+#line 1594 "y.tab.c"
     break;
 
   case 25:
-#line 115 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-3].stringValue))+3+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s%s",(yyvsp[-4].stringValue),(yyvsp[-3].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue));free((yyvsp[-1].stringValue));}
-#line 1597 "y.tab.c"
+#line 118 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-3].stringValue))+3+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s%s",(yyvsp[-4].stringValue),(yyvsp[-3].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1600 "y.tab.c"
     break;
 
   case 26:
-#line 116 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+2);  sprintf((yyval.stringValue), "%s=%s%s", (yyvsp[-3].stringValue), (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); free((yyvsp[-1].stringValue));}
-#line 1603 "y.tab.c"
+#line 119 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+2);  sprintf((yyval.stringValue), "%s=%s%s", (yyvsp[-3].stringValue), (yyvsp[-1].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1606 "y.tab.c"
     break;
 
   case 27:
-#line 117 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+2); sprintf((yyval.stringValue),"%s %s",(yyvsp[-1].stringValue),(yyvsp[0].stringValue));}
-#line 1609 "y.tab.c"
+#line 120 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+2); sprintf((yyval.stringValue),"%s %s",(yyvsp[-1].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1612 "y.tab.c"
     break;
 
   case 28:
-#line 118 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s",(yyvsp[-3].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); free((yyvsp[0].stringValue));}
-#line 1615 "y.tab.c"
+#line 121 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s",(yyvsp[-3].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1618 "y.tab.c"
     break;
 
   case 29:
-#line 119 "grammar.y"
-                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));free((yyvsp[0].stringValue));}
-#line 1621 "y.tab.c"
+#line 122 "grammar.y"
+                                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1624 "y.tab.c"
     break;
 
   case 30:
-#line 123 "grammar.y"
-                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); if(strlen((yyvsp[0].stringValue))){free((yyvsp[0].stringValue));}free((yyvsp[-1].stringValue));}
-#line 1627 "y.tab.c"
+#line 126 "grammar.y"
+                                { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); add((yyval.stringValue),true);}
+#line 1630 "y.tab.c"
     break;
 
   case 31:
-#line 124 "grammar.y"
+#line 127 "grammar.y"
                                 { (yyval.stringValue) = "";}
-#line 1633 "y.tab.c"
+#line 1636 "y.tab.c"
     break;
 
   case 32:
-#line 128 "grammar.y"
+#line 131 "grammar.y"
             {(yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1639 "y.tab.c"
+#line 1642 "y.tab.c"
     break;
 
   case 33:
-#line 129 "grammar.y"
+#line 132 "grammar.y"
             {(yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1645 "y.tab.c"
+#line 1648 "y.tab.c"
     break;
 
   case 34:
-#line 133 "grammar.y"
-                                        { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[-1].stringValue)) + 3); sprintf((yyval.stringValue), "(%s%s%s)", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[-1].stringValue)); free((yyvsp[-3].stringValue)); free((yyvsp[-1].stringValue));}
-#line 1651 "y.tab.c"
+#line 136 "grammar.y"
+                                        { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[-1].stringValue)) + 3); sprintf((yyval.stringValue), "(%s%s%s)", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1654 "y.tab.c"
     break;
 
   case 35:
-#line 134 "grammar.y"
-                                        { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); free((yyvsp[0].stringValue));}
-#line 1657 "y.tab.c"
+#line 137 "grammar.y"
+                                        { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1660 "y.tab.c"
     break;
 
   case 36:
-#line 138 "grammar.y"
+#line 141 "grammar.y"
             { (yyval.stringValue) = "while";}
-#line 1663 "y.tab.c"
+#line 1666 "y.tab.c"
     break;
 
   case 37:
-#line 139 "grammar.y"
+#line 142 "grammar.y"
             { (yyval.stringValue) = "if";}
-#line 1669 "y.tab.c"
+#line 1672 "y.tab.c"
     break;
 
   case 38:
-#line 143 "grammar.y"
+#line 146 "grammar.y"
             { (yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1675 "y.tab.c"
+#line 1678 "y.tab.c"
     break;
 
   case 39:
-#line 144 "grammar.y"
+#line 147 "grammar.y"
             { (yyval.stringValue) = "<";}
-#line 1681 "y.tab.c"
+#line 1684 "y.tab.c"
     break;
 
   case 40:
-#line 145 "grammar.y"
+#line 148 "grammar.y"
             { (yyval.stringValue) = ">";}
-#line 1687 "y.tab.c"
+#line 1690 "y.tab.c"
     break;
 
   case 41:
-#line 146 "grammar.y"
+#line 149 "grammar.y"
             { (yyval.stringValue) = "<=";}
-#line 1693 "y.tab.c"
+#line 1696 "y.tab.c"
     break;
 
   case 42:
-#line 147 "grammar.y"
+#line 150 "grammar.y"
             { (yyval.stringValue) = ">=";}
-#line 1699 "y.tab.c"
+#line 1702 "y.tab.c"
     break;
 
   case 43:
-#line 148 "grammar.y"
+#line 151 "grammar.y"
             { (yyval.stringValue) = "==";}
-#line 1705 "y.tab.c"
+#line 1708 "y.tab.c"
     break;
 
   case 44:
-#line 149 "grammar.y"
+#line 152 "grammar.y"
             { (yyval.stringValue) = "!";}
-#line 1711 "y.tab.c"
+#line 1714 "y.tab.c"
     break;
 
   case 45:
-#line 150 "grammar.y"
+#line 153 "grammar.y"
             { (yyval.stringValue) = "||";}
-#line 1717 "y.tab.c"
+#line 1720 "y.tab.c"
     break;
 
   case 46:
-#line 151 "grammar.y"
+#line 154 "grammar.y"
             { (yyval.stringValue) = "&&";}
-#line 1723 "y.tab.c"
+#line 1726 "y.tab.c"
     break;
 
   case 47:
-#line 155 "grammar.y"
+#line 158 "grammar.y"
             { (yyval.stringValue) = "+";}
-#line 1729 "y.tab.c"
+#line 1732 "y.tab.c"
     break;
 
   case 48:
-#line 156 "grammar.y"
+#line 159 "grammar.y"
             { (yyval.stringValue) = "-";}
-#line 1735 "y.tab.c"
+#line 1738 "y.tab.c"
     break;
 
   case 49:
-#line 157 "grammar.y"
+#line 160 "grammar.y"
             { (yyval.stringValue) = "/";}
-#line 1741 "y.tab.c"
+#line 1744 "y.tab.c"
     break;
 
   case 50:
-#line 158 "grammar.y"
+#line 161 "grammar.y"
             { (yyval.stringValue) = "*";}
-#line 1747 "y.tab.c"
+#line 1750 "y.tab.c"
     break;
 
 
-#line 1751 "y.tab.c"
+#line 1754 "y.tab.c"
 
       default: break;
     }
@@ -1979,10 +1982,14 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 161 "grammar.y"
+#line 164 "grammar.y"
 
 
 int main(){
     printf("Enter the expression:\n");
-    yyparse(); 
+    yyparse();
+    if(!program.error){
+        freeResources(false);
+        printf("%s\n",program.first->information);
+    } 
 }
