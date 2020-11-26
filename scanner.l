@@ -6,6 +6,9 @@
 alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
+space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" ")*[\]]
+
+
 
 %% 
 
@@ -14,17 +17,25 @@ varname {alpha}({alpha}|{digit})*
 "P"           return STDOUT; 
 "F"           return FUNCTION; 
 "R"           return RETURN;
+
 {digit}+	{char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
 				add(str,true);
 				return DIGIT;
             }
+
 {varname}   {char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
 				add(str,true);
 				return ALPHA;
+            }
+{space_alpha}   {char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				add(str,true);
+				return SPACE_ALPHA;
             }
 "."         return END;
 [ \t]+      ;
@@ -52,7 +63,7 @@ varname {alpha}({alpha}|{digit})*
 "*"         return TIMES;
 "/"         return DIV; 
 ","         return COMMA;
-"_"         return ARRAY;
+"_"         return ARRAY; 
 <<EOF>>                         { yyterminate(); return 1; }
 %%
  
