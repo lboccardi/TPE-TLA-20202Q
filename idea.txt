@@ -21,6 +21,13 @@ Bloque Condicional (if).
 Bloque Do-While (repetici´on hasta condici´on).
 "while (cond) {...}" pasaría a ser: (cond)? --> {lo que hay que hacer}
 
+Extra - Array 
+i$array_5=1,2,3,4,5. --> int array[5];
+array_0=0. --> array[0] = 0;
+array_2=2.
+
+
+
 
 // COMPILADOR 
 
@@ -69,4 +76,14 @@ S{
     R b.
 }
 
- 
+ S{
+    s$a. 
+    a=chau. 
+    i$b. 
+    b=2. 
+    (b!~3)?-->{
+        b=b+1.
+    }
+    P[hola 'a' 'b'\n]. 
+    R b.
+}

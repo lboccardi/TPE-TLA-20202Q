@@ -7,7 +7,7 @@ alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
 space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\]]
-
+string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 
 
 %% 
@@ -31,6 +31,12 @@ space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\]]
 				add(str,true);
 				return ALPHA;
             }
+{string_value}   {char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				add(str,true);
+				return STRING_VALUE;
+            }
 {space_alpha}   {char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
@@ -52,6 +58,7 @@ space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\]]
 "<="        return LE;
 ">="        return GE;
 "~"         return EQ;
+"!~"		return NE;
 "!"         return NOT;
 "|"         return OR;
 "&"         return AND;

@@ -29,7 +29,7 @@ void yyerror(const char *str)
 %type<stringValue> rule type op start arrow operator params out function program assignment operation var call args;
 
 /* Terminals */ 
-%token<stringValue>  DIGIT ALPHA SPACE_ALPHA;
+%token<stringValue>  DIGIT ALPHA SPACE_ALPHA STRING_VALUE;
 %token<stringValue>  INT STRING; 
 %token<stringValue>  PLUS MINUS TIMES DIV;
 %token  END; 
@@ -47,6 +47,7 @@ void yyerror(const char *str)
 %token  LE;
 %token  GE;
 %token  EQ;
+%token  NE;
 %token  NOT;
 %token  OR;
 %token  AND;
@@ -103,7 +104,7 @@ program
     | call END program                          { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program {$$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen($7)+strlen($9)+strlen($11)); sprintf($$,"%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11); add($$,true);}
     | RETURN assignment END                     { $$ = malloc(strlen($2) +9); sprintf($$, "return %s;", $2); add($$,true);} 
-    | STDIN OPEN_P ALPHA CLOSE_P END program    { $$ = malloc(strlen($3)+strlen($6)+ 11); sprintf($$,"sscanf(%s);\n%s",$6,$3); add($$,true);}
+    | STDIN OPEN_P ALPHA CLOSE_P END program    { $$ = malloc(strlen($3)+strlen($6)+ 11); sprintf($$,"gets(%s);\n%s",$6,$3); add($$,true);}
     | STDOUT out END program                    { $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); char * print = printfParser($2); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
     | /* lambda */                              { $$="";}
     ;
@@ -118,8 +119,8 @@ out
     ; 
 
 var
-    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+6+strlen($4)+strlen($5)); if(strcmp($1,"int") == 0) {sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);}else{sprintf($$,"%s %s=\"%s\"%s",$1,$2,$4,$5);}add($$,true); addVar($2, $1);} 
-    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+5);  if(isString($1)){sprintf($$, "%s=\"%s\"%s", $1, $3, $4);}else{sprintf($$, "%s=%s%s", $1, $3, $4);}add($$,true);}
+    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+6+strlen($4)+strlen($5)); if(strcmp($1,"int") == 0) {sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);}else{ $4[strlen($4) - 1] = 0;sprintf($$,"%s %s=\"%s\"%s",$1,$2,$4+1,$5);}add($$,true); addVar($2, $1);} 
+    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+5);  if(isString($1)){ $3[strlen($3) - 1] = 0;sprintf($$, "%s=\"%s\"%s", $1, $3+1, $4);}else{sprintf($$, "%s=%s%s", $1, $3, $4);}add($$,true);}
     | type ALPHA                                { $$ = malloc(strlen($1)+strlen($2)+2); sprintf($$,"%s %s",$1,$2);add($$,true); addVar($2, $1);}
     | type ALPHA ASSIGN call                    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s",$1,$2,$4); add($$,true); addVar($2, $1);}
     | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);add($$,true);}
@@ -133,6 +134,7 @@ operation
 assignment
     : ALPHA {$$ = $1;}
     | DIGIT {$$ = $1;}
+    | STRING_VALUE {$$ = $1;}
     ;
 
 rule
@@ -152,6 +154,7 @@ operator
     | LE    { $$ = "<=";}
     | GE    { $$ = ">=";} 
     | EQ    { $$ = "==";}
+    | NE    { $$ = "!=";}
     | NOT   { $$ = "!";}
     | OR    { $$ = "||";}
     | AND   { $$ = "&&";}
