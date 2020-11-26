@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.4.1.  */
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -51,67 +51,75 @@ extern int yydebug;
   {
     DIGIT = 258,
     ALPHA = 259,
-    END = 260,
-    OPEN_P = 261,
-    CLOSE_P = 262,
-    CONDITIONAL = 263,
-    EXEC = 264,
-    END_EXEC = 265,
-    IF = 266,
-    ELSE = 267,
-    ESCAPE = 268,
-    WHILE = 269,
-    L = 270,
-    G = 271,
-    LE = 272,
-    GE = 273,
-    EQ = 274,
-    NOT = 275,
-    OR = 276,
-    AND = 277,
-    ASSIGN = 278,
-    INT = 279,
-    STRING = 280,
-    OP = 281,
-    RETURN = 282,
-    MAIN = 283,
-    STDIN = 284,
-    STDOUT = 285,
-    FUNCTION = 286,
-    COMMA = 287
+    INT = 260,
+    STRING = 261,
+    PLUS = 262,
+    MINUS = 263,
+    TIMES = 264,
+    DIV = 265,
+    END = 266,
+    OPEN_P = 267,
+    CLOSE_P = 268,
+    CONDITIONAL = 269,
+    EXEC = 270,
+    END_EXEC = 271,
+    IF = 272,
+    ELSE = 273,
+    ESCAPE = 274,
+    WHILE = 275,
+    L = 276,
+    G = 277,
+    LE = 278,
+    GE = 279,
+    EQ = 280,
+    NOT = 281,
+    OR = 282,
+    AND = 283,
+    ASSIGN = 284,
+    RETURN = 285,
+    MAIN = 286,
+    STDIN = 287,
+    STDOUT = 288,
+    FUNCTION = 289,
+    COMMA = 290,
+    ARRAY = 291
   };
 #endif
 /* Tokens.  */
 #define DIGIT 258
 #define ALPHA 259
-#define END 260
-#define OPEN_P 261
-#define CLOSE_P 262
-#define CONDITIONAL 263
-#define EXEC 264
-#define END_EXEC 265
-#define IF 266
-#define ELSE 267
-#define ESCAPE 268
-#define WHILE 269
-#define L 270
-#define G 271
-#define LE 272
-#define GE 273
-#define EQ 274
-#define NOT 275
-#define OR 276
-#define AND 277
-#define ASSIGN 278
-#define INT 279
-#define STRING 280
-#define OP 281
-#define RETURN 282
-#define MAIN 283
-#define STDIN 284
-#define STDOUT 285
-#define FUNCTION 286
-#define COMMA 287
+#define INT 260
+#define STRING 261
+#define PLUS 262
+#define MINUS 263
+#define TIMES 264
+#define DIV 265
+#define END 266
+#define OPEN_P 267
+#define CLOSE_P 268
+#define CONDITIONAL 269
+#define EXEC 270
+#define END_EXEC 271
+#define IF 272
+#define ELSE 273
+#define ESCAPE 274
+#define WHILE 275
+#define L 276
+#define G 277
+#define LE 278
+#define GE 279
+#define EQ 280
+#define NOT 281
+#define OR 282
+#define AND 283
+#define ASSIGN 284
+#define RETURN 285
+#define MAIN 286
+#define STDIN 287
+#define STDOUT 288
+#define FUNCTION 289
+#define COMMA 290
+#define ARRAY 291
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -121,7 +129,7 @@ union YYSTYPE
 
 	char * stringValue;
 
-#line 125 "y.tab.h"
+#line 133 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

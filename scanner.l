@@ -44,13 +44,12 @@ varname {alpha}({alpha}|{digit})*
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
-[+\-*/]		{	char* str = malloc(strlen(yytext) + 1);
-				strcpy(str, yytext);
-				yylval.stringValue = str;
-				return OP;
-            }
+"+"         return PLUS; 
+"-"         return MINUS;
+"*"         return TIMES;
+"/"         return DIV; 
 ","         return COMMA;
-
+"_"         return ARRAY;
  
 %%
  

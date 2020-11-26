@@ -22,10 +22,13 @@ void yyerror(const char *str)
 	char * stringValue;
 }
 
-%type<stringValue> ALPHA OP rule type start arrow operator params out function INT STRING program assignment operation var DIGIT call args;
+/* Non Terminals */ 
+%type<stringValue> rule type op start arrow operator params out function program assignment operation var call args;
 
-%token  DIGIT;
-%token  ALPHA;
+/* Terminals */ 
+%token<stringValue>  DIGIT ALPHA;
+%token<stringValue>  INT STRING; 
+%token<stringValue>  PLUS MINUS TIMES DIV;
 %token  END; 
 %token  OPEN_P; 
 %token  CLOSE_P;
@@ -44,18 +47,20 @@ void yyerror(const char *str)
 %token  NOT;
 %token  OR;
 %token  AND;
-%token  ASSIGN; 
-%token  INT; 
-%token  STRING; 
-%token  OP; 
+%token  ASSIGN;  
 %token  RETURN;
 %token  MAIN; 
 %token  STDIN; 
 %token  STDOUT; 
 %token  FUNCTION; 
 %token  COMMA;
+%token  ARRAY;
 
 %start start
+
+/* Precedence */ 
+%left PLUS MINUS
+%left TIMES DIV
 
 %%
 
@@ -75,19 +80,19 @@ type
 
 params 
     : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); }
-    | type ALPHA COMMA params   { $$=malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); if(strlen($4)){free($4);} } 
-    | /* lambda */              { $$=""; }
+    | type ALPHA COMMA params   { $$ = malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); if(strlen($4)){free($4);} } 
+    | /* lambda */              { $$ = ""; }
     ;
 
 args 
-    : assignment                {$$ = malloc(strlen($1)+1); sprintf($$, "%s", $1);}
-    | assignment COMMA args     {$$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s,%s",$1,$3); if(strlen($3)){free($3);}}
-    | call                      {$$ = $1;}
-    | /* lambda */              {$$="";}
+    : assignment                { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1);free($1);}
+    | assignment COMMA args     { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s,%s",$1,$3); if(strlen($3)){free($3);}free($1);}
+    | call                      { $$ = $1;}
+    | /* lambda */              { $$ = "";}
     ;
 
 call
-    : ALPHA OPEN_P  args CLOSE_P {$$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s(%s)",$1,$3); if(strlen($3)){free($3);}} 
+    : ALPHA OPEN_P  args CLOSE_P { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s(%s)",$1,$3); if(strlen($3)){free($3);}} 
     ;
 
 program 
@@ -101,22 +106,22 @@ program
     ;
 
 out 
-    : ALPHA out                 {$$ = malloc(1 + strlen($1) + strlen($2)); sprintf($$, "%s%s", $1, $2); if (strlen($2)){free($2);} }
-    | ESCAPE ALPHA ESCAPE out   {$$ = malloc(3 + strlen($2) + strlen($4)); sprintf($$, "\'%s\'%s", $2, $4); if(strlen($4)){free($4);} }
-    | /* lambda */              {$$ = ""; }
+    : ALPHA out                 { $$ = malloc(1 + strlen($1) + strlen($2)); sprintf($$, "%s%s", $1, $2); if (strlen($2)){free($2);} }
+    | ESCAPE ALPHA ESCAPE out   { $$ = malloc(3 + strlen($2) + strlen($4)); sprintf($$, "\'%s\'%s", $2, $4); if(strlen($4)){free($4);} }
+    | /* lambda */              { $$ = ""; }
     ; 
 
 var
-    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);} 
-    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+2);  sprintf($$, "%s=%s%s", $1, $3, $4); }
+    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);free($4);} 
+    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+2);  sprintf($$, "%s=%s%s", $1, $3, $4); free($3);}
     | type ALPHA                                { $$ = malloc(strlen($1)+strlen($2)+2); sprintf($$,"%s %s",$1,$2);}
     | type ALPHA ASSIGN call                    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s",$1,$2,$4); free($4);}
     | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);free($3);}
     ; 
     
 operation
-    : OP assignment operation   {$$ = malloc(strlen($1)+ 1 + strlen($2) + strlen($3)); sprintf($$,"%s%s%s",$1,$2,$3 ); if(strlen($3)){free($3);}}
-    | /* lambda */              {$$ = "";}
+    : op assignment operation   { $$ = malloc(strlen($1)+ 1 + strlen($2) + strlen($3)); sprintf($$,"%s%s%s",$1,$2,$3 ); if(strlen($3)){free($3);}free($2);}
+    | /* lambda */              { $$ = "";}
     ;
     
 assignment
@@ -126,29 +131,36 @@ assignment
 
 rule
     : OPEN_P rule operator rule CLOSE_P { $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 3); sprintf($$, "(%s%s%s)", $2, $3, $4); free($2); free($4);}
-    | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1);}
+    | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); free($1);}
     ;
 
 arrow
-    : WHILE {$$ = "while";}
-    | IF    {$$ = "if";}
+    : WHILE { $$ = "while";}
+    | IF    { $$ = "if";}
     ;
 
 operator
-    : OP    {$$ = $1;}
-    | L     {$$ = "<";}
-    | G     {$$ = ">";}
-    | LE    {$$ = "<=";}
-    | GE    {$$ = ">=";} 
-    | EQ    {$$ = "==";}
-    | NOT   {$$ = "!";}
-    | OR    {$$ = "||";}
-    | AND   {$$ = "&&";}
-    ; 
+    : op    { $$ = $1;}
+    | L     { $$ = "<";}
+    | G     { $$ = ">";}
+    | LE    { $$ = "<=";}
+    | GE    { $$ = ">=";} 
+    | EQ    { $$ = "==";}
+    | NOT   { $$ = "!";}
+    | OR    { $$ = "||";}
+    | AND   { $$ = "&&";}
+    ;
+
+op 
+    : PLUS  { $$ = "+";}
+    | MINUS { $$ = "-";}
+    | DIV   { $$ = "/";}
+    | TIMES { $$ = "*";}
+    ;
 
 %%
 
 int main(){
-     printf("Enter the expression:\n");
+    printf("Enter the expression:\n");
     yyparse(); 
 }

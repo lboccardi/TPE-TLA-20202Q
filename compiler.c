@@ -46,16 +46,22 @@ int main(int argc, char *argv[])
 
 extern void generateIntermediateCodeFile()
 {
-    //generate C code to compile with gcc and obtain .out
-    //fprintf("intermdiate.c", "#include <stdio.h>");
-    char buffer[50];
-    sprintf(buffer, "gcc -S intermediate.c -o intermediate.s"); //generate Asm
 
-    if (system(buffer) != 0)
+    //fprintf("intermdiate.c", "#include <stdio.h>");
+    char generateAsm[100];
+    sprintf(generateAsm, "gcc -S intermediate.c -o intermediate.s"); //generate Asm
+
+    if (system(generateAsm) != 0)
+    {
+        fprintf(stderr, "Error while generatig Assembler code from intermediate file");
+        exit(1);
+    }
+
+    char compileAsm[100];
+    sprintf(compileAsm, "gcc -c intermediate.s -o compiled"); //compiled file generated
+    if (system(compileAsm) != 0)
     {
         fprintf(stderr, "Error while compiling intermediate file");
         exit(1);
     }
-
-    // sprintf(buffer, "gcc -c intermediate.s -o compiled"); //compiled file generated
 }
