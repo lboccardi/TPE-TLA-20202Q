@@ -19,12 +19,10 @@ void yyerror(const char *str)
 %}
 
 %union {
-    int intValue;
 	char * stringValue;
 }
 
-%type<stringValue> ALPHA OP;
-%type<intValue> DIGIT;
+%type<stringValue> ALPHA OP rule type start arrow operator params out function INT STRING program assignment operation var DIGIT call args;
 
 %token  DIGIT;
 %token  ALPHA;
@@ -62,95 +60,91 @@ void yyerror(const char *str)
 %%
 
 start 
-    : MAIN EXEC program END_EXEC {printf("int main(){ }\n");}
-    | function start
+    : MAIN EXEC program END_EXEC {printf("int main(){ %s }\n",$3);free($3);}
+    | function start {printf("%s\n",$1);free($1);}
     ;
 
 function
-    : type FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC {printf("int %s(){ }\n",$3);}
+    : type FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen($1)+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", $1, $3, $5, $8); if(strlen($5)){free($5);}; if(strlen($8)){free($8);};}
     ;
 
 type
-    : INT 
-    | STRING
+    : INT       {$$ = "int";}
+    | STRING    {$$ = "char *";}
     ;
 
 params 
-    : type ALPHA 
-    | type ALPHA COMMA params 
-    | /* lambda */
+    : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); }
+    | type ALPHA COMMA params   { $$=malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); if(strlen($4)){free($4);} } 
+    | /* lambda */              { $$=""; }
     ;
 
 args 
-    : assignment 
-    | assignment COMMA args 
-    | ALPHA OPEN_P args CLOSE_P {printf("%s()\n",$1);}
-    | /* lambda */
-    ;
-
-
-program 
-    : var END program 
-    | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program 
-    | RETURN assignment END {printf("return ;\n");}
-    | STDIN OPEN_P ALPHA CLOSE_P END program {printf("scanchar (%s);\n",$3);}
-    | STDOUT OPEN_P out CLOSE_P END program  {printf("printf();\n");} 
-    | /* lambda */  
-    ;
-
-out 
-    : ALPHA out {printf("%s\n",$1);}
-    | ESCAPE ALPHA ESCAPE out {printf("'%s'\n",$2);}
-    | /* lambda */
-    ; 
-
-var
-    : INT ALPHA creation {printf("int %s\n;\n",$2); }
-    | STRING ALPHA ASSIGN assignment {printf("char * %s = \n;\n",$2); }
-    | ALPHA botch {printf("BOTCH %s\n;\n",$1); }
-    ; 
-creation
-    :ASSIGN action {printf("=\n");}
-    |/*lambda*/ 
-    ;
-botch
-    : ASSIGN action {printf("=\n");}
-    | OPEN_P  args CLOSE_P {printf("()\n");}     
-    ;
-
-action
-    : assignment call
-    | ALPHA OPEN_P args CLOSE_P {printf("%s()\n",$1);}
+    : assignment                {$$ = malloc(strlen($1)+1); sprintf($$, "%s", $1);}
+    | assignment COMMA args     {$$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s,%s",$1,$3); if(strlen($3)){free($3);}}
+    | call                      {$$ = $1;}
+    | /* lambda */              {$$="";}
     ;
 
 call
-    : OP assignment call {printf("%s\n",$1);}
-    | /* lambda */
+    : ALPHA OPEN_P  args CLOSE_P {$$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s(%s)",$1,$3); if(strlen($3)){free($3);}} 
+    ;
+
+program 
+    : var END program                           { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); if(strlen($3)){free($3);} if(strlen($1)){free($1);}}
+    | call END program                          { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); if(strlen($3)){free($3);} if(strlen($1)){free($1);}}
+    | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program {printf("%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11);free($2);free($4);}
+    | RETURN assignment END                     { $$ = malloc(strlen($2) +9); sprintf($$, "return %s;", $2); free($2);} 
+    | STDIN OPEN_P ALPHA CLOSE_P END program    { $$ = malloc(strlen($3)+strlen($6)+ 11); sprintf($$,"sscanf(%s);\n%s",$3,$6); free($3); if(strlen($6)){free($6);}}
+    | STDOUT OPEN_P out CLOSE_P END program     { $$ = malloc(strlen($3)+strlen($6)+ 11); sprintf($$, "printf(%s);\n%s", $3, $6); if(strlen($3)){free($3);}if(strlen($6)){free($6);} } 
+    | /* lambda */  {$$="";}
+    ;
+
+out 
+    : ALPHA out                 {$$ = malloc(1 + strlen($1) + strlen($2)); sprintf($$, "%s%s", $1, $2); if (strlen($2)){free($2);} }
+    | ESCAPE ALPHA ESCAPE out   {$$ = malloc(3 + strlen($2) + strlen($4)); sprintf($$, "\'%s\'%s", $2, $4); if(strlen($4)){free($4);} }
+    | /* lambda */              {$$ = ""; }
+    ; 
+
+var
+    : type ALPHA ASSIGN assignment operation    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s",$1,$2,$4,$5);} 
+    | ALPHA ASSIGN assignment operation         { $$ = malloc(strlen($1)+strlen($3)+strlen($4)+2);  sprintf($$, "%s=%s%s", $1, $3, $4); }
+    | type ALPHA                                { $$ = malloc(strlen($1)+strlen($2)+2); sprintf($$,"%s %s",$1,$2);}
+    | type ALPHA ASSIGN call                    { $$ = malloc(strlen($1)+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s",$1,$2,$4); free($4);}
+    | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);free($3);}
+    ; 
+    
+operation
+    : OP assignment operation   {$$ = malloc(strlen($1)+ 1 + strlen($2) + strlen($3)); sprintf($$,"%s%s%s",$1,$2,$3 ); if(strlen($3)){free($3);}}
+    | /* lambda */              {$$ = "";}
     ;
     
 assignment
-    : ALPHA {printf("%s\n",$1);}
-    | DIGIT {printf("%d\n",$1);}
+    : ALPHA {$$ = $1;}
+    | DIGIT {$$ = $1;}
     ;
 
 rule
-    : OPEN_P rule operator rule CLOSE_P
-    | assignment; 
+    : OPEN_P rule operator rule CLOSE_P { $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 3); sprintf($$, "(%s%s%s)", $2, $3, $4); free($2); free($4);}
+    | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1);}
+    ;
 
 arrow
-    : WHILE 
-    | IF; 
+    : WHILE {$$ = "while";}
+    | IF    {$$ = "if";}
+    ;
 
 operator
-    : OP 
-    | L 
-    | G
-    | LE
-    | GE
-    | EQ
-    | NOT
-    | OR
-    | AND; 
+    : OP    {$$ = $1;}
+    | L     {$$ = "<";}
+    | G     {$$ = ">";}
+    | LE    {$$ = "<=";}
+    | GE    {$$ = ">=";} 
+    | EQ    {$$ = "==";}
+    | NOT   {$$ = "!";}
+    | OR    {$$ = "||";}
+    | AND   {$$ = "&&";}
+    ; 
 
 %%
 

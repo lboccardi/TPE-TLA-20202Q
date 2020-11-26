@@ -13,7 +13,11 @@ varname {alpha}({alpha}|{digit})*
 "P"           return STDOUT; 
 "F"           return FUNCTION; 
 "R"           return RETURN;
-{digit}+	{ yylval.intValue = atoi(yytext);}; return DIGIT;
+{digit}+	{char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				return DIGIT;
+            }
 {varname}   {char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;

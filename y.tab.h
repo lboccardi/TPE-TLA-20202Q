@@ -119,10 +119,9 @@ union YYSTYPE
 {
 #line 21 "grammar.y"
 
-    int intValue;
 	char * stringValue;
 
-#line 126 "y.tab.h"
+#line 125 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
