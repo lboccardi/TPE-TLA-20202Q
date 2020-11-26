@@ -163,11 +163,11 @@ op
 
 %%
 
-int main(){
+/* int main(){
     printf("Enter the expression:\n");
     yyparse();
     if(!program.error){
         freeResources(false);
         printf("%s\n",program.first->information);
     } 
-}
+} */

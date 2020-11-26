@@ -7,8 +7,9 @@
     Proveer un mecanismo de salida de datos:  STDOUT.
  */
 #include "compiler.h"
-#include <stdio.h>
+#include <stdlib.h>
 #include "y.tab.h"
+#include "tree.h"
 
 int main(int argc, char *argv[])
 {
@@ -28,28 +29,33 @@ int main(int argc, char *argv[])
 
     yyin = clux_file;
 
-    FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
-    if (intermediate_file == NULL)
+    yyparse(); //Parse clux file
+    if (!program.error)
     {
-        perror("Error creating intermediate code file");
-        exit(1);
+        freeResources(false);
+        FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
+        if (intermediate_file == NULL)
+        {
+            perror("Error creating intermediate code file");
+            exit(1);
+        }
+        generateIntermediateCodeFile(intermediate_file);
+        compile();
+        fclose(intermediate_file);
     }
 
-    yyparse(); //Parse clux file
-
-    generateIntermediateCodeFile();
-
-    fclose(clux_file);
     fclose(yyin);
-    fclose(intermediate_file);
 
     return 0;
 }
 
-extern void generateIntermediateCodeFile()
+void generateIntermediateCodeFile(FILE *intermediate_file)
 {
+    fprintf(intermediate_file, "#include <stdio.h> \n %s", program.first->information);
+}
 
-    //fprintf("intermdiate.c", "#include <stdio.h>");
+void compile()
+{
     char generateAsm[100];
     sprintf(generateAsm, "gcc -S intermediate.c -o intermediate.s"); //generate Asm
 
@@ -64,6 +70,13 @@ extern void generateIntermediateCodeFile()
     if (system(compileAsm) != 0)
     {
         fprintf(stderr, "Error while compiling intermediate file");
+        exit(1);
+    }
+    char executableAsm[100];
+    sprintf(executableAsm, "gcc compiled.o -o compiled"); //executable file generated
+    if (system(executableAsm) != 0)
+    {
+        fprintf(stderr, "Error while exec intermediate file");
         exit(1);
     }
 }
