@@ -84,52 +84,52 @@ params
 args 
     : assignment 
     | assignment COMMA args 
-    | ALPHA OPEN_P args CLOSE_P
+    | ALPHA OPEN_P args CLOSE_P {printf("%s()\n",$1);}
     | /* lambda */
     ;
 
 
 program 
-    : var END program  {printf(";\n");}
+    : var END program 
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program 
-    | RETURN assignment END 
-    | STDIN OPEN_P ALPHA CLOSE_P END program 
-    | STDOUT OPEN_P out CLOSE_P END program  
+    | RETURN assignment END {printf("return ;\n");}
+    | STDIN OPEN_P ALPHA CLOSE_P END program {printf("scanchar (%s);\n",$3);}
+    | STDOUT OPEN_P out CLOSE_P END program  {printf("printf();\n");} 
     | /* lambda */  
     ;
 
 out 
-    : ALPHA out
-    | ESCAPE ALPHA ESCAPE out
+    : ALPHA out {printf("%s\n",$1);}
+    | ESCAPE ALPHA ESCAPE out {printf("'%s'\n",$2);}
     | /* lambda */
     ; 
 
 var
-    : INT ALPHA creation {printf("int %s\n",$2);}
-    | STRING ALPHA ASSIGN assignment
-    | ALPHA botch 
+    : INT ALPHA creation {printf("int %s\n;\n",$2); }
+    | STRING ALPHA ASSIGN assignment {printf("char * %s = \n;\n",$2); }
+    | ALPHA botch {printf("BOTCH %s\n;\n",$1); }
     ; 
 creation
     :ASSIGN action {printf("=\n");}
     |/*lambda*/ 
     ;
 botch
-    : ASSIGN action
-    | OPEN_P  args CLOSE_P     
+    : ASSIGN action {printf("=\n");}
+    | OPEN_P  args CLOSE_P {printf("()\n");}     
     ;
 
 action
     : assignment call
-    | ALPHA OPEN_P args CLOSE_P
+    | ALPHA OPEN_P args CLOSE_P {printf("%s()\n",$1);}
     ;
 
 call
-    : OP assignment
+    : OP assignment call {printf("%s\n",$1);}
     | /* lambda */
     ;
-
+    
 assignment
-    : ALPHA 
+    : ALPHA {printf("%s\n",$1);}
     | DIGIT {printf("%d\n",$1);}
     ;
 
