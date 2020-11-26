@@ -8,5 +8,5 @@ extern FILE *yyin; //Set yyin for yacc to parse file
 /* Generates Assembly code */
 void generateIntermediateCodeFile(FILE *file);
 
-void compile();
+void compile(char *name);
 #endif

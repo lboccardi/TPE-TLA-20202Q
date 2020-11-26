@@ -19,7 +19,11 @@ int main(int argc, char *argv[])
     }
 
     char *input_file_path = argv[1];
-
+    char *name = "executable";
+    if (argc != 2)
+    {
+        name = argv[2];
+    }
     FILE *clux_file = fopen(input_file_path, "r"); //Read clux file
     if (clux_file == NULL)
     {
@@ -40,8 +44,8 @@ int main(int argc, char *argv[])
             exit(1);
         }
         generateIntermediateCodeFile(intermediate_file);
-        compile();
         fclose(intermediate_file);
+        compile(name);
     }
 
     fclose(yyin);
@@ -54,29 +58,14 @@ void generateIntermediateCodeFile(FILE *intermediate_file)
     fprintf(intermediate_file, "#include <stdio.h> \n %s", program.first->information);
 }
 
-void compile()
+void compile(char *name)
 {
-    char generateAsm[100];
-    sprintf(generateAsm, "gcc -S intermediate.c -o intermediate.s"); //generate Asm
+    char generateExec[100];
+    sprintf(generateExec, "gcc intermediate.c -o %s", name); //generate Exec
 
-    if (system(generateAsm) != 0)
+    if (system(generateExec) != 0)
     {
-        fprintf(stderr, "Error while generatig Assembler code from intermediate file");
-        exit(1);
-    }
-
-    char compileAsm[100];
-    sprintf(compileAsm, "gcc -c intermediate.s -o compiled"); //compiled file generated
-    if (system(compileAsm) != 0)
-    {
-        fprintf(stderr, "Error while compiling intermediate file");
-        exit(1);
-    }
-    char executableAsm[100];
-    sprintf(executableAsm, "gcc compiled.o -o compiled"); //executable file generated
-    if (system(executableAsm) != 0)
-    {
-        fprintf(stderr, "Error while exec intermediate file");
+        fprintf(stderr, "Error while generating executable file");
         exit(1);
     }
 }
