@@ -76,8 +76,8 @@ start
     ;
 
 function
-    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { $$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5);}
-    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);}
+    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { $$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5); freeVars();}
+    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);freeVars();}
     ;
 
 type
@@ -133,22 +133,22 @@ out
     ; 
 
 var
-    : INT ALPHA ASSIGN DIGIT operation              { $$ = malloc(strlen("int")+strlen($2)+6+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s","int",$2,$4,$5); add($$,true); addVar($2, KIND_INT,1);} 
-    | STRING ALPHA ASSIGN STRING_VALUE              { $$ = malloc(strlen("char *")+strlen($2)+6+strlen($4)); $4[strlen($4) - 1] = 0;sprintf($$,"%s %s=\"%s\"","char *",$2,$4+1); add($$,true); addVar($2, KIND_STRING,1);} 
-    | INT ALPHA ARRAY DIGIT ASSIGN digit_array      { if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","int",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
-    | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array   { if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","char *",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
+    : INT ALPHA ASSIGN DIGIT operation              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("int")+strlen($2)+6+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s","int",$2,$4,$5); add($$,true); addVar($2, KIND_INT,1);} 
+    | STRING ALPHA ASSIGN STRING_VALUE              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("char *")+strlen($2)+6+strlen($4)); $4[strlen($4) - 1] = 0;sprintf($$,"%s %s=\"%s\"","char *",$2,$4+1); add($$,true); addVar($2, KIND_STRING,1);} 
+    | INT ALPHA ARRAY DIGIT ASSIGN digit_array      { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","int",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
+    | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array   { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","char *",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
     
-    | INT ALPHA                                 { $$ = malloc(strlen("int")+strlen($2)+2); sprintf($$,"%s %s","int",$2);add($$,true); addVar($2, KIND_INT,1);}
-    | STRING ALPHA                              { $$ = malloc(strlen("char *")+strlen($2)+2); sprintf($$,"%s %s","char *",$2);add($$,true); addVar($2, KIND_STRING,1);}
-    | INT ALPHA ARRAY DIGIT                     { $$ = malloc(strlen("int")+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","int",$2,$4);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
-    | STRING ALPHA ARRAY DIGIT                  { $$ = malloc(strlen("char *")+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char *",$2,$4);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
+    | INT ALPHA                                 { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("int")+strlen($2)+2); sprintf($$,"%s %s","int",$2);add($$,true); addVar($2, KIND_INT,1);}
+    | STRING ALPHA                              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("char *")+strlen($2)+2); sprintf($$,"%s %s","char *",$2);add($$,true); addVar($2, KIND_STRING,1);}
+    | INT ALPHA ARRAY DIGIT                     {if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","int",$2,$4);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
+    | STRING ALPHA ARRAY DIGIT                  {if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char *",$2,$4);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
    
     | ALPHA ASSIGN DIGIT                        { if(!isOfKind($1,KIND_INT)){yyerror("Variable should be int type.");YYABORT;}$$ = malloc(strlen($1)+strlen($3)+5); sprintf($$, "%s=%s", $1, $3);add($$,true);}
     | ALPHA ASSIGN STRING_VALUE                 { if(!isOfKind($1,KIND_STRING)){yyerror("Variable should be string type.");YYABORT;}$$ = malloc(strlen($1)+strlen($3)+5); $3[strlen($3) - 1] = 0;sprintf($$, "%s=\"%s\"", $1, $3+1); add($$,true);}
     | ALPHA ASSIGN assignment operation         { if(!isOfKind($1,KIND_INT)){yyerror("Variable should be int type."); YYABORT;}$$ = malloc(strlen($1)+strlen($3)+strlen($4)+5);  sprintf($$, "%s=%s%s", $1, $3, $4); add($$,true);}
 
-    | INT ALPHA ASSIGN call                     { if(!functionReturnsKind($4, KIND_INT)){yyerror("Function should return type int"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s","int",$2,$4); add($$,true); addVar($2, KIND_INT,1);}
-    | STRING ALPHA ASSIGN call                  { if(!functionReturnsKind($4, KIND_STRING)){yyerror("Function should return type string"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s","char *",$2,$4); add($$,true); addVar($2, KIND_STRING,1);}
+    | INT ALPHA ASSIGN call                     { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind($4, KIND_INT)){yyerror("Function should return type int"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s","int",$2,$4); add($$,true); addVar($2, KIND_INT,1);}
+    | STRING ALPHA ASSIGN call                  { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind($4, KIND_STRING)){yyerror("Function should return type string"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s","char *",$2,$4); add($$,true); addVar($2, KIND_STRING,1);}
     | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);add($$,true);}
 
     | ALPHA ARRAY DIGIT ASSIGN DIGIT            { if (!isOfKind($1, KIND_ARRAY_INT)){yyerror("Variable should de string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
