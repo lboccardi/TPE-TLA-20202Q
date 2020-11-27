@@ -3,6 +3,8 @@ i$ F welcome(i$n){
     R 0.
 }
 S{
-    welcome(2).
+    i$a = 1.
+    i$b = 2.
+    i$c = a+b.
     R 0.
 }

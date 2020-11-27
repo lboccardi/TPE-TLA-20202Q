@@ -141,7 +141,8 @@ out
     ; 
 
 var
-    : INT ALPHA ASSIGN DIGIT operation              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("int")+strlen($2)+6+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s","int",$2,$4,$5); add($$,true); addVar($2, KIND_INT,1);} 
+    : INT ALPHA ASSIGN DIGIT operation              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+6+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s","int",$2,$4,$5); add($$,true); addVar($2, KIND_INT,1);}
+    | INT ALPHA ASSIGN ALPHA operation              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind($4,KIND_INT)){yyerror("Variable should be int type."); YYABORT;}$$ = malloc(strlen("int")+strlen($2)+6+strlen($4)+strlen($5)); sprintf($$,"%s %s=%s%s","int",$2,$4,$5); add($$,true); addVar($2, KIND_INT,1);} 
     | STRING ALPHA ASSIGN STRING_VALUE              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(strlen("char *")+strlen($2)+6+strlen($4)); $4[strlen($4) - 1] = 0;sprintf($$,"%s %s=\"%s\"","char *",$2,$4+1); add($$,true); addVar($2, KIND_STRING,1);} 
     | INT ALPHA ARRAY DIGIT ASSIGN digit_array      { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("int")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","int",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
     | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array   { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","char *",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
@@ -159,13 +160,14 @@ var
     | STRING ALPHA ASSIGN call                  { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind($4, KIND_STRING)){yyerror("Function should return type string"); YYABORT;} $$ = malloc(strlen("char *")+strlen($2)+3+strlen($4)); sprintf($$,"%s %s=%s","char *",$2,$4); add($$,true); addVar($2, KIND_STRING,1);}
     | ALPHA ASSIGN call                         { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$,"%s=%s",$1,$3);add($$,true);}
 
-    | ALPHA ARRAY DIGIT ASSIGN DIGIT            { if (!isOfKind($1, KIND_ARRAY_INT)){yyerror("Variable should de string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
-    | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE     { if (!isOfKind($1, KIND_ARRAY_STRING)){yyerror("Variable should de string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); $5[strlen($5) - 1] = 0; sprintf($$, "%s[%s]=\"%s\"", $1, $3, $5+1); add($$, true); }
+    | ALPHA ARRAY DIGIT ASSIGN DIGIT            { if (!isOfKind($1, KIND_ARRAY_INT)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
+    | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE     { if (!isOfKind($1, KIND_ARRAY_STRING)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); $5[strlen($5) - 1] = 0; sprintf($$, "%s[%s]=\"%s\"", $1, $3, $5+1); add($$, true); }
      
     ; 
     
 operation
     : op DIGIT operation   { $$ = malloc(strlen($1)+ 1 + strlen($2) + strlen($3)); sprintf($$,"%s%s%s",$1,$2,$3 ); add($$,true);}
+    | op ALPHA operation   { if (!isOfKind($2, KIND_INT)){yyerror("Variable should be int type"); YYABORT;}$$ = malloc(strlen($1)+ 1 + strlen($2) + strlen($3)); sprintf($$,"%s%s%s",$1,$2,$3 ); add($$,true);}
     | /* lambda */         { $$ = "";}
     ;
     
