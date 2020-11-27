@@ -1,9 +1,6 @@
+i$ F function(i$ p1,i$p2, s$p3){R 0.}
 S{
-    i$a=0.
-    (a<4)?-->{
-    G(str,30).
-    P['str'].
-    a=a+1.
-    }
+    s$b='hola'. 
+    G(a,30). 
     R 0.
 }

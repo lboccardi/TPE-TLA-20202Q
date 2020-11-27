@@ -118,30 +118,30 @@ void addVar(char *name, KIND kind,int size)
     var_list.last = aux;
     aux->next = NULL;
 }
-// void addArgs(funct * f, char * args){
-//     char *curr = strchr(args,',');
-//     int curr_amount = 0;
-//     while (curr != NULL){
-//         if(strncmp(args,"int",3)==0){
-//             f->args[curr_amount++] = KIND_INT;
-//         }else{
-//             f->args[curr_amount++] = KIND_STRING;
-//         }
-//         curr = strchr(curr+1,',');
-//     }
-    
-//     if ((curr_amount+1) != amount ) {
-//         return true;
-//     }
+void addArgs(funct * f, char * args){
+    char *curr = strchr(args,',');
+    int curr_amount = 0;
+    while (curr != NULL){
+        if(strncmp(args,"int",3)==0){
+            f->args[curr_amount++] = KIND_INT;
+            printf("agregué un int\n");
+        }else{
+            f->args[curr_amount++] = KIND_STRING;
+            printf("agregué un string\n");
+        }
+        curr = strchr(args,',');
+        args=curr+2;
+    }
+    f->args_count= curr_amount;
+    printf("agregué %d\n",curr_amount);
+}
 
-//     return false;
-// }
-void addFunction(char *name, KIND kind,int size){
+void addFunction(char *name, KIND kind,char * args){
     funct *aux = malloc(sizeof(funct));
     /** save name and kind**/
     aux->name = name;
     aux->kind=kind; 
-    //addArgs(aux,args);
+    addArgs(aux,args);
     
     if (function_list.first == NULL)
     {
@@ -369,4 +369,20 @@ bool functionReturnsKind(char * s, KIND kind){
         curr = aux;
     }
     return false;
+}
+
+bool checkIfVarExists(char * name){
+    var *curr = var_list.first;
+    while (curr != NULL)
+    {
+
+        if (strcmp(curr->name, name) == 0)
+        {
+            return true; 
+        }
+
+        curr = curr->next; 
+    }
+    return false; 
+            
 }

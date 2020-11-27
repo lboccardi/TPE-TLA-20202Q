@@ -76,8 +76,8 @@ start
     ;
 
 function
-    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { $$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,1);}
-    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,1);}
+    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { $$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5);}
+    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);}
     ;
 
 type
@@ -112,7 +112,7 @@ program
     | /* lambda */                                          { $$ = "";}
     ;
 get:
-    | STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END    { $$ = malloc(2*strlen($3)+2*strlen($5)+ 30); sprintf($$,"char %s[%s];\nfgets(%s,%s,stdin);\n",$3,$5,$3,$5); add($$,true); addVar($3, KIND_STRING,1);}
+    | STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END    { if(checkIfVarExists($3)){yyerror("That variable already exists, please choose another name"); YYABORT;}  $$ = malloc(2*strlen($3)+2*strlen($5)+ 30); sprintf($$,"char %s[%s];\nfgets(%s,%s,stdin);\n",$3,$5,$3,$5); add($$,true); addVar($3, KIND_STRING,1);}
     ;
     
 out 

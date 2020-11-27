@@ -54,7 +54,7 @@ typedef struct funct
     char *name;
     KIND kind;
     KIND args[50];
-    int args_cound;
+    int args_count;
     struct funct *next;
 } funct;
 
@@ -77,7 +77,7 @@ void freeResources(bool error);
 
 void addVar(char *name, KIND kind,int size);
 
-void addFunction(char *name, KIND kind,int size);
+void addFunction(char *name, KIND kind,char * args);
 
 char *printfParser(char *s);
 
@@ -92,4 +92,7 @@ unsigned int guess_data_type(char * s);
 bool are_comparable(unsigned int v1, unsigned int v2);
 
 bool functionReturnsKind(char * s, KIND kind);
+
+bool checkIfVarExists(char * name); 
+
 #endif
