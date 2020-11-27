@@ -5,6 +5,7 @@
 
 code program;
 variables var_list;
+functions function_list; 
 
 void initialize()
 {
@@ -39,11 +40,21 @@ void freeVars()
         curr = aux;
     }
 }
-
+void freeFuncts()
+{
+    funct *curr = function_list.first;
+    while (curr != NULL)
+    {
+        funct *aux = curr->next;
+        free(curr);
+        curr = aux;
+    }
+}
 void freeResources(bool error)
 {
     node *curr = program.first;
     freeVars();
+    freeFuncts();
     if (curr == NULL)
     {
         return;
@@ -76,12 +87,12 @@ void freeResources(bool error)
         program.last = curr;
     }
 }
-void addVar(char *name, char *type)
+void addVar(char *name, KIND kind,int size)
 {
     var *aux = malloc(sizeof(var));
     /** save type **/
     char *aux_type;
-    if (strcmp(type, "int") == 0)
+    if (kind == KIND_INT || kind == KIND_ARRAY_INT)
     {
         aux_type = "%d";
     }
@@ -90,8 +101,11 @@ void addVar(char *name, char *type)
         aux_type = "%s";
     }
     strcpy(aux->type, aux_type);
-    /** save name **/
+    /** save name and kind**/
     aux->name = name;
+    aux->kind=kind;
+    aux->amount = size;
+    
     if (var_list.first == NULL)
     {
         var_list.first = aux;
@@ -104,6 +118,25 @@ void addVar(char *name, char *type)
     aux->next = NULL;
 }
 
+void addFunction(char *name, KIND kind,int size){
+    funct *aux = malloc(sizeof(funct));
+    /** save name and kind**/
+    aux->name = name;
+    aux->kind=kind;
+    aux->params = size;
+    
+    if (function_list.first == NULL)
+    {
+        function_list.first = aux;
+    }
+    else
+    {
+        function_list.last->next = aux;
+    }
+    function_list.last = aux;
+    aux->next = NULL;
+}
+
 char *printfParser(char *s)
 { /** hola ''a12b5'' como estas --> \"hola %d como estas\",a12b5  **/
 
@@ -111,7 +144,7 @@ char *printfParser(char *s)
 
     ans[0] = '\"';
 
-    int i = 0, j = 1, k = 0;
+    int i = 0, j = 1, k = 0, array_index = 0;
     char name[strlen(s)];
     name[0] = 0;
     while (s[i] != '\0')
@@ -140,7 +173,20 @@ char *printfParser(char *s)
             int pointer = k;
             while (s[i] != '\'' && s[i] != '\0')
             {
-                name[k++] = s[i++];
+                /* Si la variable era un array */
+                if (s[i] == '_') {
+                    /* Salteo el '_' */
+                    i++;
+                    array_index = 0;
+                    /* Me guardo los digits */
+                    while(s[i] > '0' && s[i] < '9') {
+                        array_index += 10*array_index + s[i++] - '0'; 
+                    }
+                    /* Cierre */
+                } else {
+                    /* Si no es un array */
+                    name[k++] = s[i++];
+                }
             }
             i++;
             name[k] = 0;
@@ -152,6 +198,9 @@ char *printfParser(char *s)
 
                 if (strcmp(curr->name, name + pointer) == 0)
                 {
+                    if(curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING ){
+                        
+                    }
                     strcpy(ans + j, curr->type);
                     j += 2;
                     flag = false;
@@ -160,10 +209,8 @@ char *printfParser(char *s)
             }
             if (flag)
             {
-                s[strlen(s) - 1] = 0;
-                sprintf(ans, "\"%s\"", s + 1);
-
-                return ans;
+                free(ans);
+                return NULL;
             }
         }
     }
@@ -175,7 +222,7 @@ char *printfParser(char *s)
     return ans;
 }
 
-bool isString(char *s)
+bool isOfKind(char *s,KIND kind)
 {
     var *curr = var_list.first;
     while (curr != NULL)
@@ -184,11 +231,66 @@ bool isString(char *s)
 
         if (strcmp(curr->name, s) == 0)
         {
-            if (strcmp(curr->type, "%d") == 0)
+            if (curr->kind == kind)
             {
-                return false;
+                return true;
             }
+            return false;
+        }
+        curr = aux;
+    }
+    return false;
+}
+
+bool array_is_incorrect (const char* str, int amount) {
+    char *curr = strchr(str,',');
+    int curr_amount = 0;
+    while (curr != NULL){
+        curr_amount++;
+        if (curr_amount > amount) {
             return true;
+        }
+        curr = strchr(curr+1,',');
+    }
+    
+    if ((curr_amount+1) != amount ) {
+        return true;
+    }
+
+    return false;
+}
+bool enoughSpace(const char* s, int amount){
+     var *curr = var_list.first;
+    while (curr != NULL)
+    {
+        var *aux = curr->next;
+
+        if (strcmp(curr->name, s) == 0)
+        {
+            if (curr->amount > amount)
+            {
+                return true;
+            }
+            return false;
+        }
+        curr = aux;
+    }
+    return false;
+}
+
+bool functionReturnsKind(char * s, KIND kind){
+    funct *curr = function_list.first;
+    while (curr != NULL)
+    {
+        funct *aux = curr->next;
+
+        if (strcmp(curr->name, s) == 0)
+        {
+            if (curr->kind == kind)
+            {
+                return true;
+            }
+            return false;
         }
         curr = aux;
     }

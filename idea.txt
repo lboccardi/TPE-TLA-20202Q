@@ -24,7 +24,15 @@ Bloque Do-While (repetici´on hasta condici´on).
 Extra - Array 
 i$array_5=1,2,3,4,5. --> int array[5];
 array_0=0. --> array[0] = 0;
-array_2=2.
+
+i$array_5 = 1,2,3,4,5.
+
+i$array_5.
+array = 1,2,3,4,5.
+array_1=2.
+
+array_2=2.  /alpha array digit ASSIGN digit --> checkear que alpha sea int 
+            /alpha array digit ASSIGN string_value --> checkear que alpha sea string 
 
 
 
@@ -87,3 +95,9 @@ S{
     P[hola 'a' 'b'\n]. 
     R b.
 }
+
+
+
+/*** ****/
+s$a = hola. --> futuro
+

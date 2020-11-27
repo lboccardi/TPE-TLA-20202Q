@@ -1,11 +1,6 @@
 S{
-    s$a. 
-    a='chau'. 
-    i$b. 
-    b=2. 
-    (b!~3)?-->{
-        b=b+1.
-    }
-    P[hola 'a' 'b'\n]. 
+    i$b=1. 
+    i$a_2=1,2.
+    P[hola 'b'\n].
     R b.
 }
