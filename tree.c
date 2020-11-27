@@ -87,6 +87,7 @@ void freeResources(bool error)
         program.last = curr;
     }
 }
+
 void addVar(char *name, KIND kind,int size)
 {
     var *aux = malloc(sizeof(var));
@@ -117,13 +118,30 @@ void addVar(char *name, KIND kind,int size)
     var_list.last = aux;
     aux->next = NULL;
 }
+// void addArgs(funct * f, char * args){
+//     char *curr = strchr(args,',');
+//     int curr_amount = 0;
+//     while (curr != NULL){
+//         if(strncmp(args,"int",3)==0){
+//             f->args[curr_amount++] = KIND_INT;
+//         }else{
+//             f->args[curr_amount++] = KIND_STRING;
+//         }
+//         curr = strchr(curr+1,',');
+//     }
+    
+//     if ((curr_amount+1) != amount ) {
+//         return true;
+//     }
 
+//     return false;
+// }
 void addFunction(char *name, KIND kind,int size){
     funct *aux = malloc(sizeof(funct));
     /** save name and kind**/
     aux->name = name;
     aux->kind=kind; 
-    aux->params = size;
+    //addArgs(aux,args);
     
     if (function_list.first == NULL)
     {
@@ -256,6 +274,38 @@ bool isOfKind(char *s,KIND kind)
             return false;
         }
         curr = aux;
+    }
+    return false;
+}
+
+unsigned int guess_data_type(char * s) {
+    switch(*s) {
+        /* Si el primer caracter indica que es un String */
+        case '\'':
+        case '\"':
+            return STRING_LITERAL;
+        /* Si el primer caracter es un dígito */    
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+            return INT_LITERAL;
+        /* Si no, era una variable o era otra comparación del estilo "(? ? ?)" */
+        default:
+            if(isOfKind(s, KIND_STRING))    { return STRING_VAR; }
+            if(isOfKind(s, KIND_INT))       { return INT_VAR; }
+            return DATA_TYPE_NONE;
+    }
+}
+
+bool are_comparable(unsigned int v1, unsigned int v2) {
+    switch(v1) {
+        case STRING_LITERAL:
+        case STRING_VAR:
+            return (v2 == STRING_LITERAL || v2 == STRING_VAR);
+        case INT_LITERAL:
+        case INT_VAR:
+            return (v2 == INT_LITERAL || v2 == INT_VAR);
+        default:
+            break;    
     }
     return false;
 }

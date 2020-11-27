@@ -1,6 +1,9 @@
 S{
-    i$b=1. 
-    s$a_3='holis','chau','paco'.
-    P[hola 'b' 'a_2'\n].
-    R b.
+    i$a=0.
+    (a<4)?-->{
+    G(str,30).
+    P['str'].
+    a=a+1.
+    }
+    R 0.
 }

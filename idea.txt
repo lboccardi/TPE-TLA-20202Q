@@ -96,8 +96,13 @@ S{
     R b.
 }
 
-
+S{
+    i$b=1. 
+    s$a='hola'.
+    (a<'pero')?->{P[yes].}
+    P[hola 'b'\n].
+    R b.
+}
 
 /*** ****/
-s$a = hola. --> futuro
-
+G(str,300). -->  char str[300]; fgets(str,300,stdin);

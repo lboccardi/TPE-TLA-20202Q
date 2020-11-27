@@ -9,6 +9,14 @@ typedef enum KIND{
     KIND_ARRAY_STRING,
 }KIND;
 
+typedef enum DATA_TYPE {
+    DATA_TYPE_NONE,
+    STRING_LITERAL,
+    INT_LITERAL,
+    STRING_VAR,
+    INT_VAR
+} DATA_TYPE;
+
 typedef struct node
 {
     char *information;
@@ -40,11 +48,13 @@ typedef struct variables
     var *last;
 
 } variables;
+
 typedef struct funct
 {
     char *name;
     KIND kind;
-    int params;
+    KIND args[50];
+    int args_cound;
     struct funct *next;
 } funct;
 
@@ -76,5 +86,10 @@ bool enoughSpace(const char* str, int amount);
 bool array_is_incorrect (const char* str, int amount);
 
 bool isOfKind(char *s,KIND kind);
+
+unsigned int guess_data_type(char * s);
+
+bool are_comparable(unsigned int v1, unsigned int v2);
+
 bool functionReturnsKind(char * s, KIND kind);
 #endif

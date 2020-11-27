@@ -28,7 +28,7 @@ void yyerror(const char *str)
 }
 
 /* Non Terminals */ 
-%type<stringValue> rule type op start arrow operator params out function program assignment operation var call args digit_array alpha_array;
+%type<stringValue> rule type op start arrow operator params out get function program assignment operation var call args digit_array alpha_array;
 
 /* Terminals */ 
 %token<stringValue>  DIGIT ALPHA SPACE_ALPHA STRING_VALUE;
@@ -103,15 +103,18 @@ call
     ;
 
 program 
-    : var END program                           { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
-    | call END program                          { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
+    : var END program                                       { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
+    | call END program                                      { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program {$$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen($7)+strlen($9)+strlen($11)); sprintf($$,"%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11); add($$,true);}
-    | RETURN assignment END                     { $$ = malloc(strlen($2) +9); sprintf($$, "return %s;", $2); add($$,true);} 
-    | STDIN OPEN_P ALPHA CLOSE_P END program    { $$ = malloc(strlen($3)+strlen($6)+ 11); sprintf($$,"gets(%s);\n%s",$6,$3); add($$,true);}
-    | STDOUT out END program                    { char * print = printfParser($2); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
-    | /* lambda */                              { $$ = "";}
+    | RETURN assignment END                                 { $$ = malloc(strlen($2) +9); sprintf($$, "return %s;", $2); add($$,true);} 
+    | get program                                           { $$ = malloc(strlen($1)+strlen($2)+5); sprintf($$,"%s %s",$1,$2); add($$, true);}
+    | STDOUT out END program                                { char * print = printfParser($2); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
+    | /* lambda */                                          { $$ = "";}
     ;
-
+get:
+    | STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END    { $$ = malloc(2*strlen($3)+2*strlen($5)+ 30); sprintf($$,"char %s[%s];\nfgets(%s,%s,stdin);\n",$3,$5,$3,$5); add($$,true); addVar($3, KIND_STRING,1);}
+    ;
+    
 out 
     : SPACE_ALPHA out                   { $$ = malloc(1 + strlen($1) + strlen($2)); sprintf($$, "%s%s", $1, $2); add($$,true);}
     | ESCAPE SPACE_ALPHA ESCAPE out     { $$ = malloc(3 + strlen($2) + strlen($4)); sprintf($$, "\'%s\'%s", $2, $4); add($$,true);}
@@ -153,21 +156,36 @@ operation
 assignment
     : ALPHA         {$$ = $1;}
     | DIGIT         {$$ = $1;}
-    | STRING_VALUE  {$$ = $1;}
+    | STRING_VALUE  {
+        $1[strlen($1) - 1]  = '\"';
+        $1[0]               = '\"';
+        $$ = $1;
+        }
     ;
 
 alpha_array
     : STRING_VALUE COMMA alpha_array    { $$ = malloc(strlen($1)+5+strlen($3)); $1[strlen($1) - 1] = 0; sprintf($$, "\"%s\",%s", $1+1,$3); add($$,true);}
     | STRING_VALUE                      { $$ = malloc(strlen($1)+5); $1[strlen($1) - 1] = 0; sprintf($$, "\"%s\"", $1+1); add($$,true);}
     ;
+
 digit_array
     : DIGIT COMMA digit_array   { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$, "%s,%s", $1,$3); add($$,true);}
     | DIGIT                     { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); add($$,true);}     
     ; 
     
 rule
-    : OPEN_P rule operator rule CLOSE_P { $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 3); sprintf($$, "(%s%s%s)", $2, $3, $4); add($$,true);}
-    | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); add($$,true);}
+    : OPEN_P rule operator rule CLOSE_P {   $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 3);
+                                            unsigned int v1_type, v2_type;
+                                            if ( (v1_type = guess_data_type($2)) != DATA_TYPE_NONE && (v2_type = guess_data_type($4)) != DATA_TYPE_NONE) {
+                                                if(!are_comparable(v1_type, v2_type)) {
+                                                    yyerror("Uncomparable data types");
+                                                    YYABORT;
+                                                }
+                                            }
+                                            sprintf($$, "(%s%s%s)", $2, $3, $4);
+                                            add($$,true);}
+
+    | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); add($$, true);}
     ;
 
 arrow

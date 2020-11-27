@@ -3,8 +3,22 @@ Terminals unused in grammar
     ELSE
 
 
-State 54 conflicts: 1 reduce/reduce
-State 55 conflicts: 1 reduce/reduce
+Rules useless in parser due to conflicts
+
+   22 get: %empty
+
+
+State 8 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 22 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 43 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 46 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 56 conflicts: 1 reduce/reduce
+State 57 conflicts: 1 reduce/reduce
+State 87 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 112 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 113 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 147 conflicts: 7 shift/reduce, 1 reduce/reduce
+State 149 conflicts: 7 shift/reduce, 1 reduce/reduce
 
 
 Grammar
@@ -35,110 +49,113 @@ Grammar
    16        | call END program
    17        | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
    18        | RETURN assignment END
-   19        | STDIN OPEN_P ALPHA CLOSE_P END program
+   19        | get program
    20        | STDOUT out END program
    21        | %empty
 
-   22 out: SPACE_ALPHA out
-   23    | ESCAPE SPACE_ALPHA ESCAPE out
-   24    | %empty
-   25    | ALPHA out
-   26    | ESCAPE ALPHA ESCAPE out
+   22 get: %empty
+   23    | STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END
 
-   27 var: INT ALPHA ASSIGN DIGIT operation
-   28    | STRING ALPHA ASSIGN STRING_VALUE
-   29    | INT ALPHA ARRAY DIGIT ASSIGN digit_array
-   30    | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array
-   31    | INT ALPHA
-   32    | STRING ALPHA
-   33    | INT ALPHA ARRAY DIGIT
-   34    | STRING ALPHA ARRAY DIGIT
-   35    | ALPHA ASSIGN DIGIT
-   36    | ALPHA ASSIGN STRING_VALUE
-   37    | ALPHA ASSIGN assignment operation
-   38    | INT ALPHA ASSIGN call
-   39    | STRING ALPHA ASSIGN call
-   40    | ALPHA ASSIGN call
-   41    | ALPHA ARRAY DIGIT ASSIGN DIGIT
-   42    | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE
+   24 out: SPACE_ALPHA out
+   25    | ESCAPE SPACE_ALPHA ESCAPE out
+   26    | %empty
+   27    | ALPHA out
+   28    | ESCAPE ALPHA ESCAPE out
 
-   43 operation: op DIGIT operation
-   44          | %empty
+   29 var: INT ALPHA ASSIGN DIGIT operation
+   30    | STRING ALPHA ASSIGN STRING_VALUE
+   31    | INT ALPHA ARRAY DIGIT ASSIGN digit_array
+   32    | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array
+   33    | INT ALPHA
+   34    | STRING ALPHA
+   35    | INT ALPHA ARRAY DIGIT
+   36    | STRING ALPHA ARRAY DIGIT
+   37    | ALPHA ASSIGN DIGIT
+   38    | ALPHA ASSIGN STRING_VALUE
+   39    | ALPHA ASSIGN assignment operation
+   40    | INT ALPHA ASSIGN call
+   41    | STRING ALPHA ASSIGN call
+   42    | ALPHA ASSIGN call
+   43    | ALPHA ARRAY DIGIT ASSIGN DIGIT
+   44    | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE
 
-   45 assignment: ALPHA
-   46           | DIGIT
-   47           | STRING_VALUE
+   45 operation: op DIGIT operation
+   46          | %empty
 
-   48 alpha_array: STRING_VALUE COMMA alpha_array
-   49            | STRING_VALUE
+   47 assignment: ALPHA
+   48           | DIGIT
+   49           | STRING_VALUE
 
-   50 digit_array: DIGIT COMMA digit_array
-   51            | DIGIT
+   50 alpha_array: STRING_VALUE COMMA alpha_array
+   51            | STRING_VALUE
 
-   52 rule: OPEN_P rule operator rule CLOSE_P
-   53     | assignment
+   52 digit_array: DIGIT COMMA digit_array
+   53            | DIGIT
 
-   54 arrow: WHILE
-   55      | IF
+   54 rule: OPEN_P rule operator rule CLOSE_P
+   55     | assignment
 
-   56 operator: op
-   57         | L
-   58         | G
-   59         | LE
-   60         | GE
-   61         | EQ
-   62         | NE
-   63         | NOT
-   64         | OR
-   65         | AND
+   56 arrow: WHILE
+   57      | IF
 
-   66 op: PLUS
-   67   | MINUS
-   68   | DIV
-   69   | TIMES
+   58 operator: op
+   59         | L
+   60         | G
+   61         | LE
+   62         | GE
+   63         | EQ
+   64         | NE
+   65         | NOT
+   66         | OR
+   67         | AND
+
+   68 op: PLUS
+   69   | MINUS
+   70   | DIV
+   71   | TIMES
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    DIGIT <stringValue> (258) 27 29 30 33 34 35 41 42 43 46 50 51
-    ALPHA <stringValue> (259) 3 4 7 8 14 19 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 45
-    SPACE_ALPHA <stringValue> (260) 22 23
-    STRING_VALUE <stringValue> (261) 28 36 42 47 48 49
-    INT <stringValue> (262) 3 5 27 29 31 33 38
-    STRING <stringValue> (263) 4 6 28 30 32 34 39
-    PLUS <stringValue> (264) 66
-    MINUS <stringValue> (265) 67
-    TIMES <stringValue> (266) 69
-    DIV <stringValue> (267) 68
-    END (268) 15 16 18 19 20
-    OPEN_P (269) 3 4 14 17 19 52
-    CLOSE_P (270) 3 4 14 17 19 52
+    DIGIT <stringValue> (258) 23 29 31 32 35 36 37 43 44 45 48 52 53
+    ALPHA <stringValue> (259) 3 4 7 8 14 23 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 47
+    SPACE_ALPHA <stringValue> (260) 24 25
+    STRING_VALUE <stringValue> (261) 30 38 44 49 50 51
+    INT <stringValue> (262) 3 5 29 31 33 35 40
+    STRING <stringValue> (263) 4 6 30 32 34 36 41
+    PLUS <stringValue> (264) 68
+    MINUS <stringValue> (265) 69
+    TIMES <stringValue> (266) 71
+    DIV <stringValue> (267) 70
+    END (268) 15 16 18 20 23
+    OPEN_P (269) 3 4 14 17 23 54
+    CLOSE_P (270) 3 4 14 17 23 54
     CONDITIONAL (271) 17
     EXEC (272) 1 3 4 17
     END_EXEC (273) 1 3 4 17
-    IF (274) 55
+    IF (274) 57
     ELSE (275)
-    ESCAPE (276) 23 26
-    WHILE (277) 54
-    L (278) 57
-    G (279) 58
-    LE (280) 59
-    GE (281) 60
-    EQ (282) 61
-    NE (283) 62
-    NOT (284) 63
-    OR (285) 64
-    AND (286) 65
-    ASSIGN (287) 27 28 29 30 35 36 37 38 39 40 41 42
+    ESCAPE (276) 25 28
+    WHILE (277) 56
+    L (278) 59
+    G (279) 60
+    LE (280) 61
+    GE (281) 62
+    EQ (282) 63
+    NE (283) 64
+    NOT (284) 65
+    OR (285) 66
+    AND (286) 67
+    ASSIGN (287) 29 30 31 32 37 38 39 40 41 42 43 44
     RETURN (288) 18
     MAIN (289) 1
-    STDIN (290) 19
+    STDIN (290) 23
     STDOUT (291) 20
     FUNCTION (292) 3 4
-    COMMA (293) 8 11 48 50
-    ARRAY (294) 29 30 33 34 41 42
+    COMMA (293) 8 11 23 50 52
+    ARRAY (294) 31 32 35 36 43 44
 
 
 Nonterminals, with rules where they appear
@@ -162,40 +179,43 @@ Nonterminals, with rules where they appear
         on right: 11 14
     call <stringValue> (46)
         on left: 14
-        on right: 12 16 38 39 40
+        on right: 12 16 40 41 42
     program <stringValue> (47)
         on left: 15 16 17 18 19 20 21
         on right: 1 3 4 15 16 17 19 20
-    out <stringValue> (48)
-        on left: 22 23 24 25 26
-        on right: 20 22 23 25 26
-    var <stringValue> (49)
-        on left: 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42
+    get <stringValue> (48)
+        on left: 22 23
+        on right: 19
+    out <stringValue> (49)
+        on left: 24 25 26 27 28
+        on right: 20 24 25 27 28
+    var <stringValue> (50)
+        on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44
         on right: 15
-    operation <stringValue> (50)
-        on left: 43 44
-        on right: 27 37 43
-    assignment <stringValue> (51)
-        on left: 45 46 47
-        on right: 10 11 18 37 53
-    alpha_array <stringValue> (52)
-        on left: 48 49
-        on right: 30 48
-    digit_array <stringValue> (53)
+    operation <stringValue> (51)
+        on left: 45 46
+        on right: 29 39 45
+    assignment <stringValue> (52)
+        on left: 47 48 49
+        on right: 10 11 18 39 55
+    alpha_array <stringValue> (53)
         on left: 50 51
-        on right: 29 50
-    rule <stringValue> (54)
+        on right: 32 50
+    digit_array <stringValue> (54)
         on left: 52 53
-        on right: 17 52
-    arrow <stringValue> (55)
+        on right: 31 52
+    rule <stringValue> (55)
         on left: 54 55
+        on right: 17 54
+    arrow <stringValue> (56)
+        on left: 56 57
         on right: 17
-    operator <stringValue> (56)
-        on left: 56 57 58 59 60 61 62 63 64 65
-        on right: 17 52
-    op <stringValue> (57)
-        on left: 66 67 68 69
-        on right: 43 56
+    operator <stringValue> (57)
+        on left: 58 59 60 61 62 63 64 65 66 67
+        on right: 17 54
+    op <stringValue> (58)
+        on left: 68 69 70 71
+        on right: 45 58
 
 
 State 0
@@ -276,11 +296,21 @@ State 8
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
     program  go to state 21
-    var      go to state 22
+    get      go to state 22
+    var      go to state 23
 
 
 State 9
@@ -301,330 +331,359 @@ State 11
 
     3 function: INT FUNCTION ALPHA . OPEN_P params CLOSE_P EXEC program END_EXEC
 
-    OPEN_P  shift, and go to state 23
+    OPEN_P  shift, and go to state 24
 
 
 State 12
 
     4 function: STRING FUNCTION ALPHA . OPEN_P params CLOSE_P EXEC program END_EXEC
 
-    OPEN_P  shift, and go to state 24
+    OPEN_P  shift, and go to state 25
 
 
 State 13
 
    14 call: ALPHA . OPEN_P args CLOSE_P
-   35 var: ALPHA . ASSIGN DIGIT
-   36    | ALPHA . ASSIGN STRING_VALUE
-   37    | ALPHA . ASSIGN assignment operation
-   40    | ALPHA . ASSIGN call
-   41    | ALPHA . ARRAY DIGIT ASSIGN DIGIT
-   42    | ALPHA . ARRAY DIGIT ASSIGN STRING_VALUE
+   37 var: ALPHA . ASSIGN DIGIT
+   38    | ALPHA . ASSIGN STRING_VALUE
+   39    | ALPHA . ASSIGN assignment operation
+   42    | ALPHA . ASSIGN call
+   43    | ALPHA . ARRAY DIGIT ASSIGN DIGIT
+   44    | ALPHA . ARRAY DIGIT ASSIGN STRING_VALUE
 
-    OPEN_P  shift, and go to state 25
-    ASSIGN  shift, and go to state 26
-    ARRAY   shift, and go to state 27
+    OPEN_P  shift, and go to state 26
+    ASSIGN  shift, and go to state 27
+    ARRAY   shift, and go to state 28
 
 
 State 14
 
-   27 var: INT . ALPHA ASSIGN DIGIT operation
-   29    | INT . ALPHA ARRAY DIGIT ASSIGN digit_array
-   31    | INT . ALPHA
-   33    | INT . ALPHA ARRAY DIGIT
-   38    | INT . ALPHA ASSIGN call
+   29 var: INT . ALPHA ASSIGN DIGIT operation
+   31    | INT . ALPHA ARRAY DIGIT ASSIGN digit_array
+   33    | INT . ALPHA
+   35    | INT . ALPHA ARRAY DIGIT
+   40    | INT . ALPHA ASSIGN call
 
-    ALPHA  shift, and go to state 28
+    ALPHA  shift, and go to state 29
 
 
 State 15
 
-   28 var: STRING . ALPHA ASSIGN STRING_VALUE
-   30    | STRING . ALPHA ARRAY DIGIT ASSIGN alpha_array
-   32    | STRING . ALPHA
-   34    | STRING . ALPHA ARRAY DIGIT
-   39    | STRING . ALPHA ASSIGN call
+   30 var: STRING . ALPHA ASSIGN STRING_VALUE
+   32    | STRING . ALPHA ARRAY DIGIT ASSIGN alpha_array
+   34    | STRING . ALPHA
+   36    | STRING . ALPHA ARRAY DIGIT
+   41    | STRING . ALPHA ASSIGN call
 
-    ALPHA  shift, and go to state 29
+    ALPHA  shift, and go to state 30
 
 
 State 16
 
    17 program: OPEN_P . rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 31
-    STRING_VALUE  shift, and go to state 32
-    OPEN_P        shift, and go to state 33
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 32
+    STRING_VALUE  shift, and go to state 33
+    OPEN_P        shift, and go to state 34
 
-    assignment  go to state 34
-    rule        go to state 35
+    assignment  go to state 35
+    rule        go to state 36
 
 
 State 17
 
    18 program: RETURN . assignment END
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 31
-    STRING_VALUE  shift, and go to state 32
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 32
+    STRING_VALUE  shift, and go to state 33
 
-    assignment  go to state 36
+    assignment  go to state 37
 
 
 State 18
 
-   19 program: STDIN . OPEN_P ALPHA CLOSE_P END program
+   23 get: STDIN . OPEN_P ALPHA COMMA DIGIT CLOSE_P END
 
-    OPEN_P  shift, and go to state 37
+    OPEN_P  shift, and go to state 38
 
 
 State 19
 
    20 program: STDOUT . out END program
 
-    ALPHA        shift, and go to state 38
-    SPACE_ALPHA  shift, and go to state 39
-    ESCAPE       shift, and go to state 40
+    ALPHA        shift, and go to state 39
+    SPACE_ALPHA  shift, and go to state 40
+    ESCAPE       shift, and go to state 41
 
-    $default  reduce using rule 24 (out)
+    $default  reduce using rule 26 (out)
 
-    out  go to state 41
+    out  go to state 42
 
 
 State 20
 
    16 program: call . END program
 
-    END  shift, and go to state 42
+    END  shift, and go to state 43
 
 
 State 21
 
     1 start: MAIN EXEC program . END_EXEC
 
-    END_EXEC  shift, and go to state 43
+    END_EXEC  shift, and go to state 44
 
 
 State 22
 
-   15 program: var . END program
+   19 program: get . program
 
-    END  shift, and go to state 44
+    ALPHA   shift, and go to state 13
+    INT     shift, and go to state 14
+    STRING  shift, and go to state 15
+    OPEN_P  shift, and go to state 16
+    RETURN  shift, and go to state 17
+    STDIN   shift, and go to state 18
+    STDOUT  shift, and go to state 19
+
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
+    $default  reduce using rule 21 (program)
+
+    call     go to state 20
+    program  go to state 45
+    get      go to state 22
+    var      go to state 23
 
 
 State 23
 
-    3 function: INT FUNCTION ALPHA OPEN_P . params CLOSE_P EXEC program END_EXEC
+   15 program: var . END program
 
-    INT     shift, and go to state 45
-    STRING  shift, and go to state 46
-
-    $default  reduce using rule 9 (params)
-
-    type    go to state 47
-    params  go to state 48
+    END  shift, and go to state 46
 
 
 State 24
 
-    4 function: STRING FUNCTION ALPHA OPEN_P . params CLOSE_P EXEC program END_EXEC
+    3 function: INT FUNCTION ALPHA OPEN_P . params CLOSE_P EXEC program END_EXEC
 
-    INT     shift, and go to state 45
-    STRING  shift, and go to state 46
+    INT     shift, and go to state 47
+    STRING  shift, and go to state 48
 
     $default  reduce using rule 9 (params)
 
-    type    go to state 47
-    params  go to state 49
+    type    go to state 49
+    params  go to state 50
 
 
 State 25
 
-   14 call: ALPHA OPEN_P . args CLOSE_P
+    4 function: STRING FUNCTION ALPHA OPEN_P . params CLOSE_P EXEC program END_EXEC
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 50
-    STRING_VALUE  shift, and go to state 32
+    INT     shift, and go to state 47
+    STRING  shift, and go to state 48
 
-    $default  reduce using rule 13 (args)
+    $default  reduce using rule 9 (params)
 
-    args        go to state 51
-    call        go to state 52
-    assignment  go to state 53
+    type    go to state 49
+    params  go to state 51
 
 
 State 26
 
-   35 var: ALPHA ASSIGN . DIGIT
-   36    | ALPHA ASSIGN . STRING_VALUE
-   37    | ALPHA ASSIGN . assignment operation
-   40    | ALPHA ASSIGN . call
+   14 call: ALPHA OPEN_P . args CLOSE_P
 
-    DIGIT         shift, and go to state 54
-    ALPHA         shift, and go to state 50
-    STRING_VALUE  shift, and go to state 55
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 52
+    STRING_VALUE  shift, and go to state 33
 
-    call        go to state 56
-    assignment  go to state 57
+    $default  reduce using rule 13 (args)
+
+    args        go to state 53
+    call        go to state 54
+    assignment  go to state 55
 
 
 State 27
 
-   41 var: ALPHA ARRAY . DIGIT ASSIGN DIGIT
-   42    | ALPHA ARRAY . DIGIT ASSIGN STRING_VALUE
+   37 var: ALPHA ASSIGN . DIGIT
+   38    | ALPHA ASSIGN . STRING_VALUE
+   39    | ALPHA ASSIGN . assignment operation
+   42    | ALPHA ASSIGN . call
 
-    DIGIT  shift, and go to state 58
+    DIGIT         shift, and go to state 56
+    ALPHA         shift, and go to state 52
+    STRING_VALUE  shift, and go to state 57
+
+    call        go to state 58
+    assignment  go to state 59
 
 
 State 28
 
-   27 var: INT ALPHA . ASSIGN DIGIT operation
-   29    | INT ALPHA . ARRAY DIGIT ASSIGN digit_array
-   31    | INT ALPHA .
-   33    | INT ALPHA . ARRAY DIGIT
-   38    | INT ALPHA . ASSIGN call
+   43 var: ALPHA ARRAY . DIGIT ASSIGN DIGIT
+   44    | ALPHA ARRAY . DIGIT ASSIGN STRING_VALUE
 
-    ASSIGN  shift, and go to state 59
-    ARRAY   shift, and go to state 60
-
-    $default  reduce using rule 31 (var)
+    DIGIT  shift, and go to state 60
 
 
 State 29
 
-   28 var: STRING ALPHA . ASSIGN STRING_VALUE
-   30    | STRING ALPHA . ARRAY DIGIT ASSIGN alpha_array
-   32    | STRING ALPHA .
-   34    | STRING ALPHA . ARRAY DIGIT
-   39    | STRING ALPHA . ASSIGN call
+   29 var: INT ALPHA . ASSIGN DIGIT operation
+   31    | INT ALPHA . ARRAY DIGIT ASSIGN digit_array
+   33    | INT ALPHA .
+   35    | INT ALPHA . ARRAY DIGIT
+   40    | INT ALPHA . ASSIGN call
 
     ASSIGN  shift, and go to state 61
     ARRAY   shift, and go to state 62
 
-    $default  reduce using rule 32 (var)
+    $default  reduce using rule 33 (var)
 
 
 State 30
 
-   46 assignment: DIGIT .
+   30 var: STRING ALPHA . ASSIGN STRING_VALUE
+   32    | STRING ALPHA . ARRAY DIGIT ASSIGN alpha_array
+   34    | STRING ALPHA .
+   36    | STRING ALPHA . ARRAY DIGIT
+   41    | STRING ALPHA . ASSIGN call
 
-    $default  reduce using rule 46 (assignment)
+    ASSIGN  shift, and go to state 63
+    ARRAY   shift, and go to state 64
+
+    $default  reduce using rule 34 (var)
 
 
 State 31
 
-   45 assignment: ALPHA .
+   48 assignment: DIGIT .
 
-    $default  reduce using rule 45 (assignment)
+    $default  reduce using rule 48 (assignment)
 
 
 State 32
 
-   47 assignment: STRING_VALUE .
+   47 assignment: ALPHA .
 
     $default  reduce using rule 47 (assignment)
 
 
 State 33
 
-   52 rule: OPEN_P . rule operator rule CLOSE_P
+   49 assignment: STRING_VALUE .
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 31
-    STRING_VALUE  shift, and go to state 32
-    OPEN_P        shift, and go to state 33
-
-    assignment  go to state 34
-    rule        go to state 63
+    $default  reduce using rule 49 (assignment)
 
 
 State 34
 
-   53 rule: assignment .
+   54 rule: OPEN_P . rule operator rule CLOSE_P
 
-    $default  reduce using rule 53 (rule)
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 32
+    STRING_VALUE  shift, and go to state 33
+    OPEN_P        shift, and go to state 34
+
+    assignment  go to state 35
+    rule        go to state 65
 
 
 State 35
 
-   17 program: OPEN_P rule . operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
+   55 rule: assignment .
 
-    PLUS   shift, and go to state 64
-    MINUS  shift, and go to state 65
-    TIMES  shift, and go to state 66
-    DIV    shift, and go to state 67
-    L      shift, and go to state 68
-    G      shift, and go to state 69
-    LE     shift, and go to state 70
-    GE     shift, and go to state 71
-    EQ     shift, and go to state 72
-    NE     shift, and go to state 73
-    NOT    shift, and go to state 74
-    OR     shift, and go to state 75
-    AND    shift, and go to state 76
-
-    operator  go to state 77
-    op        go to state 78
+    $default  reduce using rule 55 (rule)
 
 
 State 36
 
-   18 program: RETURN assignment . END
+   17 program: OPEN_P rule . operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
 
-    END  shift, and go to state 79
+    PLUS   shift, and go to state 66
+    MINUS  shift, and go to state 67
+    TIMES  shift, and go to state 68
+    DIV    shift, and go to state 69
+    L      shift, and go to state 70
+    G      shift, and go to state 71
+    LE     shift, and go to state 72
+    GE     shift, and go to state 73
+    EQ     shift, and go to state 74
+    NE     shift, and go to state 75
+    NOT    shift, and go to state 76
+    OR     shift, and go to state 77
+    AND    shift, and go to state 78
+
+    operator  go to state 79
+    op        go to state 80
 
 
 State 37
 
-   19 program: STDIN OPEN_P . ALPHA CLOSE_P END program
+   18 program: RETURN assignment . END
 
-    ALPHA  shift, and go to state 80
+    END  shift, and go to state 81
 
 
 State 38
 
-   25 out: ALPHA . out
+   23 get: STDIN OPEN_P . ALPHA COMMA DIGIT CLOSE_P END
 
-    ALPHA        shift, and go to state 38
-    SPACE_ALPHA  shift, and go to state 39
-    ESCAPE       shift, and go to state 40
-
-    $default  reduce using rule 24 (out)
-
-    out  go to state 81
+    ALPHA  shift, and go to state 82
 
 
 State 39
 
-   22 out: SPACE_ALPHA . out
+   27 out: ALPHA . out
 
-    ALPHA        shift, and go to state 38
-    SPACE_ALPHA  shift, and go to state 39
-    ESCAPE       shift, and go to state 40
+    ALPHA        shift, and go to state 39
+    SPACE_ALPHA  shift, and go to state 40
+    ESCAPE       shift, and go to state 41
 
-    $default  reduce using rule 24 (out)
+    $default  reduce using rule 26 (out)
 
-    out  go to state 82
+    out  go to state 83
 
 
 State 40
 
-   23 out: ESCAPE . SPACE_ALPHA ESCAPE out
-   26    | ESCAPE . ALPHA ESCAPE out
+   24 out: SPACE_ALPHA . out
 
-    ALPHA        shift, and go to state 83
-    SPACE_ALPHA  shift, and go to state 84
+    ALPHA        shift, and go to state 39
+    SPACE_ALPHA  shift, and go to state 40
+    ESCAPE       shift, and go to state 41
+
+    $default  reduce using rule 26 (out)
+
+    out  go to state 84
 
 
 State 41
 
-   20 program: STDOUT out . END program
+   25 out: ESCAPE . SPACE_ALPHA ESCAPE out
+   28    | ESCAPE . ALPHA ESCAPE out
 
-    END  shift, and go to state 85
+    ALPHA        shift, and go to state 85
+    SPACE_ALPHA  shift, and go to state 86
 
 
 State 42
+
+   20 program: STDOUT out . END program
+
+    END  shift, and go to state 87
+
+
+State 43
 
    16 program: call END . program
 
@@ -636,21 +695,38 @@ State 42
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 86
-    var      go to state 22
+    program  go to state 88
+    get      go to state 22
+    var      go to state 23
 
 
-State 43
+State 44
 
     1 start: MAIN EXEC program END_EXEC .
 
     $default  reduce using rule 1 (start)
 
 
-State 44
+State 45
+
+   19 program: get program .
+
+    $default  reduce using rule 19 (program)
+
+
+State 46
 
    15 program: var END . program
 
@@ -662,347 +738,357 @@ State 44
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 87
-    var      go to state 22
+    program  go to state 89
+    get      go to state 22
+    var      go to state 23
 
 
-State 45
+State 47
 
     5 type: INT .
 
     $default  reduce using rule 5 (type)
 
 
-State 46
+State 48
 
     6 type: STRING .
 
     $default  reduce using rule 6 (type)
 
 
-State 47
+State 49
 
     7 params: type . ALPHA
     8       | type . ALPHA COMMA params
 
-    ALPHA  shift, and go to state 88
-
-
-State 48
-
-    3 function: INT FUNCTION ALPHA OPEN_P params . CLOSE_P EXEC program END_EXEC
-
-    CLOSE_P  shift, and go to state 89
-
-
-State 49
-
-    4 function: STRING FUNCTION ALPHA OPEN_P params . CLOSE_P EXEC program END_EXEC
-
-    CLOSE_P  shift, and go to state 90
+    ALPHA  shift, and go to state 90
 
 
 State 50
 
-   14 call: ALPHA . OPEN_P args CLOSE_P
-   45 assignment: ALPHA .
-
-    OPEN_P  shift, and go to state 25
-
-    $default  reduce using rule 45 (assignment)
-
-
-State 51
-
-   14 call: ALPHA OPEN_P args . CLOSE_P
+    3 function: INT FUNCTION ALPHA OPEN_P params . CLOSE_P EXEC program END_EXEC
 
     CLOSE_P  shift, and go to state 91
 
 
+State 51
+
+    4 function: STRING FUNCTION ALPHA OPEN_P params . CLOSE_P EXEC program END_EXEC
+
+    CLOSE_P  shift, and go to state 92
+
+
 State 52
+
+   14 call: ALPHA . OPEN_P args CLOSE_P
+   47 assignment: ALPHA .
+
+    OPEN_P  shift, and go to state 26
+
+    $default  reduce using rule 47 (assignment)
+
+
+State 53
+
+   14 call: ALPHA OPEN_P args . CLOSE_P
+
+    CLOSE_P  shift, and go to state 93
+
+
+State 54
 
    12 args: call .
 
     $default  reduce using rule 12 (args)
 
 
-State 53
+State 55
 
    10 args: assignment .
    11     | assignment . COMMA args
 
-    COMMA  shift, and go to state 92
+    COMMA  shift, and go to state 94
 
     $default  reduce using rule 10 (args)
 
 
-State 54
-
-   35 var: ALPHA ASSIGN DIGIT .
-   46 assignment: DIGIT .
-
-    END       reduce using rule 35 (var)
-    END       [reduce using rule 46 (assignment)]
-    $default  reduce using rule 46 (assignment)
-
-
-State 55
-
-   36 var: ALPHA ASSIGN STRING_VALUE .
-   47 assignment: STRING_VALUE .
-
-    END       reduce using rule 36 (var)
-    END       [reduce using rule 47 (assignment)]
-    $default  reduce using rule 47 (assignment)
-
-
 State 56
 
-   40 var: ALPHA ASSIGN call .
+   37 var: ALPHA ASSIGN DIGIT .
+   48 assignment: DIGIT .
 
-    $default  reduce using rule 40 (var)
+    END       reduce using rule 37 (var)
+    END       [reduce using rule 48 (assignment)]
+    $default  reduce using rule 48 (assignment)
 
 
 State 57
 
-   37 var: ALPHA ASSIGN assignment . operation
+   38 var: ALPHA ASSIGN STRING_VALUE .
+   49 assignment: STRING_VALUE .
 
-    PLUS   shift, and go to state 64
-    MINUS  shift, and go to state 65
-    TIMES  shift, and go to state 66
-    DIV    shift, and go to state 67
-
-    $default  reduce using rule 44 (operation)
-
-    operation  go to state 93
-    op         go to state 94
+    END       reduce using rule 38 (var)
+    END       [reduce using rule 49 (assignment)]
+    $default  reduce using rule 49 (assignment)
 
 
 State 58
 
-   41 var: ALPHA ARRAY DIGIT . ASSIGN DIGIT
-   42    | ALPHA ARRAY DIGIT . ASSIGN STRING_VALUE
+   42 var: ALPHA ASSIGN call .
 
-    ASSIGN  shift, and go to state 95
+    $default  reduce using rule 42 (var)
 
 
 State 59
 
-   27 var: INT ALPHA ASSIGN . DIGIT operation
-   38    | INT ALPHA ASSIGN . call
+   39 var: ALPHA ASSIGN assignment . operation
 
-    DIGIT  shift, and go to state 96
-    ALPHA  shift, and go to state 97
+    PLUS   shift, and go to state 66
+    MINUS  shift, and go to state 67
+    TIMES  shift, and go to state 68
+    DIV    shift, and go to state 69
 
-    call  go to state 98
+    $default  reduce using rule 46 (operation)
+
+    operation  go to state 95
+    op         go to state 96
 
 
 State 60
 
-   29 var: INT ALPHA ARRAY . DIGIT ASSIGN digit_array
-   33    | INT ALPHA ARRAY . DIGIT
+   43 var: ALPHA ARRAY DIGIT . ASSIGN DIGIT
+   44    | ALPHA ARRAY DIGIT . ASSIGN STRING_VALUE
 
-    DIGIT  shift, and go to state 99
+    ASSIGN  shift, and go to state 97
 
 
 State 61
 
-   28 var: STRING ALPHA ASSIGN . STRING_VALUE
-   39    | STRING ALPHA ASSIGN . call
+   29 var: INT ALPHA ASSIGN . DIGIT operation
+   40    | INT ALPHA ASSIGN . call
 
-    ALPHA         shift, and go to state 97
-    STRING_VALUE  shift, and go to state 100
+    DIGIT  shift, and go to state 98
+    ALPHA  shift, and go to state 99
 
-    call  go to state 101
+    call  go to state 100
 
 
 State 62
 
-   30 var: STRING ALPHA ARRAY . DIGIT ASSIGN alpha_array
-   34    | STRING ALPHA ARRAY . DIGIT
+   31 var: INT ALPHA ARRAY . DIGIT ASSIGN digit_array
+   35    | INT ALPHA ARRAY . DIGIT
 
-    DIGIT  shift, and go to state 102
+    DIGIT  shift, and go to state 101
 
 
 State 63
 
-   52 rule: OPEN_P rule . operator rule CLOSE_P
+   30 var: STRING ALPHA ASSIGN . STRING_VALUE
+   41    | STRING ALPHA ASSIGN . call
 
-    PLUS   shift, and go to state 64
-    MINUS  shift, and go to state 65
-    TIMES  shift, and go to state 66
-    DIV    shift, and go to state 67
-    L      shift, and go to state 68
-    G      shift, and go to state 69
-    LE     shift, and go to state 70
-    GE     shift, and go to state 71
-    EQ     shift, and go to state 72
-    NE     shift, and go to state 73
-    NOT    shift, and go to state 74
-    OR     shift, and go to state 75
-    AND    shift, and go to state 76
+    ALPHA         shift, and go to state 99
+    STRING_VALUE  shift, and go to state 102
 
-    operator  go to state 103
-    op        go to state 78
+    call  go to state 103
 
 
 State 64
 
-   66 op: PLUS .
+   32 var: STRING ALPHA ARRAY . DIGIT ASSIGN alpha_array
+   36    | STRING ALPHA ARRAY . DIGIT
 
-    $default  reduce using rule 66 (op)
+    DIGIT  shift, and go to state 104
 
 
 State 65
 
-   67 op: MINUS .
+   54 rule: OPEN_P rule . operator rule CLOSE_P
 
-    $default  reduce using rule 67 (op)
+    PLUS   shift, and go to state 66
+    MINUS  shift, and go to state 67
+    TIMES  shift, and go to state 68
+    DIV    shift, and go to state 69
+    L      shift, and go to state 70
+    G      shift, and go to state 71
+    LE     shift, and go to state 72
+    GE     shift, and go to state 73
+    EQ     shift, and go to state 74
+    NE     shift, and go to state 75
+    NOT    shift, and go to state 76
+    OR     shift, and go to state 77
+    AND    shift, and go to state 78
+
+    operator  go to state 105
+    op        go to state 80
 
 
 State 66
 
-   69 op: TIMES .
-
-    $default  reduce using rule 69 (op)
-
-
-State 67
-
-   68 op: DIV .
+   68 op: PLUS .
 
     $default  reduce using rule 68 (op)
 
 
+State 67
+
+   69 op: MINUS .
+
+    $default  reduce using rule 69 (op)
+
+
 State 68
 
-   57 operator: L .
+   71 op: TIMES .
 
-    $default  reduce using rule 57 (operator)
+    $default  reduce using rule 71 (op)
 
 
 State 69
 
-   58 operator: G .
+   70 op: DIV .
 
-    $default  reduce using rule 58 (operator)
+    $default  reduce using rule 70 (op)
 
 
 State 70
 
-   59 operator: LE .
+   59 operator: L .
 
     $default  reduce using rule 59 (operator)
 
 
 State 71
 
-   60 operator: GE .
+   60 operator: G .
 
     $default  reduce using rule 60 (operator)
 
 
 State 72
 
-   61 operator: EQ .
+   61 operator: LE .
 
     $default  reduce using rule 61 (operator)
 
 
 State 73
 
-   62 operator: NE .
+   62 operator: GE .
 
     $default  reduce using rule 62 (operator)
 
 
 State 74
 
-   63 operator: NOT .
+   63 operator: EQ .
 
     $default  reduce using rule 63 (operator)
 
 
 State 75
 
-   64 operator: OR .
+   64 operator: NE .
 
     $default  reduce using rule 64 (operator)
 
 
 State 76
 
-   65 operator: AND .
+   65 operator: NOT .
 
     $default  reduce using rule 65 (operator)
 
 
 State 77
 
-   17 program: OPEN_P rule operator . rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
+   66 operator: OR .
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 31
-    STRING_VALUE  shift, and go to state 32
-    OPEN_P        shift, and go to state 33
-
-    assignment  go to state 34
-    rule        go to state 104
+    $default  reduce using rule 66 (operator)
 
 
 State 78
 
-   56 operator: op .
+   67 operator: AND .
 
-    $default  reduce using rule 56 (operator)
+    $default  reduce using rule 67 (operator)
 
 
 State 79
+
+   17 program: OPEN_P rule operator . rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
+
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 32
+    STRING_VALUE  shift, and go to state 33
+    OPEN_P        shift, and go to state 34
+
+    assignment  go to state 35
+    rule        go to state 106
+
+
+State 80
+
+   58 operator: op .
+
+    $default  reduce using rule 58 (operator)
+
+
+State 81
 
    18 program: RETURN assignment END .
 
     $default  reduce using rule 18 (program)
 
 
-State 80
-
-   19 program: STDIN OPEN_P ALPHA . CLOSE_P END program
-
-    CLOSE_P  shift, and go to state 105
-
-
-State 81
-
-   25 out: ALPHA out .
-
-    $default  reduce using rule 25 (out)
-
-
 State 82
 
-   22 out: SPACE_ALPHA out .
+   23 get: STDIN OPEN_P ALPHA . COMMA DIGIT CLOSE_P END
 
-    $default  reduce using rule 22 (out)
+    COMMA  shift, and go to state 107
 
 
 State 83
 
-   26 out: ESCAPE ALPHA . ESCAPE out
+   27 out: ALPHA out .
 
-    ESCAPE  shift, and go to state 106
+    $default  reduce using rule 27 (out)
 
 
 State 84
 
-   23 out: ESCAPE SPACE_ALPHA . ESCAPE out
+   24 out: SPACE_ALPHA out .
 
-    ESCAPE  shift, and go to state 107
+    $default  reduce using rule 24 (out)
 
 
 State 85
+
+   28 out: ESCAPE ALPHA . ESCAPE out
+
+    ESCAPE  shift, and go to state 108
+
+
+State 86
+
+   25 out: ESCAPE SPACE_ALPHA . ESCAPE out
+
+    ESCAPE  shift, and go to state 109
+
+
+State 87
 
    20 program: STDOUT out END . program
 
@@ -1014,233 +1100,243 @@ State 85
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 108
-    var      go to state 22
+    program  go to state 110
+    get      go to state 22
+    var      go to state 23
 
 
-State 86
+State 88
 
    16 program: call END program .
 
     $default  reduce using rule 16 (program)
 
 
-State 87
+State 89
 
    15 program: var END program .
 
     $default  reduce using rule 15 (program)
 
 
-State 88
+State 90
 
     7 params: type ALPHA .
     8       | type ALPHA . COMMA params
 
-    COMMA  shift, and go to state 109
+    COMMA  shift, and go to state 111
 
     $default  reduce using rule 7 (params)
 
 
-State 89
+State 91
 
     3 function: INT FUNCTION ALPHA OPEN_P params CLOSE_P . EXEC program END_EXEC
 
-    EXEC  shift, and go to state 110
+    EXEC  shift, and go to state 112
 
 
-State 90
+State 92
 
     4 function: STRING FUNCTION ALPHA OPEN_P params CLOSE_P . EXEC program END_EXEC
 
-    EXEC  shift, and go to state 111
+    EXEC  shift, and go to state 113
 
 
-State 91
+State 93
 
    14 call: ALPHA OPEN_P args CLOSE_P .
 
     $default  reduce using rule 14 (call)
 
 
-State 92
+State 94
 
    11 args: assignment COMMA . args
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 50
-    STRING_VALUE  shift, and go to state 32
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 52
+    STRING_VALUE  shift, and go to state 33
 
     $default  reduce using rule 13 (args)
 
-    args        go to state 112
-    call        go to state 52
-    assignment  go to state 53
-
-
-State 93
-
-   37 var: ALPHA ASSIGN assignment operation .
-
-    $default  reduce using rule 37 (var)
-
-
-State 94
-
-   43 operation: op . DIGIT operation
-
-    DIGIT  shift, and go to state 113
+    args        go to state 114
+    call        go to state 54
+    assignment  go to state 55
 
 
 State 95
 
-   41 var: ALPHA ARRAY DIGIT ASSIGN . DIGIT
-   42    | ALPHA ARRAY DIGIT ASSIGN . STRING_VALUE
-
-    DIGIT         shift, and go to state 114
-    STRING_VALUE  shift, and go to state 115
-
-
-State 96
-
-   27 var: INT ALPHA ASSIGN DIGIT . operation
-
-    PLUS   shift, and go to state 64
-    MINUS  shift, and go to state 65
-    TIMES  shift, and go to state 66
-    DIV    shift, and go to state 67
-
-    $default  reduce using rule 44 (operation)
-
-    operation  go to state 116
-    op         go to state 94
-
-
-State 97
-
-   14 call: ALPHA . OPEN_P args CLOSE_P
-
-    OPEN_P  shift, and go to state 25
-
-
-State 98
-
-   38 var: INT ALPHA ASSIGN call .
-
-    $default  reduce using rule 38 (var)
-
-
-State 99
-
-   29 var: INT ALPHA ARRAY DIGIT . ASSIGN digit_array
-   33    | INT ALPHA ARRAY DIGIT .
-
-    ASSIGN  shift, and go to state 117
-
-    $default  reduce using rule 33 (var)
-
-
-State 100
-
-   28 var: STRING ALPHA ASSIGN STRING_VALUE .
-
-    $default  reduce using rule 28 (var)
-
-
-State 101
-
-   39 var: STRING ALPHA ASSIGN call .
+   39 var: ALPHA ASSIGN assignment operation .
 
     $default  reduce using rule 39 (var)
 
 
+State 96
+
+   45 operation: op . DIGIT operation
+
+    DIGIT  shift, and go to state 115
+
+
+State 97
+
+   43 var: ALPHA ARRAY DIGIT ASSIGN . DIGIT
+   44    | ALPHA ARRAY DIGIT ASSIGN . STRING_VALUE
+
+    DIGIT         shift, and go to state 116
+    STRING_VALUE  shift, and go to state 117
+
+
+State 98
+
+   29 var: INT ALPHA ASSIGN DIGIT . operation
+
+    PLUS   shift, and go to state 66
+    MINUS  shift, and go to state 67
+    TIMES  shift, and go to state 68
+    DIV    shift, and go to state 69
+
+    $default  reduce using rule 46 (operation)
+
+    operation  go to state 118
+    op         go to state 96
+
+
+State 99
+
+   14 call: ALPHA . OPEN_P args CLOSE_P
+
+    OPEN_P  shift, and go to state 26
+
+
+State 100
+
+   40 var: INT ALPHA ASSIGN call .
+
+    $default  reduce using rule 40 (var)
+
+
+State 101
+
+   31 var: INT ALPHA ARRAY DIGIT . ASSIGN digit_array
+   35    | INT ALPHA ARRAY DIGIT .
+
+    ASSIGN  shift, and go to state 119
+
+    $default  reduce using rule 35 (var)
+
+
 State 102
 
-   30 var: STRING ALPHA ARRAY DIGIT . ASSIGN alpha_array
-   34    | STRING ALPHA ARRAY DIGIT .
+   30 var: STRING ALPHA ASSIGN STRING_VALUE .
 
-    ASSIGN  shift, and go to state 118
-
-    $default  reduce using rule 34 (var)
+    $default  reduce using rule 30 (var)
 
 
 State 103
 
-   52 rule: OPEN_P rule operator . rule CLOSE_P
+   41 var: STRING ALPHA ASSIGN call .
 
-    DIGIT         shift, and go to state 30
-    ALPHA         shift, and go to state 31
-    STRING_VALUE  shift, and go to state 32
-    OPEN_P        shift, and go to state 33
-
-    assignment  go to state 34
-    rule        go to state 119
+    $default  reduce using rule 41 (var)
 
 
 State 104
 
-   17 program: OPEN_P rule operator rule . CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
+   32 var: STRING ALPHA ARRAY DIGIT . ASSIGN alpha_array
+   36    | STRING ALPHA ARRAY DIGIT .
 
-    CLOSE_P  shift, and go to state 120
+    ASSIGN  shift, and go to state 120
+
+    $default  reduce using rule 36 (var)
 
 
 State 105
 
-   19 program: STDIN OPEN_P ALPHA CLOSE_P . END program
+   54 rule: OPEN_P rule operator . rule CLOSE_P
 
-    END  shift, and go to state 121
+    DIGIT         shift, and go to state 31
+    ALPHA         shift, and go to state 32
+    STRING_VALUE  shift, and go to state 33
+    OPEN_P        shift, and go to state 34
+
+    assignment  go to state 35
+    rule        go to state 121
 
 
 State 106
 
-   26 out: ESCAPE ALPHA ESCAPE . out
+   17 program: OPEN_P rule operator rule . CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program
 
-    ALPHA        shift, and go to state 38
-    SPACE_ALPHA  shift, and go to state 39
-    ESCAPE       shift, and go to state 40
-
-    $default  reduce using rule 24 (out)
-
-    out  go to state 122
+    CLOSE_P  shift, and go to state 122
 
 
 State 107
 
-   23 out: ESCAPE SPACE_ALPHA ESCAPE . out
+   23 get: STDIN OPEN_P ALPHA COMMA . DIGIT CLOSE_P END
 
-    ALPHA        shift, and go to state 38
-    SPACE_ALPHA  shift, and go to state 39
-    ESCAPE       shift, and go to state 40
-
-    $default  reduce using rule 24 (out)
-
-    out  go to state 123
+    DIGIT  shift, and go to state 123
 
 
 State 108
+
+   28 out: ESCAPE ALPHA ESCAPE . out
+
+    ALPHA        shift, and go to state 39
+    SPACE_ALPHA  shift, and go to state 40
+    ESCAPE       shift, and go to state 41
+
+    $default  reduce using rule 26 (out)
+
+    out  go to state 124
+
+
+State 109
+
+   25 out: ESCAPE SPACE_ALPHA ESCAPE . out
+
+    ALPHA        shift, and go to state 39
+    SPACE_ALPHA  shift, and go to state 40
+    ESCAPE       shift, and go to state 41
+
+    $default  reduce using rule 26 (out)
+
+    out  go to state 125
+
+
+State 110
 
    20 program: STDOUT out END program .
 
     $default  reduce using rule 20 (program)
 
 
-State 109
+State 111
 
     8 params: type ALPHA COMMA . params
 
-    INT     shift, and go to state 45
-    STRING  shift, and go to state 46
+    INT     shift, and go to state 47
+    STRING  shift, and go to state 48
 
     $default  reduce using rule 9 (params)
 
-    type    go to state 47
-    params  go to state 124
+    type    go to state 49
+    params  go to state 126
 
 
-State 110
+State 112
 
     3 function: INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC . program END_EXEC
 
@@ -1252,14 +1348,24 @@ State 110
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 125
-    var      go to state 22
+    program  go to state 127
+    get      go to state 22
+    var      go to state 23
 
 
-State 111
+State 113
 
     4 function: STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC . program END_EXEC
 
@@ -1271,275 +1377,280 @@ State 111
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 126
-    var      go to state 22
+    program  go to state 128
+    get      go to state 22
+    var      go to state 23
 
 
-State 112
+State 114
 
    11 args: assignment COMMA args .
 
     $default  reduce using rule 11 (args)
 
 
-State 113
-
-   43 operation: op DIGIT . operation
-
-    PLUS   shift, and go to state 64
-    MINUS  shift, and go to state 65
-    TIMES  shift, and go to state 66
-    DIV    shift, and go to state 67
-
-    $default  reduce using rule 44 (operation)
-
-    operation  go to state 127
-    op         go to state 94
-
-
-State 114
-
-   41 var: ALPHA ARRAY DIGIT ASSIGN DIGIT .
-
-    $default  reduce using rule 41 (var)
-
-
 State 115
 
-   42 var: ALPHA ARRAY DIGIT ASSIGN STRING_VALUE .
+   45 operation: op DIGIT . operation
 
-    $default  reduce using rule 42 (var)
+    PLUS   shift, and go to state 66
+    MINUS  shift, and go to state 67
+    TIMES  shift, and go to state 68
+    DIV    shift, and go to state 69
+
+    $default  reduce using rule 46 (operation)
+
+    operation  go to state 129
+    op         go to state 96
 
 
 State 116
 
-   27 var: INT ALPHA ASSIGN DIGIT operation .
+   43 var: ALPHA ARRAY DIGIT ASSIGN DIGIT .
 
-    $default  reduce using rule 27 (var)
+    $default  reduce using rule 43 (var)
 
 
 State 117
 
-   29 var: INT ALPHA ARRAY DIGIT ASSIGN . digit_array
+   44 var: ALPHA ARRAY DIGIT ASSIGN STRING_VALUE .
 
-    DIGIT  shift, and go to state 128
-
-    digit_array  go to state 129
+    $default  reduce using rule 44 (var)
 
 
 State 118
 
-   30 var: STRING ALPHA ARRAY DIGIT ASSIGN . alpha_array
+   29 var: INT ALPHA ASSIGN DIGIT operation .
 
-    STRING_VALUE  shift, and go to state 130
-
-    alpha_array  go to state 131
+    $default  reduce using rule 29 (var)
 
 
 State 119
 
-   52 rule: OPEN_P rule operator rule . CLOSE_P
+   31 var: INT ALPHA ARRAY DIGIT ASSIGN . digit_array
 
-    CLOSE_P  shift, and go to state 132
+    DIGIT  shift, and go to state 130
+
+    digit_array  go to state 131
 
 
 State 120
 
-   17 program: OPEN_P rule operator rule CLOSE_P . CONDITIONAL arrow EXEC program END_EXEC program
+   32 var: STRING ALPHA ARRAY DIGIT ASSIGN . alpha_array
 
-    CONDITIONAL  shift, and go to state 133
+    STRING_VALUE  shift, and go to state 132
+
+    alpha_array  go to state 133
 
 
 State 121
 
-   19 program: STDIN OPEN_P ALPHA CLOSE_P END . program
+   54 rule: OPEN_P rule operator rule . CLOSE_P
 
-    ALPHA   shift, and go to state 13
-    INT     shift, and go to state 14
-    STRING  shift, and go to state 15
-    OPEN_P  shift, and go to state 16
-    RETURN  shift, and go to state 17
-    STDIN   shift, and go to state 18
-    STDOUT  shift, and go to state 19
-
-    $default  reduce using rule 21 (program)
-
-    call     go to state 20
-    program  go to state 134
-    var      go to state 22
+    CLOSE_P  shift, and go to state 134
 
 
 State 122
 
-   26 out: ESCAPE ALPHA ESCAPE out .
+   17 program: OPEN_P rule operator rule CLOSE_P . CONDITIONAL arrow EXEC program END_EXEC program
 
-    $default  reduce using rule 26 (out)
+    CONDITIONAL  shift, and go to state 135
 
 
 State 123
 
-   23 out: ESCAPE SPACE_ALPHA ESCAPE out .
+   23 get: STDIN OPEN_P ALPHA COMMA DIGIT . CLOSE_P END
 
-    $default  reduce using rule 23 (out)
+    CLOSE_P  shift, and go to state 136
 
 
 State 124
+
+   28 out: ESCAPE ALPHA ESCAPE out .
+
+    $default  reduce using rule 28 (out)
+
+
+State 125
+
+   25 out: ESCAPE SPACE_ALPHA ESCAPE out .
+
+    $default  reduce using rule 25 (out)
+
+
+State 126
 
     8 params: type ALPHA COMMA params .
 
     $default  reduce using rule 8 (params)
 
 
-State 125
+State 127
 
     3 function: INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program . END_EXEC
 
-    END_EXEC  shift, and go to state 135
-
-
-State 126
-
-    4 function: STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program . END_EXEC
-
-    END_EXEC  shift, and go to state 136
-
-
-State 127
-
-   43 operation: op DIGIT operation .
-
-    $default  reduce using rule 43 (operation)
+    END_EXEC  shift, and go to state 137
 
 
 State 128
 
-   50 digit_array: DIGIT . COMMA digit_array
-   51            | DIGIT .
+    4 function: STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program . END_EXEC
 
-    COMMA  shift, and go to state 137
-
-    $default  reduce using rule 51 (digit_array)
+    END_EXEC  shift, and go to state 138
 
 
 State 129
 
-   29 var: INT ALPHA ARRAY DIGIT ASSIGN digit_array .
+   45 operation: op DIGIT operation .
 
-    $default  reduce using rule 29 (var)
+    $default  reduce using rule 45 (operation)
 
 
 State 130
 
-   48 alpha_array: STRING_VALUE . COMMA alpha_array
-   49            | STRING_VALUE .
+   52 digit_array: DIGIT . COMMA digit_array
+   53            | DIGIT .
 
-    COMMA  shift, and go to state 138
+    COMMA  shift, and go to state 139
 
-    $default  reduce using rule 49 (alpha_array)
+    $default  reduce using rule 53 (digit_array)
 
 
 State 131
 
-   30 var: STRING ALPHA ARRAY DIGIT ASSIGN alpha_array .
+   31 var: INT ALPHA ARRAY DIGIT ASSIGN digit_array .
 
-    $default  reduce using rule 30 (var)
+    $default  reduce using rule 31 (var)
 
 
 State 132
 
-   52 rule: OPEN_P rule operator rule CLOSE_P .
+   50 alpha_array: STRING_VALUE . COMMA alpha_array
+   51            | STRING_VALUE .
 
-    $default  reduce using rule 52 (rule)
+    COMMA  shift, and go to state 140
+
+    $default  reduce using rule 51 (alpha_array)
 
 
 State 133
 
-   17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL . arrow EXEC program END_EXEC program
+   32 var: STRING ALPHA ARRAY DIGIT ASSIGN alpha_array .
 
-    IF     shift, and go to state 139
-    WHILE  shift, and go to state 140
-
-    arrow  go to state 141
+    $default  reduce using rule 32 (var)
 
 
 State 134
 
-   19 program: STDIN OPEN_P ALPHA CLOSE_P END program .
+   54 rule: OPEN_P rule operator rule CLOSE_P .
 
-    $default  reduce using rule 19 (program)
+    $default  reduce using rule 54 (rule)
 
 
 State 135
+
+   17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL . arrow EXEC program END_EXEC program
+
+    IF     shift, and go to state 141
+    WHILE  shift, and go to state 142
+
+    arrow  go to state 143
+
+
+State 136
+
+   23 get: STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P . END
+
+    END  shift, and go to state 144
+
+
+State 137
 
     3 function: INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC .
 
     $default  reduce using rule 3 (function)
 
 
-State 136
+State 138
 
     4 function: STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC .
 
     $default  reduce using rule 4 (function)
 
 
-State 137
-
-   50 digit_array: DIGIT COMMA . digit_array
-
-    DIGIT  shift, and go to state 128
-
-    digit_array  go to state 142
-
-
-State 138
-
-   48 alpha_array: STRING_VALUE COMMA . alpha_array
-
-    STRING_VALUE  shift, and go to state 130
-
-    alpha_array  go to state 143
-
-
 State 139
 
-   55 arrow: IF .
+   52 digit_array: DIGIT COMMA . digit_array
 
-    $default  reduce using rule 55 (arrow)
+    DIGIT  shift, and go to state 130
+
+    digit_array  go to state 145
 
 
 State 140
 
-   54 arrow: WHILE .
+   50 alpha_array: STRING_VALUE COMMA . alpha_array
 
-    $default  reduce using rule 54 (arrow)
+    STRING_VALUE  shift, and go to state 132
+
+    alpha_array  go to state 146
 
 
 State 141
 
-   17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow . EXEC program END_EXEC program
+   57 arrow: IF .
 
-    EXEC  shift, and go to state 144
+    $default  reduce using rule 57 (arrow)
 
 
 State 142
 
-   50 digit_array: DIGIT COMMA digit_array .
+   56 arrow: WHILE .
 
-    $default  reduce using rule 50 (digit_array)
+    $default  reduce using rule 56 (arrow)
 
 
 State 143
 
-   48 alpha_array: STRING_VALUE COMMA alpha_array .
+   17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow . EXEC program END_EXEC program
 
-    $default  reduce using rule 48 (alpha_array)
+    EXEC  shift, and go to state 147
 
 
 State 144
+
+   23 get: STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END .
+
+    $default  reduce using rule 23 (get)
+
+
+State 145
+
+   52 digit_array: DIGIT COMMA digit_array .
+
+    $default  reduce using rule 52 (digit_array)
+
+
+State 146
+
+   50 alpha_array: STRING_VALUE COMMA alpha_array .
+
+    $default  reduce using rule 50 (alpha_array)
+
+
+State 147
 
    17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC . program END_EXEC program
 
@@ -1551,21 +1662,31 @@ State 144
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 145
-    var      go to state 22
+    program  go to state 148
+    get      go to state 22
+    var      go to state 23
 
 
-State 145
+State 148
 
    17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program . END_EXEC program
 
-    END_EXEC  shift, and go to state 146
+    END_EXEC  shift, and go to state 149
 
 
-State 146
+State 149
 
    17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC . program
 
@@ -1577,14 +1698,24 @@ State 146
     STDIN   shift, and go to state 18
     STDOUT  shift, and go to state 19
 
+    ALPHA     [reduce using rule 22 (get)]
+    INT       [reduce using rule 22 (get)]
+    STRING    [reduce using rule 22 (get)]
+    OPEN_P    [reduce using rule 22 (get)]
+    END_EXEC  reduce using rule 21 (program)
+    END_EXEC  [reduce using rule 22 (get)]
+    RETURN    [reduce using rule 22 (get)]
+    STDIN     [reduce using rule 22 (get)]
+    STDOUT    [reduce using rule 22 (get)]
     $default  reduce using rule 21 (program)
 
     call     go to state 20
-    program  go to state 147
-    var      go to state 22
+    program  go to state 150
+    get      go to state 22
+    var      go to state 23
 
 
-State 147
+State 150
 
    17 program: OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program .
 
