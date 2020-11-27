@@ -1,10 +1,18 @@
-i$ F welcome(i$n){
-    P[Recibi 'n'\n].
+i$ F welcome(){
+    P[Escriba un numero:\n].
+    R 0.
+}
+i$ F isEven(i$ n){
+    P[me llego 'n'\n].
+    i$mod = n%2.
+    (mod~0)?->{R 1.}
     R 0.
 }
 S{
-    i$a = 1.
-    i$b = 2.
-    i$c = a+b.
-    R 0.
+    welcome().
+    G(number,20).
+    i$answer = isEven(5).
+    (answer ~ 1)?->{ P[El numero 'number' si es par\n]. R 0.}
+    P[El numero 'number' NO es par]. 
+    R 1.
 }

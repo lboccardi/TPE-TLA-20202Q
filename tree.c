@@ -123,6 +123,7 @@ void addVar(char *name, KIND kind,int size)
 void addArgs(funct * f, char * args){
     int curr_amount = 0;
     if(*args == 0){
+        f->args_count=0;
         return;
     }
     char * curr = args;

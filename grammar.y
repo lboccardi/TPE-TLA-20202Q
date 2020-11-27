@@ -109,14 +109,22 @@ program
     | get program                                           { $$ = malloc(strlen($1)+strlen($2)+5); sprintf($$,"%s %s",$1,$2); add($$, true);}
     | STDOUT out END program                                { char * print = printfParser($2); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
     | /* lambda */                                          { $$ = "";}
-    | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program {   
+    | OPEN_P rule operator rule CLOSE_P CONDITIONAL WHILE EXEC program END_EXEC program {   
                                                                                             if(!are_comparable($2, $4)) {
                                                                                                 yyerror("Uncomparable data types");
                                                                                                 YYABORT;
                                                                                             }
-                                                                                            $$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen($7)+strlen($9)+strlen($11));
-                                                                                            sprintf($$,"%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11);
+                                                                                            $$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen("while")+strlen($9)+strlen($11));
+                                                                                            sprintf($$,"while(%s %s %s){%s}\n%s ",$2,$3,$4,$9,$11);
                                                                                             add($$,true);}
+    | OPEN_P rule operator rule CLOSE_P CONDITIONAL IF EXEC program END_EXEC program {   
+                                                                                            if(!are_comparable($2, $4)) {
+                                                                                                yyerror("Uncomparable data types");
+                                                                                                YYABORT;
+                                                                                            }
+                                                                                            $$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen("if")+strlen($9)+strlen($11));
+                                                                                            sprintf($$,"if(%s %s %s){%s}\n%s ",$2,$3,$4,$9,$11);
+                                                                                            add($$,true);}                                                                                        
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL IF EXEC program END_EXEC ELSE EXEC program END_EXEC program {   
                                                                                                                         if(!are_comparable($2, $4)) {
                                                                                                                             yyerror("Uncomparable data types");
@@ -127,8 +135,8 @@ program
                                                                                                                         add($$,true);} 
     ;
 
-get:
-    | STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END    { if(checkIfVarExists($3)){yyerror("That variable already exists, please choose another name"); YYABORT;}  $$ = malloc(2*strlen($3)+2*strlen($5)+ 30); sprintf($$,"char %s[%s];\nfgets(%s,%s,stdin);\n",$3,$5,$3,$5); add($$,true); addVar($3, KIND_STRING,1);}
+get 
+    : STDIN OPEN_P ALPHA COMMA DIGIT CLOSE_P END    { if(checkIfVarExists($3)){yyerror("That variable already exists, please choose another name"); YYABORT;}  $$ = malloc(2*strlen($3)+2*strlen($5)+ 30); sprintf($$,"char %s[%s];\nfgets(%s,%s,stdin);\n",$3,$5,$3,$5); add($$,true); addVar($3, KIND_STRING,1);}
     ;
     
 out 
