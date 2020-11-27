@@ -397,6 +397,21 @@ bool checkIfVarExists(char * name){
     return false; 
             
 }
+bool checkIfFunctionExists(char * name){
+    funct *curr = function_list.first;
+    while (curr != NULL)
+    {
+
+        if (strcmp(curr->name, name) == 0)
+        {
+            return true; 
+        }
+
+        curr = curr->next; 
+    }
+    return false; 
+            
+}
 bool checkArgsOk(char*name,char*args){
     funct *curr = function_list.first;
     while (curr != NULL)

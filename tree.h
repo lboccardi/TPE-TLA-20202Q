@@ -95,6 +95,7 @@ bool are_comparable(char * s1, char * s2);
 bool functionReturnsKind(char * s, KIND kind);
 
 bool checkIfVarExists(char * name); 
+bool checkIfFunctionExists(char * name); 
 bool checkArgsOk(char*name,char*args);
 void freeVars();
 bool checkReturnType(char * program, KIND kind);

@@ -76,8 +76,8 @@ start
     ;
 
 function
-    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { if(!checkReturnType($8,KIND_INT)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5); freeVars();}
-    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { if(!checkReturnType($8,KIND_STRING)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);freeVars();}
+    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    {if(checkIfFunctionExists($3)){yyerror("Function already declared."); YYABORT;} if(!checkReturnType($8,KIND_INT)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5); freeVars();}
+    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC {if(checkIfFunctionExists($3)){yyerror("Function already declared."); YYABORT;} if(!checkReturnType($8,KIND_STRING)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);freeVars();}
     ;
 
 type

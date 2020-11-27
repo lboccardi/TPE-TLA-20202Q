@@ -1,3 +1,7 @@
+s$ F function2(){
+    s$a='holis'.
+    R a.
+}
 s$ F function(){
     s$a='holis'.
     R a.
