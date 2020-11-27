@@ -71,13 +71,13 @@ void yyerror(const char *str)
 %%
 
 start 
-    : MAIN EXEC program END_EXEC    { $$ = malloc(16 +  strlen($3)); sprintf($$, "int main(){ %s }\n",$3); add($$, true);  } 
+    : MAIN EXEC program END_EXEC    { if(!checkReturnType($3,KIND_INT)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(16 +  strlen($3)); sprintf($$, "int main(){ %s }\n",$3); add($$, true);  } 
     | function start                { $$ = malloc(strlen($1)+strlen($2)+3); sprintf($$,"%s\n%s", $1, $2); add($$,true);}
     ;
 
 function
-    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { $$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5); freeVars();}
-    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { $$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);freeVars();}
+    : INT FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC    { if(!checkReturnType($8,KIND_INT)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("int")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "int", $3, $5, $8); add($$,true); addFunction($3,KIND_INT,$5); freeVars();}
+    | STRING FUNCTION ALPHA OPEN_P params CLOSE_P EXEC program END_EXEC { if(!checkReturnType($8,KIND_STRING)){yyerror("Wrong return type"); YYABORT;}$$ = malloc(strlen("char *")+strlen($3)+strlen($5)+strlen($8)+ 8); sprintf($$, "%s %s(%s){\n%s}\n", "char *", $3, $5, $8); add($$,true); addFunction($3,KIND_STRING,$5);freeVars();}
     ;
 
 type

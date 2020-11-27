@@ -1,9 +1,10 @@
-i$ F function(s$ a1, i$a2){
-    R 0.
+s$ F function(){
+    s$a='holis'.
+    R a.
 }
 S{
-    i$b = 1.
-    s$c = 'hola'.
-    i$a = function('holis').
+    i$a = 1.
+    s$c='holis'.
+    ((c~'chau')&(a~1))?->{R 1.}
     R 0.
 }

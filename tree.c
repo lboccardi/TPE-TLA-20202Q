@@ -421,7 +421,7 @@ bool checkArgsOk(char*name,char*args){
                 strncpy(aux,p1,copy_size);
                 aux[copy_size]=0;
                 unsigned int type = guess_data_type(aux);
-                if(type == DATA_TYPE_NONE){
+                if(type == UNDECLARED_VAR||type == DATA_TYPE_NONE){
                     return false;
                 }
                 if((type == INT_LITERAL || type == INT_VAR) && curr->args[i]!=KIND_INT){
@@ -447,4 +447,30 @@ bool checkArgsOk(char*name,char*args){
         curr = curr->next;
     }
     return false;
+}
+bool checkReturnType(char * program, KIND kind){
+    int size = strlen("return ");
+    char * p = strstr(program,"return"); 
+    while (p != NULL)
+    {
+        char * c = p+size;
+        char * c2 = strchr(c,';');
+        int copy_size = c2-c;
+        char aux[copy_size+1];
+        strncpy(aux,c,copy_size);
+        aux[copy_size]=0;
+        unsigned int type = guess_data_type(aux);
+        if(type == UNDECLARED_VAR){
+                    return false;
+                }
+        if((type == INT_LITERAL || type == INT_VAR) && kind!=KIND_INT){
+            return false;
+        }
+        if((type == STRING_LITERAL || type == STRING_VAR) && kind!=KIND_STRING){
+            return false;
+        }
+        p = strstr(c,"return");
+    }
+    return true;
+    
 }
