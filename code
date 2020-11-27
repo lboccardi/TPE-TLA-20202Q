@@ -1,6 +1,8 @@
-i$ F function(i$ p1,i$p2, s$p3){R 0.}
 S{
-    s$b='hola'. 
-    G(a,30). 
+    i$a=1.
+    i$c=2.
+    s$d='chau'.
+    s$b='holis'.
+    (b<'holi')?->{P[true].}
     R 0.
 }

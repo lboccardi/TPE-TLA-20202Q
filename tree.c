@@ -124,16 +124,13 @@ void addArgs(funct * f, char * args){
     while (curr != NULL){
         if(strncmp(args,"int",3)==0){
             f->args[curr_amount++] = KIND_INT;
-            printf("agregué un int\n");
         }else{
             f->args[curr_amount++] = KIND_STRING;
-            printf("agregué un string\n");
         }
         curr = strchr(args,',');
         args=curr+2;
     }
     f->args_count= curr_amount;
-    printf("agregué %d\n",curr_amount);
 }
 
 void addFunction(char *name, KIND kind,char * args){
