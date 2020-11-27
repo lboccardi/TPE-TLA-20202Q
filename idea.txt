@@ -34,7 +34,7 @@ array_1=2.
 array_2=2.  /alpha array digit ASSIGN digit --> checkear que alpha sea int 
             /alpha array digit ASSIGN string_value --> checkear que alpha sea string 
 
-
+P[hola 'p_1']
 
 
 // COMPILADOR 

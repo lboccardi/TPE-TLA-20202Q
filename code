@@ -1,6 +1,6 @@
 S{
     i$b=1. 
-    i$a_2=1,2.
-    P[hola 'b'\n].
+    s$a_3='holis','chau','paco'.
+    P[hola 'b' 'a_2'\n].
     R b.
 }

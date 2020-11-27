@@ -122,7 +122,7 @@ void addFunction(char *name, KIND kind,int size){
     funct *aux = malloc(sizeof(funct));
     /** save name and kind**/
     aux->name = name;
-    aux->kind=kind;
+    aux->kind=kind; 
     aux->params = size;
     
     if (function_list.first == NULL)
@@ -178,11 +178,15 @@ char *printfParser(char *s)
                     /* Salteo el '_' */
                     i++;
                     array_index = 0;
+                    /* Apertura */
+                    name[k++] = '[';
                     /* Me guardo los digits */
-                    while(s[i] > '0' && s[i] < '9') {
-                        array_index += 10*array_index + s[i++] - '0'; 
+                    while(s[i] >= '0' && s[i] <= '9') {
+                        name[k++] = s[i];
+                        array_index = 10*array_index + s[i++] - '0'; 
                     }
                     /* Cierre */
+                    name[k++] = ']';
                 } else {
                     /* Si no es un array */
                     name[k++] = s[i++];
@@ -198,12 +202,26 @@ char *printfParser(char *s)
 
                 if (strcmp(curr->name, name + pointer) == 0)
                 {
-                    if(curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING ){
-                        
-                    }
                     strcpy(ans + j, curr->type);
                     j += 2;
                     flag = false;
+                } else {
+                  /* Si falla, es porque estoy en un caso arr[N] chequear el strtok */
+                    int token_aux_len = strlen(name + pointer)+1;
+                    char token_aux[token_aux_len];
+                    strcpy(token_aux, name + pointer);
+                    char * token = strtok(token_aux, "[");
+                    if (token != NULL) {
+                        if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING)) {
+                            if (array_index >= curr->amount) {
+                                free(ans);
+                                return NULL;
+                            }
+                            strcpy(ans + j, curr->type);
+                            j += 2;
+                            flag = false;
+                        }  
+                    } 
                 }
                 curr = aux;
             }
@@ -279,12 +297,18 @@ bool enoughSpace(const char* s, int amount){
 }
 
 bool functionReturnsKind(char * s, KIND kind){
+    
+    char string[strlen(s)+1];
+    strcpy(string,s);
+
+    char * p = strchr(string,'(');
+    *p = 0;
     funct *curr = function_list.first;
     while (curr != NULL)
     {
         funct *aux = curr->next;
 
-        if (strcmp(curr->name, s) == 0)
+        if (strcmp(curr->name, string) == 0)
         {
             if (curr->kind == kind)
             {
