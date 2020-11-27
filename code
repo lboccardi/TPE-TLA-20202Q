@@ -1,14 +1,8 @@
-s$ F function2(){
-    s$a='holis'.
-    R a.
-}
-s$ F function(){
-    s$a='holis'.
-    R a.
+i$ F welcome(i$n){
+    P[Recibi 'n'\n].
+    R 0.
 }
 S{
-    i$a = 1.
-    s$c='holis'.
-    ((c~'chau')&(a~1))?->{R 1.}
+    welcome(2).
     R 0.
 }

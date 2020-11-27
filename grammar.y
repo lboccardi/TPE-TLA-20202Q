@@ -33,7 +33,7 @@ void yyerror(const char *str)
 /* Terminals */ 
 %token<stringValue>  DIGIT ALPHA SPACE_ALPHA STRING_VALUE;
 %token<stringValue>  INT STRING; 
-%token<stringValue>  PLUS MINUS TIMES DIV;
+%token<stringValue>  PLUS MINUS TIMES DIV MOD;
 %token  END; 
 %token  OPEN_P; 
 %token  CLOSE_P;
@@ -86,8 +86,8 @@ type
     ;
 
 params 
-    : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); add($$,true);}
-    | type ALPHA COMMA params   { $$ = malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); add($$,true);} 
+    : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); add($$,true); if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else{addVar($2, KIND_STRING,1);}}
+    | type ALPHA COMMA params   { $$ = malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); add($$,true);if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else{addVar($2, KIND_STRING,1);}} 
     | /* lambda */              { $$ = ""; }
     ;
 
@@ -117,6 +117,14 @@ program
                                                                                             $$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen($7)+strlen($9)+strlen($11));
                                                                                             sprintf($$,"%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11);
                                                                                             add($$,true);}
+    | OPEN_P rule operator rule CLOSE_P CONDITIONAL IF EXEC program END_EXEC ELSE EXEC program END_EXEC program {   
+                                                                                                                        if(!are_comparable($2, $4)) {
+                                                                                                                            yyerror("Uncomparable data types");
+                                                                                                                            YYABORT;
+                                                                                                                        }
+                                                                                                                        $$ = malloc(25+strlen($2)+strlen($3)+strlen($4)+strlen($9)+strlen($13)+strlen($15));
+                                                                                                                        sprintf($$,"if(%s %s %s){%s}\nelse{%s}\n%s ",$2,$3,$4,$9,$13,$15);
+                                                                                                                        add($$,true);} 
     ;
 
 get:
@@ -217,6 +225,7 @@ op
     | MINUS { $$ = "-";}
     | DIV   { $$ = "/";}
     | TIMES { $$ = "*";}
+    | MOD { $$ = "%";}
     ;
 
 %%

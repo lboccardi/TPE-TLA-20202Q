@@ -6,7 +6,7 @@
 alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
-space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'"|"_")*[\]]
+space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'"|"_"|":")*[\]]
 string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 
 %% 
@@ -64,12 +64,14 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
-"+"         return PLUS; 
+"+"         return PLUS;
+"%"         return MOD; 
 "-"         return MINUS;
 "*"         return TIMES;
 "/"         return DIV; 
 ","         return COMMA;
 "_"         return ARRAY; 
+":"			return ELSE;
 <<EOF>>                         { yyterminate(); return 1; }
 %%
  

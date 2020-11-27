@@ -121,8 +121,11 @@ void addVar(char *name, KIND kind,int size)
     aux->next = NULL;
 }
 void addArgs(funct * f, char * args){
-    char *curr = strchr(args,',');
     int curr_amount = 0;
+    if(*args == 0){
+        return;
+    }
+    char * curr = args;
     while (curr != NULL){
         if(strncmp(args,"int",3)==0){
             f->args[curr_amount++] = KIND_INT;
