@@ -89,10 +89,11 @@ bool isOfKind(char *s,KIND kind);
 
 unsigned int guess_data_type(char * s);
 
-bool are_comparable(unsigned int v1, unsigned int v2);
+bool are_comparable(char * s1, char * s2);
 
 bool functionReturnsKind(char * s, KIND kind);
 
 bool checkIfVarExists(char * name); 
+bool checkArgsOk(char*name,char*args);
 
 #endif

@@ -99,7 +99,7 @@ args
     ;
 
 call
-    : ALPHA OPEN_P  args CLOSE_P { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s(%s)",$1,$3); add($$,true);} 
+    : ALPHA OPEN_P  args CLOSE_P {if(!checkArgsOk($1,$3)){yyerror("Incompatible args for function"); YYABORT;} $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s(%s)",$1,$3); add($$,true);} 
     ;
 
 program 
@@ -110,15 +110,11 @@ program
     | STDOUT out END program                                { char * print = printfParser($2); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
     | /* lambda */                                          { $$ = "";}
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL arrow EXEC program END_EXEC program {   
-                                                                                            unsigned int v1_type, v2_type;
-                                                                                            if ( (v1_type = guess_data_type($2)) != DATA_TYPE_NONE && (v2_type = guess_data_type($4)) != DATA_TYPE_NONE) {
-                                                                                                if(!are_comparable(v1_type, v2_type)) {
-                                                                                                    yyerror("Uncomparable data types");
-                                                                                                        YYABORT;
-                                                                                                }
+                                                                                            if(!are_comparable($2, $4)) {
+                                                                                                yyerror("Uncomparable data types");
+                                                                                                YYABORT;
                                                                                             }
                                                                                             $$ = malloc(strlen($2)+10+strlen($3)+strlen($4)+strlen($7)+strlen($9)+strlen($11));
-                                                                                            
                                                                                             sprintf($$,"%s(%s %s %s){%s}\n%s ",$7,$2,$3,$4,$9,$11);
                                                                                             add($$,true);}
     ;
@@ -186,12 +182,10 @@ digit_array
     ; 
     
 rule
-    : OPEN_P rule operator rule CLOSE_P {   unsigned int v1_type, v2_type;
-                                            if ( (v1_type = guess_data_type($2)) != DATA_TYPE_NONE && (v2_type = guess_data_type($4)) != DATA_TYPE_NONE) {
-                                                if(!are_comparable(v1_type, v2_type)) {
-                                                    yyerror("Uncomparable data types");
-                                                    YYABORT;
-                                                }
+    : OPEN_P rule operator rule CLOSE_P {   
+                                            if(!are_comparable($2, $4)) {
+                                                yyerror("Uncomparable data types");
+                                                YYABORT;
                                             }
                                             $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 5);
                                             sprintf($$, "(%s %s %s)", $2, $3, $4);

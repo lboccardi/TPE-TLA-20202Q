@@ -1,8 +1,9 @@
+i$ F function(s$ a1, i$a2){
+    R 0.
+}
 S{
-    i$a=1.
-    i$c=2.
-    s$d='chau'.
-    s$b='holis'.
-    (b<'holi')?->{P[true].}
+    i$b = 1.
+    s$c = 'hola'.
+    i$a = function('holis').
     R 0.
 }

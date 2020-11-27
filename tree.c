@@ -213,8 +213,6 @@ char *printfParser(char *s)
             bool flag = true;
             while (curr != NULL && flag)
             {
-                var *aux = curr->next;
-
                 if (strcmp(curr->name, name + pointer) == 0)
                 {
                     strcpy(ans + j, curr->type);
@@ -238,7 +236,7 @@ char *printfParser(char *s)
                         }  
                     } 
                 }
-                curr = aux;
+                curr = curr->next;
             }
             if (flag)
             {
@@ -260,8 +258,6 @@ bool isOfKind(char *s,KIND kind)
     var *curr = var_list.first;
     while (curr != NULL)
     {
-        var *aux = curr->next;
-
         if (strcmp(curr->name, s) == 0)
         {
             if (curr->kind == kind)
@@ -270,7 +266,7 @@ bool isOfKind(char *s,KIND kind)
             }
             return false;
         }
-        curr = aux;
+        curr = curr->next;
     }
     return false;
 }
@@ -293,18 +289,27 @@ unsigned int guess_data_type(char * s) {
     }
 }
 
-bool are_comparable(unsigned int v1, unsigned int v2) {
-    switch(v1) {
-        case STRING_LITERAL:
-        case STRING_VAR:
-            return (v2 == STRING_LITERAL || v2 == STRING_VAR);
-        case INT_LITERAL:
-        case INT_VAR:
-            return (v2 == INT_LITERAL || v2 == INT_VAR);
-        default:
-            break;    
+bool are_comparable(char * s1, char * s2) {
+    unsigned int v1, v2;
+    /* Si ambas variables eran tipos de dato atómicos */
+    if ( (v1 = guess_data_type(s1)) != DATA_TYPE_NONE && (v2 = guess_data_type(s2)) != DATA_TYPE_NONE) {
+        switch(v1) {
+            /* String se comapra a String */
+            case STRING_LITERAL:
+            case STRING_VAR:
+                return (v2 == STRING_LITERAL || v2 == STRING_VAR);
+            /* Int se compara con Int */
+            case INT_LITERAL:
+            case INT_VAR:
+                return (v2 == INT_LITERAL || v2 == INT_VAR);;   
+        }
+        /* Code Unreachable */
+        return false;
     }
-    return false;
+
+    /* Si llega acá, alguna de las dos era una comparación, por ende son comparables */
+    return true;
+
 }
 
 bool array_is_incorrect (const char* str, int amount) {
@@ -328,8 +333,6 @@ bool enoughSpace(const char* s, int amount){
      var *curr = var_list.first;
     while (curr != NULL)
     {
-        var *aux = curr->next;
-
         if (strcmp(curr->name, s) == 0)
         {
             if (curr->amount > amount)
@@ -338,7 +341,7 @@ bool enoughSpace(const char* s, int amount){
             }
             return false;
         }
-        curr = aux;
+        curr = curr->next;
     }
     return false;
 }
@@ -353,8 +356,6 @@ bool functionReturnsKind(char * s, KIND kind){
     funct *curr = function_list.first;
     while (curr != NULL)
     {
-        funct *aux = curr->next;
-
         if (strcmp(curr->name, string) == 0)
         {
             if (curr->kind == kind)
@@ -363,7 +364,7 @@ bool functionReturnsKind(char * s, KIND kind){
             }
             return false;
         }
-        curr = aux;
+        curr = curr->next;
     }
     return false;
 }
@@ -382,4 +383,55 @@ bool checkIfVarExists(char * name){
     }
     return false; 
             
+}
+bool checkArgsOk(char*name,char*args){
+    funct *curr = function_list.first;
+    while (curr != NULL)
+    {
+        if (strcmp(curr->name, name) == 0)
+        {
+            char * p2 = strchr(args,',');
+            if(p2!=NULL && curr->args_count == 0){
+                return false;
+            }
+            char * p1 = args;
+            int i;
+            for(i=0; i<curr->args_count;i++){
+                if(*p1 == 0){
+                    return false;
+                }
+                if(p2 == NULL){
+                    p2=strchr(p1,0);
+                }
+                int copy_size = p2-p1;
+                char aux[strlen(args)+1];
+                strncpy(aux,p1,copy_size);
+                aux[copy_size]=0;
+                unsigned int type = guess_data_type(aux);
+                if(type == DATA_TYPE_NONE){
+                    return false;
+                }
+                if((type == INT_LITERAL || type == INT_VAR) && curr->args[i]!=KIND_INT){
+                    return false;
+                }
+                if((type == STRING_LITERAL || type == STRING_VAR) && curr->args[i]!=KIND_STRING){
+                    return false;
+                }
+                
+                if(*p2 == 0){
+                    p1 = p2;
+                }else{  
+                p1 = p2 +1;
+                p2 = strchr(p1,',');
+                }
+                
+            }
+            if(i==curr->args_count && *p1 == 0){
+                return true;
+            }
+            return false;
+        }
+        curr = curr->next;
+    }
+    return false;
 }
