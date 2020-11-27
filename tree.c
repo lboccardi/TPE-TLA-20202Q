@@ -39,6 +39,8 @@ void freeVars()
         free(curr);
         curr = aux;
     }
+    var_list.first = NULL;
+    var_list.last = NULL;
 }
 void freeFuncts()
 {
@@ -281,18 +283,29 @@ unsigned int guess_data_type(char * s) {
         case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9':
             return INT_LITERAL;
+        case '(':
+            return DATA_TYPE_NONE;    
         /* Si no, era una variable o era otra comparación del estilo "(? ? ?)" */
         default:
-            if(isOfKind(s, KIND_STRING))    { return STRING_VAR; }
-            if(isOfKind(s, KIND_INT))       { return INT_VAR; }
-            return DATA_TYPE_NONE;
+            if(checkIfVarExists(s)) {
+                if(isOfKind(s, KIND_STRING))    { return STRING_VAR; }
+                if(isOfKind(s, KIND_INT))       { return INT_VAR; }
+            }
+            return UNDECLARED_VAR;
     }
 }
 
 bool are_comparable(char * s1, char * s2) {
     unsigned int v1, v2;
     /* Si ambas variables eran tipos de dato atómicos */
-    if ( (v1 = guess_data_type(s1)) != DATA_TYPE_NONE && (v2 = guess_data_type(s2)) != DATA_TYPE_NONE) {
+    v1 = guess_data_type(s1);
+    v2 = guess_data_type(s2);
+
+    if (v1 ==  UNDECLARED_VAR || v2 == UNDECLARED_VAR) {
+        return false;
+    }
+
+    if ( v1 != DATA_TYPE_NONE && v2 != DATA_TYPE_NONE) {
         switch(v1) {
             /* String se comapra a String */
             case STRING_LITERAL:
@@ -301,7 +314,7 @@ bool are_comparable(char * s1, char * s2) {
             /* Int se compara con Int */
             case INT_LITERAL:
             case INT_VAR:
-                return (v2 == INT_LITERAL || v2 == INT_VAR);;   
+                return (v2 == INT_LITERAL || v2 == INT_VAR);       
         }
         /* Code Unreachable */
         return false;

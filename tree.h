@@ -11,6 +11,7 @@ typedef enum KIND{
 
 typedef enum DATA_TYPE {
     DATA_TYPE_NONE,
+    UNDECLARED_VAR,
     STRING_LITERAL,
     INT_LITERAL,
     STRING_VAR,
@@ -95,5 +96,6 @@ bool functionReturnsKind(char * s, KIND kind);
 
 bool checkIfVarExists(char * name); 
 bool checkArgsOk(char*name,char*args);
+void freeVars();
 
 #endif
