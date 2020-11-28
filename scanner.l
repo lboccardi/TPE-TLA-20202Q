@@ -59,8 +59,7 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 "<="        return LE;
 ">="        return GE;
 "~"         return EQ;
-"!~"		return NE;
-"!"         return NOT;
+"!~"		return NE; 
 "|"         return OR;
 "&"         return AND;
 "="         return ASSIGN; 

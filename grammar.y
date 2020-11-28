@@ -41,7 +41,7 @@ void yyerror(const char *str)
 %token  IF ELSE;
 %token  ESCAPE;
 %token  WHILE;
-%token  L G LE GE EQ NE NOT OR AND;
+%token  L G LE GE EQ NE OR AND;
 %token  ASSIGN;  
 %token  RETURN;
 %token  MAIN; 
@@ -227,8 +227,7 @@ operator
     | LE    { $$ = "<=";}
     | GE    { $$ = ">=";} 
     | EQ    { $$ = "==";}
-    | NE    { $$ = "!=";}
-    | NOT   { $$ = "!";}
+    | NE    { $$ = "!=";} 
     | OR    { $$ = "||";}
     | AND   { $$ = "&&";}
     ;
