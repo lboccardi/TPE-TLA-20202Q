@@ -2,23 +2,25 @@
 #define TREE_H
 #include <stdbool.h>
 
-typedef enum KIND{
+typedef enum KIND
+{
     KIND_STRING,
     KIND_INT,
     KIND_CHAR,
     KIND_ARRAY_INT,
     KIND_ARRAY_STRING,
     KIND_ARRAY_CHAR
-}KIND;
+} KIND;
 
-typedef enum DATA_TYPE {
+typedef enum DATA_TYPE
+{
     DATA_TYPE_NONE,
     UNDECLARED_VAR,
     STRING_LITERAL,
     INT_LITERAL,
     CHAR_LITERAL,
     STRING_VAR,
-    INT_VAR, 
+    INT_VAR,
     CHAR_VAR
 } DATA_TYPE;
 
@@ -73,36 +75,38 @@ extern code program;
 extern variables var_list;
 extern functions function_list;
 
-
 void initialize();
 
 void add(char *information, bool free);
 
 void freeResources(bool error);
 
-void addVar(char *name, KIND kind,int size);
+void addVar(char *name, KIND kind, int size);
 
-void addFunction(char *name, KIND kind,char * args);
+void addFunction(char *name, KIND kind, char *args);
 
 char *printfParser(char *s);
 
-bool enoughSpace(const char* str, int amount);
+bool enoughSpace(const char *str, int amount);
 
-bool array_is_incorrect (const char* str, int amount);
+bool array_is_incorrect(const char *str, int amount);
 
-bool isOfKind(char *s,KIND kind);
+bool isOfKind(char *s, KIND kind);
 
-unsigned int guess_data_type(char * s);
+unsigned int guess_data_type(char *s);
 
-bool are_comparable(char * s1, char * s2);
+bool are_comparable(char *s1, char *s2);
 
-bool functionReturnsKind(char * s, KIND kind);
+bool functionReturnsKind(char *s, KIND kind);
 
-bool checkIfVarExists(char * name); 
-bool checkIfFunctionExists(char * name); 
-bool checkArgsOk(char*name,char*args);
+bool checkIfVarExists(char *name);
+bool checkIfFunctionExists(char *name);
+bool checkArgsOk(char *name, char *args);
 void freeVars();
-bool checkReturnType(char * program, KIND kind);
-bool compatibleArray(char * v1,char * v2,int number);
-bool correctArray(char * name,KIND kind,int size);
+bool checkReturnType(char *program, KIND kind);
+bool compatibleArray(char *v1, char *v2, int number);
+bool correctArray(char *name, KIND kind, int size);
+
+/* Checks if two arrays are of the same type in order to do a[i] = a[kj] */
+bool compatibleArrayAssignment(char *v1, char *v2, int n1, int n2);
 #endif
