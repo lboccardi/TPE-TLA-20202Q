@@ -1,0 +1,36 @@
+i$ F welcome(){
+    P[Ingrese un numero para checkear:\n].
+    R 0.
+}
+
+i$ F primeCheck(i$n){
+    (n <= 1)?->{
+        R 0.
+    }
+    i$check=2.
+    i$aux.
+    (check<n)?-->{
+        aux=n%check.
+        (aux~0)?->{
+            R 0.
+        }
+        check = check +1.
+    }
+    R 1.
+}
+
+S{
+    welcome().
+    G(w, 50).
+    i$number=C(w).
+
+    i$res=primeCheck(number).
+
+    (res~0)?->{
+        P['w' no es primo\n].
+    }:{
+        P['w' es primo\n].
+    }
+
+    R 0.
+}

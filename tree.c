@@ -257,7 +257,7 @@ char *printfParser(char *s)
                     if (token != NULL) {
                         if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING)) {
                             if (var_flag == false) {
-                                if (array_index >= curr->amount) {
+                                if (array_index >= curr->amount && curr->amount!=-1) {
                                     free(ans);
                                     return NULL;
                                 }
@@ -389,7 +389,7 @@ bool enoughSpace(const char* s, int amount){
     {
         if (strcmp(curr->name, s) == 0)
         {
-            if (curr->amount > amount)
+            if (curr->amount > amount || curr->amount==-1)
             {
                 return true;
             }

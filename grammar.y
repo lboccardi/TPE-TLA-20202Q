@@ -16,9 +16,11 @@ int yylex();
 
 int yydebug=1;
 
+extern int yylineno;
+
 void yyerror(const char *str)
 {
-  fprintf(stderr,"error: %s\n",str);
+  fprintf(stderr,"At line: %d. error: %s\n",yylineno,str);
   freeResources(true); 
   program.error = true;
 } 
@@ -162,8 +164,10 @@ var
     | CHAR ALPHA                                { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(5+strlen($2)+2); sprintf($$,"char %s",$2);add($$,true); addVar($2, KIND_CHAR,1);}
     | STRING ALPHA                              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(7+strlen($2)+2); sprintf($$,"%s %s","char *",$2);add($$,true); addVar($2, KIND_STRING,1);}
     | INT ALPHA ARRAY DIGIT                     { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(3+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","int",$2,$4);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
+    | INT ALPHA ARRAY ALPHA                     { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind($4,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;} $$ = malloc(3+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","int",$2,$4);add($$,true); addVar($2, KIND_ARRAY_INT,-1); }
     | STRING ALPHA ARRAY DIGIT                  { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(7+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char *",$2,$4);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
     | CHAR ALPHA ARRAY DIGIT                    { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(4+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char",$2,$4);add($$,true); addVar($2, KIND_ARRAY_CHAR,atoi($4)); }
+    | CHAR ALPHA ARRAY ALPHA                    { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} if(!isOfKind($4,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}$$ = malloc(4+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char",$2,$4);add($$,true); addVar($2, KIND_ARRAY_CHAR,-1); }
  
     | ALPHA ASSIGN ALPHA                        { if((!checkIfVarExists($1)||!checkIfVarExists($3))|| !are_comparable($1,$3)){yyerror("Variables aren't compatible."); YYABORT;}$$ = malloc(4+strlen($1)+6+strlen($3)); sprintf($$,"%s=%s",$1,$3); add($$,true);}
     | ALPHA ASSIGN ESCAPE ALPHA                 { if(!isOfKind($1,KIND_CHAR)){yyerror("Variable should be int type.");YYABORT;}if(strlen($4)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($1)+strlen($4)+10); sprintf($$, "%s=\'%s\'", $1, $4);add($$,true);}

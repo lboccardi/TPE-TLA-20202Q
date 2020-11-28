@@ -3,6 +3,8 @@
 #include "tree.h"
 %}
 
+%option yylineno
+
 alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
