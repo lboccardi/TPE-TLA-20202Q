@@ -473,16 +473,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  11
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   268
+#define YYLAST   275
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  19
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  100
+#define YYNRULES  101
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  223
+#define YYNSTATES  226
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   297
@@ -539,10 +539,10 @@ static const yytype_uint16 yyrline[] =
      149,   150,   151,   152,   153,   154,   155,   156,   157,   158,
      160,   161,   162,   163,   164,   165,   167,   168,   169,   170,
      171,   172,   173,   174,   175,   178,   179,   180,   181,   184,
-     185,   186,   191,   192,   193,   197,   198,   199,   204,   208,
-     209,   213,   214,   218,   219,   223,   232,   241,   242,   243,
-     244,   245,   246,   247,   248,   249,   253,   254,   255,   256,
-     257
+     185,   186,   187,   191,   192,   193,   197,   198,   199,   204,
+     208,   209,   213,   214,   218,   219,   223,   232,   241,   242,
+     243,   244,   245,   246,   247,   248,   249,   253,   254,   255,
+     256,   257
 };
 #endif
 
@@ -576,10 +576,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -109
+#define YYPACT_NINF -94
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-109)))
+  (!!((Yystate) == (-94)))
 
 #define YYTABLE_NINF -60
 
@@ -590,29 +590,29 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      67,   -25,   -17,    -9,     7,    34,    67,    38,    55,    63,
-      64,  -109,  -109,    54,    70,    94,    12,   108,   113,   124,
-     123,    86,   118,    56,   136,   125,    64,   148,   140,   140,
-     140,   127,    10,   135,    -4,    -3,    66,  -109,  -109,  -109,
-     123,   160,  -109,    93,   151,   161,    56,    56,   132,   153,
-      64,  -109,  -109,    64,  -109,  -109,  -109,   163,   155,   157,
-     159,   162,   164,  -109,   128,   165,     4,   167,   166,   169,
-     170,  -109,   130,   138,    18,   172,    87,   174,     2,   176,
-      93,  -109,  -109,  -109,  -109,  -109,  -109,  -109,  -109,  -109,
-    -109,  -109,  -109,  -109,  -109,   123,  -109,  -109,   146,  -109,
-    -109,   168,   171,    64,  -109,  -109,   149,   173,   177,   178,
-    -109,   127,   150,   183,   195,   196,  -109,   152,   129,   130,
-      71,   185,   186,  -109,   175,    27,  -109,  -109,   179,    36,
-     199,  -109,   180,   123,   187,   202,    56,    56,  -109,   140,
-      64,    64,    64,  -109,  -109,  -109,   189,   190,   130,   130,
-    -109,  -109,   205,  -109,   154,  -109,   206,   207,   211,   156,
-     209,   158,  -109,   193,   200,   201,   203,  -109,  -109,  -109,
-     198,   204,   208,  -109,  -109,  -109,  -109,  -109,  -109,  -109,
-     210,   212,   181,  -109,  -109,  -109,   182,  -109,  -109,  -109,
-     217,  -109,  -109,    42,   215,  -109,  -109,  -109,  -109,  -109,
-     211,   209,   184,   213,   214,  -109,  -109,  -109,   193,    64,
-      64,  -109,   216,   218,    28,    64,   220,  -109,  -109,    64,
-     221,    64,  -109
+      68,   -24,    -3,    20,    -7,    73,    68,    85,    97,   104,
+      58,   -94,   -94,    96,    99,   142,    67,   153,   155,   156,
+      65,    87,   145,    10,   147,   143,    58,   149,   123,   123,
+     123,   101,     7,   140,   -16,   -10,   100,   -94,   -94,   -94,
+      65,   161,   -94,   109,   151,   163,    10,    10,   141,   154,
+      58,   -94,   -94,    58,   -94,   -94,   -94,   164,   157,   158,
+     159,   162,   160,   -94,   129,   165,    64,   166,   167,   168,
+     169,   -94,   115,   139,   170,    17,   176,    80,   179,    49,
+     180,   109,   -94,   -94,   -94,   -94,   -94,   -94,   -94,   -94,
+     -94,   -94,   -94,   -94,   -94,   -94,    65,   -94,   -94,   132,
+     -94,   -94,   171,   172,    58,   -94,   -94,   173,   174,   178,
+     181,   -94,   101,   144,   175,   184,   185,   -94,   146,    79,
+     195,   115,    28,   186,   188,   -94,   177,     6,   -94,   -94,
+     182,     9,   197,   -94,   183,    65,   189,   202,    10,    10,
+     -94,   123,    58,    58,    58,   -94,   -94,   -94,   190,   191,
+     115,   115,   -94,   -94,   205,   -94,   -94,   148,   -94,   207,
+     208,   210,   150,   211,   152,   -94,   196,   201,   203,   206,
+     -94,   -94,   -94,   200,   204,   209,   -94,   -94,   -94,   -94,
+     -94,   -94,   -94,   213,   214,   187,   -94,   -94,   -94,   192,
+     -94,   -94,   -94,   218,   -94,   -94,    90,   212,   -94,   -94,
+     -94,   -94,   -94,   210,   211,   193,   216,   217,   -94,   -94,
+     -94,   196,    58,    58,   -94,   219,   220,    27,    58,   222,
+     -94,   -94,    58,   223,    58,   -94
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -623,40 +623,40 @@ static const yytype_uint8 yydefact[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
       26,     1,     3,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,    30,     0,     0,    26,     0,    12,    12,
-      12,    16,     0,     0,    50,    52,    51,    76,    75,    77,
-       0,     0,    86,     0,     0,     0,    30,    30,     0,     0,
+      12,    16,     0,     0,    50,    52,    51,    77,    76,    78,
+       0,     0,    87,     0,     0,     0,    30,    30,     0,     0,
       26,     2,    21,    26,     7,     8,     9,     0,     0,     0,
-       0,    75,     0,    15,    13,    76,    75,    77,     0,     0,
-       0,    68,    74,     0,     0,     0,     0,     0,     0,     0,
-       0,    78,    96,    97,    99,    98,   100,    88,    89,    90,
-      91,    92,    93,    94,    95,     0,    87,    20,     0,    31,
-      28,     0,     0,    26,    19,    18,    10,     0,     0,     0,
-      17,    16,     0,    78,     0,     0,    60,     0,     0,    74,
-      74,     0,     0,    65,    53,    36,    35,    66,    54,    47,
-       0,    67,    55,     0,     0,     0,    30,    30,    22,    12,
-      26,    26,    26,    14,    61,    62,     0,     0,    74,    74,
-      69,    71,     0,    33,     0,    34,     0,     0,     0,     0,
-       0,     0,    37,     0,     0,     0,     0,    32,    29,    11,
-       0,     0,     0,    63,    64,    72,    73,    70,    43,    45,
-       0,     0,    82,    38,    44,    46,    80,    39,    48,    49,
-       0,    40,    85,     0,     0,     4,     5,     6,    41,    42,
-       0,     0,    84,     0,     0,    27,    81,    79,     0,    26,
-      26,    83,     0,     0,    26,    26,     0,    24,    23,    26,
-       0,    26,    25
+       0,    76,     0,    15,    13,    77,    76,    78,     0,     0,
+       0,    68,    75,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    79,    97,    98,   100,    99,   101,    89,    90,
+      91,    92,    93,    94,    95,    96,     0,    88,    20,     0,
+      31,    28,     0,     0,    26,    19,    18,    10,     0,     0,
+       0,    17,    16,     0,    79,     0,     0,    60,     0,     0,
+       0,    75,    75,     0,     0,    65,    53,    36,    35,    66,
+      54,    47,     0,    67,    55,     0,     0,     0,    30,    30,
+      22,    12,    26,    26,    26,    14,    61,    62,     0,     0,
+      75,    75,    69,    71,     0,    72,    33,     0,    34,     0,
+       0,     0,     0,     0,     0,    37,     0,     0,     0,     0,
+      32,    29,    11,     0,     0,     0,    63,    64,    73,    74,
+      70,    43,    45,     0,     0,    83,    38,    44,    46,    81,
+      39,    48,    49,     0,    40,    86,     0,     0,     4,     5,
+       6,    41,    42,     0,     0,    85,     0,     0,    27,    82,
+      80,     0,    26,    26,    84,     0,     0,    26,    26,     0,
+      24,    23,    26,     0,    26,    25
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -109,   225,  -109,  -109,   -28,    62,   -23,   -26,  -109,   -42,
-    -109,  -108,   -14,    25,    35,    26,   -37,   188,   -33
+     -94,   226,   -94,   -94,   -28,   113,   -25,   -26,   -94,   -42,
+     -94,   -93,   -13,    22,    34,    31,   -37,   194,   -34
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
       -1,     5,     6,    57,    58,    62,    24,    25,    26,    49,
-      27,   116,    42,   187,   183,   191,    43,    95,   117
+      27,   117,    42,   190,   186,   194,    43,    96,   118
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -664,64 +664,66 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      52,    59,    60,    80,    99,   100,   129,    44,    63,    71,
-      96,   153,   155,    65,    66,     7,    67,    64,    72,   -56,
-      31,   119,   120,     8,   104,   130,    10,   105,    31,    74,
-      76,     9,    16,    68,    11,    17,    18,    19,    75,    77,
-     175,   176,    13,    31,    20,    32,   112,    96,    69,    70,
-     216,   123,    31,   127,    33,   131,   121,   122,   134,    14,
-      46,    47,    21,   203,    22,    23,   204,    15,    16,   159,
-      28,    17,    18,    19,     1,     2,     3,   138,   161,    48,
-      20,    82,    83,    84,    85,    86,    29,    31,    63,    37,
-      38,   125,    39,   126,   167,   168,   164,    64,    21,    78,
-      22,    23,     4,    82,    83,    84,    85,    86,    79,    41,
-      30,   169,    34,   154,   170,   171,   172,    35,    87,    88,
-      89,    90,    91,    92,    93,    94,    37,    38,    36,    39,
-      37,    61,   150,    39,    45,   151,   101,   102,    73,    40,
-      82,    83,    84,    85,    86,    51,    41,    54,    55,    56,
-      41,    50,   152,   144,   145,   148,   149,   178,   179,   184,
-     185,   188,   189,    53,    81,    98,    97,   106,   103,   111,
-     113,   118,   107,   143,   108,   124,   109,   128,    31,   132,
-     -58,   110,   -59,   212,   213,   114,   115,   135,   217,   218,
-     139,   136,   140,   220,   137,   222,   141,   142,   -57,   146,
-     147,   156,   157,   162,   165,   166,   173,   174,   158,   177,
-     180,   181,   160,   163,   182,   186,   190,   192,   195,   193,
-     194,   202,   200,   201,   196,   208,   207,   198,   197,   199,
-     205,    12,   209,   210,   211,   206,   214,     0,   215,   219,
-       0,   221,     0,     0,     0,     0,     0,     0,     0,     0,
+      52,    59,    60,    81,   100,   101,    63,    71,    44,    97,
+      65,    66,    10,    67,    46,    47,     7,    75,    64,    72,
+     121,   122,    31,    77,   105,    31,    76,   106,   156,   158,
+      68,    16,    78,    48,    17,    18,    19,     8,    83,    84,
+      85,    86,    87,    20,    31,    69,    70,    97,   162,   219,
+     125,   164,   129,   131,   133,   123,   124,   178,   179,   136,
+       9,    21,    16,    22,    23,    17,    18,    19,    37,    38,
+     157,    39,   132,    11,    20,     1,     2,     3,   140,   -56,
+      31,    40,   152,    31,   127,   153,   128,    63,    41,    13,
+      37,    38,    21,    39,    22,    23,   170,   171,   167,    64,
+      32,    14,   154,     4,    37,    61,   113,    39,    15,    33,
+      41,   206,    28,   172,   207,    29,   173,   174,   175,    83,
+      84,    85,    86,    87,    41,    83,    84,    85,    86,    87,
+      54,    55,    56,    79,    88,    89,    90,    91,    92,    93,
+      94,    95,    80,    73,    74,   102,   103,   146,   147,   150,
+     151,   181,   182,   187,   188,   191,   192,    34,    30,    35,
+      36,    45,    50,    51,    53,    82,    98,    99,   107,   104,
+     112,   114,   119,   137,   108,   109,   110,   111,    31,   126,
+     -58,   -59,   130,   134,   115,   116,   215,   216,   148,   149,
+     -57,   220,   221,   142,   138,   139,   223,   143,   225,   155,
+     144,   165,   159,   120,   160,   169,   168,   176,   177,   180,
+     161,   183,   184,   185,   141,   163,   166,   189,   195,   193,
+     198,   196,   205,   197,   199,   145,   210,   208,   203,   200,
+     201,   202,    12,   204,   211,   212,   213,   209,     0,   217,
+     218,   222,   214,   224,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   133
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   135
 };
 
 static const yytype_int16 yycheck[] =
 {
-      26,    29,    30,    40,    46,    47,     4,    21,    31,    32,
-      43,   119,   120,     3,     4,    40,     6,    31,    32,    15,
-      16,     3,     4,    40,    50,    23,    19,    53,    16,    33,
-      33,    40,     4,    23,     0,     7,     8,     9,    42,    42,
-     148,   149,     4,    16,    16,    33,    42,    80,    38,    39,
-      22,    74,    16,    76,    42,    78,    38,    39,    95,     4,
-       4,     5,    34,    21,    36,    37,    24,     4,     4,    42,
-      16,     7,     8,     9,     7,     8,     9,   103,    42,    23,
-      16,    10,    11,    12,    13,    14,    16,    16,   111,     3,
-       4,     4,     6,     6,   136,   137,   133,   111,    34,    33,
-      36,    37,    35,    10,    11,    12,    13,    14,    42,    23,
-      16,   139,     4,    42,   140,   141,   142,     4,    25,    26,
-      27,    28,    29,    30,    31,    32,     3,     4,     4,     6,
-       3,     4,     3,     6,    16,     6,     4,     5,     3,    16,
-      10,    11,    12,    13,    14,    20,    23,     7,     8,     9,
-      23,    15,    23,     3,     4,     3,     4,     3,     4,     3,
-       4,     3,     4,    15,     4,     4,    15,     4,    15,    41,
-       4,    33,    17,   111,    17,     3,    17,     3,    16,     3,
-      15,    17,    15,   209,   210,    16,    16,    41,   214,   215,
-      41,    23,    19,   219,    23,   221,    19,    19,    15,     4,
-       4,    16,    16,     4,    17,     3,    17,    17,    33,     4,
-       4,     4,    33,    33,     3,     6,    23,    17,    20,    18,
-      17,     4,    41,    41,    20,    41,   201,    17,    20,    17,
-      15,     6,    19,    19,   208,   200,    20,    -1,    20,    19,
-      -1,    20,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      26,    29,    30,    40,    46,    47,    31,    32,    21,    43,
+       3,     4,    19,     6,     4,     5,    40,    33,    31,    32,
+       3,     4,    16,    33,    50,    16,    42,    53,   121,   122,
+      23,     4,    42,    23,     7,     8,     9,    40,    10,    11,
+      12,    13,    14,    16,    16,    38,    39,    81,    42,    22,
+      75,    42,    77,     4,    79,    38,    39,   150,   151,    96,
+      40,    34,     4,    36,    37,     7,     8,     9,     3,     4,
+      42,     6,    23,     0,    16,     7,     8,     9,   104,    15,
+      16,    16,     3,    16,     4,     6,     6,   112,    23,     4,
+       3,     4,    34,     6,    36,    37,   138,   139,   135,   112,
+      33,     4,    23,    35,     3,     4,    42,     6,     4,    42,
+      23,    21,    16,   141,    24,    16,   142,   143,   144,    10,
+      11,    12,    13,    14,    23,    10,    11,    12,    13,    14,
+       7,     8,     9,    33,    25,    26,    27,    28,    29,    30,
+      31,    32,    42,     3,     4,     4,     5,     3,     4,     3,
+       4,     3,     4,     3,     4,     3,     4,     4,    16,     4,
+       4,    16,    15,    20,    15,     4,    15,     4,     4,    15,
+      41,     4,    33,    41,    17,    17,    17,    17,    16,     3,
+      15,    15,     3,     3,    16,    16,   212,   213,     4,     4,
+      15,   217,   218,    19,    23,    23,   222,    19,   224,     4,
+      19,     4,    16,    33,    16,     3,    17,    17,    17,     4,
+      33,     4,     4,     3,    41,    33,    33,     6,    17,    23,
+      20,    18,     4,    17,    20,   112,   204,    15,    41,    20,
+      17,    17,     6,    41,    41,    19,    19,   203,    -1,    20,
+      20,    19,   211,    20,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    80
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    81
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -735,22 +737,22 @@ static const yytype_uint8 yystos[] =
       16,    23,    55,    59,    55,    16,     4,     5,    23,    52,
       15,    20,    50,    15,     7,     8,     9,    46,    47,    47,
       47,     4,    48,    49,    55,     3,     4,     6,    23,    38,
-      39,    49,    55,     3,    33,    42,    33,    42,    33,    42,
-      59,     4,    10,    11,    12,    13,    14,    25,    26,    27,
-      28,    29,    30,    31,    32,    60,    61,    15,     4,    52,
-      52,     4,     5,    15,    50,    50,     4,    17,    17,    17,
-      17,    41,    42,     4,    16,    16,    54,    61,    33,     3,
-       4,    38,    39,    49,     3,     4,     6,    49,     3,     4,
-      23,    49,     3,    60,    59,    41,    23,    23,    50,    41,
-      19,    19,    19,    48,     3,     4,     4,     4,     3,     4,
-       3,     6,    23,    54,    42,    54,    16,    16,    33,    42,
-      33,    42,     4,    33,    59,    17,     3,    52,    52,    47,
-      50,    50,    50,    17,    17,    54,    54,     4,     3,     4,
-       4,     4,     3,    57,     3,     4,     6,    56,     3,     4,
-      23,    58,    17,    18,    17,    20,    20,    20,    17,    17,
-      41,    41,     4,    21,    24,    15,    57,    56,    41,    19,
-      19,    58,    50,    50,    20,    20,    22,    50,    50,    19,
-      50,    20,    50
+      39,    49,    55,     3,     4,    33,    42,    33,    42,    33,
+      42,    59,     4,    10,    11,    12,    13,    14,    25,    26,
+      27,    28,    29,    30,    31,    32,    60,    61,    15,     4,
+      52,    52,     4,     5,    15,    50,    50,     4,    17,    17,
+      17,    17,    41,    42,     4,    16,    16,    54,    61,    33,
+      33,     3,     4,    38,    39,    49,     3,     4,     6,    49,
+       3,     4,    23,    49,     3,    60,    59,    41,    23,    23,
+      50,    41,    19,    19,    19,    48,     3,     4,     4,     4,
+       3,     4,     3,     6,    23,     4,    54,    42,    54,    16,
+      16,    33,    42,    33,    42,     4,    33,    59,    17,     3,
+      52,    52,    47,    50,    50,    50,    17,    17,    54,    54,
+       4,     3,     4,     4,     4,     3,    57,     3,     4,     6,
+      56,     3,     4,    23,    58,    17,    18,    17,    20,    20,
+      20,    17,    17,    41,    41,     4,    21,    24,    15,    57,
+      56,    41,    19,    19,    58,    50,    50,    20,    20,    22,
+      50,    50,    19,    50,    20,    50
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -763,10 +765,10 @@ static const yytype_uint8 yyr1[] =
       53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
       53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
       53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
-      53,    53,    54,    54,    54,    55,    55,    55,    55,    56,
-      56,    57,    57,    58,    58,    59,    59,    60,    60,    60,
-      60,    60,    60,    60,    60,    60,    61,    61,    61,    61,
-      61
+      53,    53,    53,    54,    54,    54,    55,    55,    55,    55,
+      56,    56,    57,    57,    58,    58,    59,    59,    60,    60,
+      60,    60,    60,    60,    60,    60,    60,    61,    61,    61,
+      61,    61
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -779,10 +781,10 @@ static const yytype_uint8 yyr2[] =
        6,     7,     7,     6,     6,     6,     6,     4,     6,     6,
        2,     2,     2,     4,     4,     4,     3,     4,     3,     3,
        4,     5,     5,     6,     6,     4,     4,     4,     3,     5,
-       6,     5,     3,     3,     0,     1,     1,     1,     2,     3,
-       1,     3,     1,     4,     2,     5,     1,     1,     1,     1,
+       6,     5,     5,     3,     3,     0,     1,     1,     1,     2,
+       3,     1,     3,     1,     4,     2,     5,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1
+       1,     1
 };
 
 
@@ -1469,127 +1471,127 @@ yyreduce:
   case 2:
 #line 62 "grammar.y"
     { if(!checkReturnType((yyvsp[-1].stringValue),KIND_INT)){yyerror("Wrong return type"); YYABORT;}(yyval.stringValue) = malloc(16 +  strlen((yyvsp[-1].stringValue))); sprintf((yyval.stringValue), "int main(){ %s }\n",(yyvsp[-1].stringValue)); add((yyval.stringValue), true);  }
-#line 1473 "y.tab.c"
+#line 1475 "y.tab.c"
     break;
 
   case 3:
 #line 63 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+3); sprintf((yyval.stringValue),"%s\n%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1479 "y.tab.c"
+#line 1481 "y.tab.c"
     break;
 
   case 4:
 #line 67 "grammar.y"
     {if(checkIfFunctionExists((yyvsp[-6].stringValue))){yyerror("Function already declared."); YYABORT;} if(!checkReturnType((yyvsp[-1].stringValue),KIND_INT)){yyerror("Wrong return type"); YYABORT;}(yyval.stringValue) = malloc(3+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-1].stringValue))+ 8); sprintf((yyval.stringValue), "%s %s(%s){\n%s}\n", "int", (yyvsp[-6].stringValue), (yyvsp[-4].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true); addFunction((yyvsp[-6].stringValue),KIND_INT,(yyvsp[-4].stringValue)); freeVars();}
-#line 1485 "y.tab.c"
+#line 1487 "y.tab.c"
     break;
 
   case 5:
 #line 68 "grammar.y"
     {if(checkIfFunctionExists((yyvsp[-6].stringValue))){yyerror("Function already declared."); YYABORT;} if(!checkReturnType((yyvsp[-1].stringValue),KIND_STRING)){yyerror("Wrong return type"); YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-1].stringValue))+ 8); sprintf((yyval.stringValue), "%s %s(%s){\n%s}\n", "char *", (yyvsp[-6].stringValue), (yyvsp[-4].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true); addFunction((yyvsp[-6].stringValue),KIND_STRING,(yyvsp[-4].stringValue));freeVars();}
-#line 1491 "y.tab.c"
+#line 1493 "y.tab.c"
     break;
 
   case 6:
 #line 69 "grammar.y"
     {if(checkIfFunctionExists((yyvsp[-6].stringValue))){yyerror("Function already declared."); YYABORT;} if(!checkReturnType((yyvsp[-1].stringValue),KIND_CHAR)){yyerror("Wrong return type"); YYABORT;}(yyval.stringValue) = malloc(4+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-1].stringValue))+ 8); sprintf((yyval.stringValue), "%s %s(%s){\n%s}\n", "char", (yyvsp[-6].stringValue), (yyvsp[-4].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true); addFunction((yyvsp[-6].stringValue),KIND_CHAR,(yyvsp[-4].stringValue)); freeVars();}
-#line 1497 "y.tab.c"
+#line 1499 "y.tab.c"
     break;
 
   case 7:
 #line 73 "grammar.y"
     {(yyval.stringValue) = "int";}
-#line 1503 "y.tab.c"
+#line 1505 "y.tab.c"
     break;
 
   case 8:
 #line 74 "grammar.y"
     {(yyval.stringValue) = "char *";}
-#line 1509 "y.tab.c"
+#line 1511 "y.tab.c"
     break;
 
   case 9:
 #line 75 "grammar.y"
     {(yyval.stringValue) = "char";}
-#line 1515 "y.tab.c"
+#line 1517 "y.tab.c"
     break;
 
   case 10:
 #line 79 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue)) +2); sprintf((yyval.stringValue), "%s %s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true); if(strcmp((yyvsp[-1].stringValue),"int")==0){addVar((yyvsp[0].stringValue), KIND_INT,1);}else{addVar((yyvsp[0].stringValue), KIND_STRING,1);}}
-#line 1521 "y.tab.c"
+#line 1523 "y.tab.c"
     break;
 
   case 11:
 #line 80 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-2].stringValue))+4+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s %s, %s", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);if(strcmp((yyvsp[-3].stringValue),"int")==0){addVar((yyvsp[-2].stringValue), KIND_INT,1);}else{addVar((yyvsp[-2].stringValue), KIND_STRING,1);}}
-#line 1527 "y.tab.c"
+#line 1529 "y.tab.c"
     break;
 
   case 12:
 #line 81 "grammar.y"
     { (yyval.stringValue) = ""; }
-#line 1533 "y.tab.c"
+#line 1535 "y.tab.c"
     break;
 
   case 13:
 #line 85 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1539 "y.tab.c"
+#line 1541 "y.tab.c"
     break;
 
   case 14:
 #line 86 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s,%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1545 "y.tab.c"
+#line 1547 "y.tab.c"
     break;
 
   case 15:
 #line 87 "grammar.y"
     { (yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1551 "y.tab.c"
+#line 1553 "y.tab.c"
     break;
 
   case 16:
 #line 88 "grammar.y"
     { (yyval.stringValue) = "";}
-#line 1557 "y.tab.c"
+#line 1559 "y.tab.c"
     break;
 
   case 17:
 #line 92 "grammar.y"
     {if(!checkArgsOk((yyvsp[-3].stringValue),(yyvsp[-1].stringValue))){yyerror("Incompatible args for function"); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+3+strlen((yyvsp[-1].stringValue))); sprintf((yyval.stringValue),"%s(%s)",(yyvsp[-3].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
-#line 1563 "y.tab.c"
+#line 1565 "y.tab.c"
     break;
 
   case 18:
 #line 96 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1569 "y.tab.c"
+#line 1571 "y.tab.c"
     break;
 
   case 19:
 #line 97 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s; %s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1575 "y.tab.c"
+#line 1577 "y.tab.c"
     break;
 
   case 20:
 #line 98 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue)) +9); sprintf((yyval.stringValue), "return %s;", (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
-#line 1581 "y.tab.c"
+#line 1583 "y.tab.c"
     break;
 
   case 21:
 #line 99 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+5); sprintf((yyval.stringValue),"%s %s",(yyvsp[-1].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue), true);}
-#line 1587 "y.tab.c"
+#line 1589 "y.tab.c"
     break;
 
   case 22:
 #line 100 "grammar.y"
     { char * print = printfParser((yyvsp[-2].stringValue)); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))*2+5+strlen((yyvsp[0].stringValue))+ 11); sprintf((yyval.stringValue), "printf(%s);\n%s", print, (yyvsp[0].stringValue)); add((yyval.stringValue),true); free(print);}
-#line 1593 "y.tab.c"
+#line 1595 "y.tab.c"
     break;
 
   case 23:
@@ -1602,7 +1604,7 @@ yyreduce:
                                                                                             (yyval.stringValue) = malloc(strlen((yyvsp[-9].stringValue))+10+strlen((yyvsp[-8].stringValue))+strlen((yyvsp[-7].stringValue))+strlen("while")+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue)));
                                                                                             sprintf((yyval.stringValue),"while(%s %s %s){%s}\n%s ",(yyvsp[-9].stringValue),(yyvsp[-8].stringValue),(yyvsp[-7].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));
                                                                                             add((yyval.stringValue),true);}
-#line 1606 "y.tab.c"
+#line 1608 "y.tab.c"
     break;
 
   case 24:
@@ -1615,7 +1617,7 @@ yyreduce:
                                                                                             (yyval.stringValue) = malloc(strlen((yyvsp[-9].stringValue))+10+strlen((yyvsp[-8].stringValue))+strlen((yyvsp[-7].stringValue))+strlen("if")+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue)));
                                                                                             sprintf((yyval.stringValue),"if(%s %s %s){%s}\n%s ",(yyvsp[-9].stringValue),(yyvsp[-8].stringValue),(yyvsp[-7].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));
                                                                                             add((yyval.stringValue),true);}
-#line 1619 "y.tab.c"
+#line 1621 "y.tab.c"
     break;
 
   case 25:
@@ -1628,368 +1630,374 @@ yyreduce:
                                                                                                                         (yyval.stringValue) = malloc(25+strlen((yyvsp[-13].stringValue))+strlen((yyvsp[-12].stringValue))+strlen((yyvsp[-11].stringValue))+strlen((yyvsp[-6].stringValue))+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue)));
                                                                                                                         sprintf((yyval.stringValue),"if(%s %s %s){%s}\nelse{%s}\n%s ",(yyvsp[-13].stringValue),(yyvsp[-12].stringValue),(yyvsp[-11].stringValue),(yyvsp[-6].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));
                                                                                                                         add((yyval.stringValue),true);}
-#line 1632 "y.tab.c"
+#line 1634 "y.tab.c"
     break;
 
   case 26:
 #line 125 "grammar.y"
     { (yyval.stringValue) = "";}
-#line 1638 "y.tab.c"
+#line 1640 "y.tab.c"
     break;
 
   case 27:
 #line 129 "grammar.y"
-    { if(checkIfVarExists((yyvsp[-4].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}  (yyval.stringValue) = malloc(2*strlen((yyvsp[-4].stringValue))+2*strlen((yyvsp[-2].stringValue))+ 30); sprintf((yyval.stringValue),"char %s[%s];\nfgets(%s,%s,stdin);\n",(yyvsp[-4].stringValue),(yyvsp[-2].stringValue),(yyvsp[-4].stringValue),(yyvsp[-2].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-4].stringValue), KIND_STRING,1);}
-#line 1644 "y.tab.c"
+    { if(checkIfVarExists((yyvsp[-4].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}  (yyval.stringValue) = malloc(2*strlen((yyvsp[-4].stringValue))+2*strlen((yyvsp[-2].stringValue))+ 30); sprintf((yyval.stringValue),"char %s[%s];\nfgets(%s,%s,stdin);\n",(yyvsp[-4].stringValue),(yyvsp[-2].stringValue),(yyvsp[-4].stringValue),(yyvsp[-2].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-4].stringValue), KIND_ARRAY_CHAR,1);}
+#line 1646 "y.tab.c"
     break;
 
   case 28:
 #line 133 "grammar.y"
     { (yyval.stringValue) = malloc(1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1650 "y.tab.c"
+#line 1652 "y.tab.c"
     break;
 
   case 29:
 #line 134 "grammar.y"
     { (yyval.stringValue) = malloc(3 + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\'%s", (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1656 "y.tab.c"
+#line 1658 "y.tab.c"
     break;
 
   case 30:
 #line 135 "grammar.y"
     { (yyval.stringValue) = ""; }
-#line 1662 "y.tab.c"
+#line 1664 "y.tab.c"
     break;
 
   case 31:
 #line 136 "grammar.y"
     { (yyval.stringValue) = malloc(1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s%s", (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1668 "y.tab.c"
+#line 1670 "y.tab.c"
     break;
 
   case 32:
 #line 137 "grammar.y"
     { (yyval.stringValue) = malloc(3 + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\'%s", (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1674 "y.tab.c"
+#line 1676 "y.tab.c"
     break;
 
   case 33:
 #line 142 "grammar.y"
     { if(checkIfVarExists((yyvsp[-3].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;} (yyval.stringValue) = malloc(3+strlen((yyvsp[-3].stringValue))+6+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s%s","int",(yyvsp[-3].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-3].stringValue), KIND_INT,1);}
-#line 1680 "y.tab.c"
+#line 1682 "y.tab.c"
     break;
 
   case 34:
 #line 143 "grammar.y"
     { if(checkIfVarExists((yyvsp[-3].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind((yyvsp[-1].stringValue),KIND_INT)){yyerror("Variable should be int type."); YYABORT;}(yyval.stringValue) = malloc(3+strlen((yyvsp[-3].stringValue))+6+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s%s","int",(yyvsp[-3].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-3].stringValue), KIND_INT,1);}
-#line 1686 "y.tab.c"
+#line 1688 "y.tab.c"
     break;
 
   case 35:
 #line 144 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-2].stringValue))+6+strlen((yyvsp[0].stringValue))); (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1] = 0;sprintf((yyval.stringValue),"%s %s=\"%s\"","char *",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)+1); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_STRING,1);}
-#line 1692 "y.tab.c"
+#line 1694 "y.tab.c"
     break;
 
   case 36:
 #line 145 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind((yyvsp[0].stringValue),KIND_STRING)){yyerror("Variable should be string type"); YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-2].stringValue))+6+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s","char *",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_STRING,1);}
-#line 1698 "y.tab.c"
+#line 1700 "y.tab.c"
     break;
 
   case 37:
 #line 146 "grammar.y"
     { if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}if(checkIfVarExists((yyvsp[-3].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-3].stringValue))+6+strlen((yyvsp[0].stringValue)));sprintf((yyval.stringValue),"char %s=\'%s\'",(yyvsp[-3].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-3].stringValue), KIND_CHAR,1);}
-#line 1704 "y.tab.c"
+#line 1706 "y.tab.c"
     break;
 
   case 38:
 #line 147 "grammar.y"
     { if(checkIfVarExists((yyvsp[-4].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect((yyvsp[0].stringValue),atoi((yyvsp[-2].stringValue)))){yyerror("Bad initialization of array"); YYABORT;} (yyval.stringValue) = malloc(3+strlen((yyvsp[-4].stringValue))+10+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]={%s}","int",(yyvsp[-4].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-4].stringValue), KIND_ARRAY_INT,atoi((yyvsp[-2].stringValue))); }
-#line 1710 "y.tab.c"
+#line 1712 "y.tab.c"
     break;
 
   case 39:
 #line 148 "grammar.y"
     { if(checkIfVarExists((yyvsp[-4].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect((yyvsp[0].stringValue),atoi((yyvsp[-2].stringValue)))){yyerror("Bad initialization of array"); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-4].stringValue))+10+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]={%s}","char *",(yyvsp[-4].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-4].stringValue), KIND_ARRAY_STRING,atoi((yyvsp[-2].stringValue)));}
-#line 1716 "y.tab.c"
+#line 1718 "y.tab.c"
     break;
 
   case 40:
 #line 149 "grammar.y"
     { if(checkIfVarExists((yyvsp[-4].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect((yyvsp[0].stringValue),atoi((yyvsp[-2].stringValue)))){yyerror("Bad initialization of array"); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-4].stringValue))+10+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]={%s}","char",(yyvsp[-4].stringValue),(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-4].stringValue), KIND_ARRAY_CHAR,atoi((yyvsp[-2].stringValue)));}
-#line 1722 "y.tab.c"
+#line 1724 "y.tab.c"
     break;
 
   case 41:
 #line 150 "grammar.y"
-    { if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING)){yyerror("Variable to convert should be string type."); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-1].stringValue))+3+strlen((yyvsp[-5].stringValue))+6); sprintf((yyval.stringValue),"int %s = atoi(%s)",(yyvsp[-5].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-5].stringValue), KIND_INT,1);}
-#line 1728 "y.tab.c"
+    { if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING) && !isOfKind((yyvsp[-1].stringValue),KIND_ARRAY_CHAR)){yyerror("Variable to convert should be string type."); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-1].stringValue))+3+strlen((yyvsp[-5].stringValue))+6); sprintf((yyval.stringValue),"int %s = atoi(%s)",(yyvsp[-5].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-5].stringValue), KIND_INT,1);}
+#line 1730 "y.tab.c"
     break;
 
   case 42:
 #line 151 "grammar.y"
-    { if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING)){yyerror("Variable should be string type."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[-5].stringValue)) +15); sprintf((yyval.stringValue),"int %s=strlen(%s)",(yyvsp[-5].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);addVar((yyvsp[-5].stringValue), KIND_INT,1);}
-#line 1734 "y.tab.c"
+    { if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING) && !isOfKind((yyvsp[-1].stringValue),KIND_ARRAY_CHAR)){yyerror("Variable should be string type."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-1].stringValue))+strlen((yyvsp[-5].stringValue)) +15); sprintf((yyval.stringValue),"int %s=strlen(%s)",(yyvsp[-5].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);addVar((yyvsp[-5].stringValue), KIND_INT,1);}
+#line 1736 "y.tab.c"
     break;
 
   case 43:
 #line 152 "grammar.y"
     { if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_INT,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(3+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "int %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_INT,1);}
-#line 1740 "y.tab.c"
+#line 1742 "y.tab.c"
     break;
 
   case 44:
 #line 153 "grammar.y"
     { if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_STRING,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "char * %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_STRING,1);}
-#line 1746 "y.tab.c"
+#line 1748 "y.tab.c"
     break;
 
   case 45:
 #line 154 "grammar.y"
     { if(!isOfKind((yyvsp[0].stringValue),KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_INT,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(3+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "int %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_INT,1);}
-#line 1752 "y.tab.c"
+#line 1754 "y.tab.c"
     break;
 
   case 46:
 #line 155 "grammar.y"
     { if(!isOfKind((yyvsp[0].stringValue),KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_STRING,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "char * %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_STRING,1);}
-#line 1758 "y.tab.c"
+#line 1760 "y.tab.c"
     break;
 
   case 47:
 #line 156 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind((yyvsp[0].stringValue),KIND_CHAR)){yyerror("Variable should be char type."); YYABORT;}(yyval.stringValue) = malloc(4+strlen((yyvsp[-2].stringValue))+6+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s=%s","char",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_CHAR,1);}
-#line 1764 "y.tab.c"
+#line 1766 "y.tab.c"
     break;
 
   case 48:
 #line 157 "grammar.y"
     { if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_CHAR,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(4+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "char %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_CHAR,1);}
-#line 1770 "y.tab.c"
+#line 1772 "y.tab.c"
     break;
 
   case 49:
 #line 158 "grammar.y"
     { if(!isOfKind((yyvsp[0].stringValue),KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray((yyvsp[-2].stringValue),KIND_ARRAY_CHAR,atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(4+strlen((yyvsp[-4].stringValue))+6+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "char %s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);addVar((yyvsp[-4].stringValue), KIND_CHAR,1);}
-#line 1776 "y.tab.c"
+#line 1778 "y.tab.c"
     break;
 
   case 50:
 #line 160 "grammar.y"
     { if(checkIfVarExists((yyvsp[0].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}(yyval.stringValue) = malloc(3+strlen((yyvsp[0].stringValue))+2); sprintf((yyval.stringValue),"%s %s","int",(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[0].stringValue), KIND_INT,1);}
-#line 1782 "y.tab.c"
+#line 1784 "y.tab.c"
     break;
 
   case 51:
 #line 161 "grammar.y"
     { if(checkIfVarExists((yyvsp[0].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}(yyval.stringValue) = malloc(5+strlen((yyvsp[0].stringValue))+2); sprintf((yyval.stringValue),"char %s",(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[0].stringValue), KIND_CHAR,1);}
-#line 1788 "y.tab.c"
+#line 1790 "y.tab.c"
     break;
 
   case 52:
 #line 162 "grammar.y"
     { if(checkIfVarExists((yyvsp[0].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}(yyval.stringValue) = malloc(7+strlen((yyvsp[0].stringValue))+2); sprintf((yyval.stringValue),"%s %s","char *",(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[0].stringValue), KIND_STRING,1);}
-#line 1794 "y.tab.c"
+#line 1796 "y.tab.c"
     break;
 
   case 53:
 #line 163 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;} (yyval.stringValue) = malloc(3+strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]","int",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_ARRAY_INT,atoi((yyvsp[0].stringValue))); }
-#line 1800 "y.tab.c"
+#line 1802 "y.tab.c"
     break;
 
   case 54:
 #line 164 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]","char *",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_ARRAY_STRING,atoi((yyvsp[0].stringValue)));}
-#line 1806 "y.tab.c"
+#line 1808 "y.tab.c"
     break;
 
   case 55:
 #line 165 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;} (yyval.stringValue) = malloc(4+strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s %s[%s]","char",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_ARRAY_CHAR,atoi((yyvsp[0].stringValue))); }
-#line 1812 "y.tab.c"
+#line 1814 "y.tab.c"
     break;
 
   case 56:
 #line 167 "grammar.y"
     { if((!checkIfVarExists((yyvsp[-2].stringValue))||!checkIfVarExists((yyvsp[0].stringValue)))|| !are_comparable((yyvsp[-2].stringValue),(yyvsp[0].stringValue))){yyerror("Variables aren't compatible."); YYABORT;}(yyval.stringValue) = malloc(4+strlen((yyvsp[-2].stringValue))+6+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1818 "y.tab.c"
+#line 1820 "y.tab.c"
     break;
 
   case 57:
 #line 168 "grammar.y"
     { if(!isOfKind((yyvsp[-3].stringValue),KIND_CHAR)){yyerror("Variable should be int type.");YYABORT;}if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[0].stringValue))+10); sprintf((yyval.stringValue), "%s=\'%s\'", (yyvsp[-3].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1824 "y.tab.c"
+#line 1826 "y.tab.c"
     break;
 
   case 58:
 #line 169 "grammar.y"
     { if(!isOfKind((yyvsp[-2].stringValue),KIND_INT)){yyerror("Variable should be int type.");YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))+5); sprintf((yyval.stringValue), "%s=%s", (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1830 "y.tab.c"
+#line 1832 "y.tab.c"
     break;
 
   case 59:
 #line 170 "grammar.y"
     { if(!isOfKind((yyvsp[-2].stringValue),KIND_STRING)){yyerror("Variable should be string type.");YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue))+5); (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1] = 0;sprintf((yyval.stringValue), "%s=\"%s\"", (yyvsp[-2].stringValue), (yyvsp[0].stringValue)+1); add((yyval.stringValue),true);}
-#line 1836 "y.tab.c"
+#line 1838 "y.tab.c"
     break;
 
   case 60:
 #line 171 "grammar.y"
     { if(!isOfKind((yyvsp[-3].stringValue),KIND_INT)){yyerror("Variable should be int type."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue))+strlen((yyvsp[-1].stringValue))+strlen((yyvsp[0].stringValue))+5);  sprintf((yyval.stringValue), "%s=%s%s", (yyvsp[-3].stringValue), (yyvsp[-1].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1842 "y.tab.c"
+#line 1844 "y.tab.c"
     break;
 
   case 61:
 #line 172 "grammar.y"
     { if(!compatibleArray((yyvsp[-4].stringValue),(yyvsp[-2].stringValue),atoi((yyvsp[0].stringValue)))){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue)) +5); sprintf((yyval.stringValue), "%s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1848 "y.tab.c"
+#line 1850 "y.tab.c"
     break;
 
   case 62:
 #line 173 "grammar.y"
     { if(!isOfKind((yyvsp[0].stringValue),KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!compatibleArray((yyvsp[-4].stringValue),(yyvsp[-2].stringValue),0)){yyerror("Variables aren't compatible.");YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue))+strlen((yyvsp[-2].stringValue))+strlen((yyvsp[0].stringValue)) +5); sprintf((yyval.stringValue), "%s=%s[%s]", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1854 "y.tab.c"
+#line 1856 "y.tab.c"
     break;
 
   case 63:
 #line 174 "grammar.y"
-    { if(!isOfKind((yyvsp[-5].stringValue),KIND_INT)){yyerror("Variable to assign should be int type."); YYABORT;} if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING)){yyerror("Argument should be string type."); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-5].stringValue))+strlen((yyvsp[-1].stringValue))+10); sprintf((yyval.stringValue),"%s = atoi(%s)",(yyvsp[-5].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
-#line 1860 "y.tab.c"
+    { if(!isOfKind((yyvsp[-5].stringValue),KIND_INT)){yyerror("Variable to assign should be int type."); YYABORT;} if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING) && !isOfKind((yyvsp[-1].stringValue),KIND_ARRAY_CHAR)){yyerror("Argument should be string type."); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-5].stringValue))+strlen((yyvsp[-1].stringValue))+10); sprintf((yyval.stringValue),"%s = atoi(%s)",(yyvsp[-5].stringValue),(yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1862 "y.tab.c"
     break;
 
   case 64:
 #line 175 "grammar.y"
-    { if(!isOfKind((yyvsp[-5].stringValue),KIND_INT)){yyerror("Variable to assign should be int type."); YYABORT;} if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING)){yyerror("Argument hould be string type."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-5].stringValue))+strlen((yyvsp[-1].stringValue))+10); sprintf((yyval.stringValue),"%s=strlen(%s)",(yyvsp[-5].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
-#line 1866 "y.tab.c"
+    { if(!isOfKind((yyvsp[-5].stringValue),KIND_INT)){yyerror("Variable to assign should be int type."); YYABORT;} if(!isOfKind((yyvsp[-1].stringValue),KIND_STRING) && !isOfKind((yyvsp[-1].stringValue),KIND_ARRAY_CHAR)){yyerror("Argument hould be string type."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-5].stringValue))+strlen((yyvsp[-1].stringValue))+10); sprintf((yyval.stringValue),"%s=strlen(%s)",(yyvsp[-5].stringValue), (yyvsp[-1].stringValue)); add((yyval.stringValue),true);}
+#line 1868 "y.tab.c"
     break;
 
   case 65:
 #line 178 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind((yyvsp[0].stringValue), KIND_INT)){yyerror("Function should return type int"); YYABORT;} (yyval.stringValue) = malloc(3+strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"int %s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_INT,1);}
-#line 1872 "y.tab.c"
+#line 1874 "y.tab.c"
     break;
 
   case 66:
 #line 179 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind((yyvsp[0].stringValue), KIND_STRING)){yyerror("Function should return type string"); YYABORT;} (yyval.stringValue) = malloc(7+strlen((yyvsp[-2].stringValue))+3+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"char* %s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_STRING,1);}
-#line 1878 "y.tab.c"
+#line 1880 "y.tab.c"
     break;
 
   case 67:
 #line 180 "grammar.y"
     { if(checkIfVarExists((yyvsp[-2].stringValue))){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!functionReturnsKind((yyvsp[0].stringValue), KIND_CHAR)){yyerror("Function should return type char"); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+8+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"char %s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true); addVar((yyvsp[-2].stringValue), KIND_CHAR,1);}
-#line 1884 "y.tab.c"
+#line 1886 "y.tab.c"
     break;
 
   case 68:
 #line 181 "grammar.y"
     { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s=%s",(yyvsp[-2].stringValue),(yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1890 "y.tab.c"
+#line 1892 "y.tab.c"
     break;
 
   case 69:
 #line 184 "grammar.y"
     { if (!isOfKind((yyvsp[-4].stringValue), KIND_ARRAY_INT)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace((yyvsp[-4].stringValue), atoi((yyvsp[-2].stringValue))) ) { yyerror("Array has not enough space"); YYABORT; } (yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue)) + 4 ); sprintf((yyval.stringValue), "%s[%s]=%s", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue), true); }
-#line 1896 "y.tab.c"
+#line 1898 "y.tab.c"
     break;
 
   case 70:
 #line 185 "grammar.y"
     { if (!isOfKind((yyvsp[-5].stringValue), KIND_ARRAY_CHAR)){yyerror("Variable should be char array type"); YYABORT;} if(! enoughSpace((yyvsp[-5].stringValue), atoi((yyvsp[-3].stringValue))) ) { yyerror("Array has not enough space"); YYABORT; } if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-5].stringValue)) + strlen((yyvsp[-3].stringValue)) + strlen((yyvsp[0].stringValue)) + 10 ); sprintf((yyval.stringValue), "%s[%s]=\'%s\'", (yyvsp[-5].stringValue), (yyvsp[-3].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue), true); }
-#line 1902 "y.tab.c"
+#line 1904 "y.tab.c"
     break;
 
   case 71:
 #line 186 "grammar.y"
     { if (!isOfKind((yyvsp[-4].stringValue), KIND_ARRAY_STRING)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace((yyvsp[-4].stringValue), atoi((yyvsp[-2].stringValue))) ) { yyerror("Array has not enough space"); YYABORT; } (yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue)) + 4 ); (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1] = 0; sprintf((yyval.stringValue), "%s[%s]=\"%s\"", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)+1); add((yyval.stringValue), true); }
-#line 1908 "y.tab.c"
+#line 1910 "y.tab.c"
     break;
 
   case 72:
-#line 191 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); add((yyval.stringValue),true);}
-#line 1914 "y.tab.c"
+#line 187 "grammar.y"
+    { if (!isOfKind((yyvsp[-4].stringValue), KIND_ARRAY_CHAR)){yyerror("Variable should be char array type"); YYABORT;} if(! enoughSpace((yyvsp[-4].stringValue), atoi((yyvsp[-2].stringValue))) ) { yyerror("Array has not enough space"); YYABORT; } if(!isOfKind((yyvsp[-2].stringValue),KIND_INT)){yyerror("Variable should be int type."); YYABORT;}if(!isOfKind((yyvsp[0].stringValue),KIND_CHAR)){yyerror("Variable should be char type."); YYABORT;} (yyval.stringValue) = malloc(strlen((yyvsp[-4].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[0].stringValue)) + 4 ); sprintf((yyval.stringValue), "%s[%s]=%s", (yyvsp[-4].stringValue), (yyvsp[-2].stringValue), (yyvsp[0].stringValue)); add((yyval.stringValue), true); }
+#line 1916 "y.tab.c"
     break;
 
   case 73:
-#line 192 "grammar.y"
-    { if (!isOfKind((yyvsp[-1].stringValue), KIND_INT)){yyerror("Variable should be int type"); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); add((yyval.stringValue),true);}
-#line 1920 "y.tab.c"
+#line 191 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); add((yyval.stringValue),true);}
+#line 1922 "y.tab.c"
     break;
 
   case 74:
-#line 193 "grammar.y"
-    { (yyval.stringValue) = "";}
-#line 1926 "y.tab.c"
+#line 192 "grammar.y"
+    { if (!isOfKind((yyvsp[-1].stringValue), KIND_INT)){yyerror("Variable should be int type"); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+ 1 + strlen((yyvsp[-1].stringValue)) + strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue),"%s%s%s",(yyvsp[-2].stringValue),(yyvsp[-1].stringValue),(yyvsp[0].stringValue) ); add((yyval.stringValue),true);}
+#line 1928 "y.tab.c"
     break;
 
   case 75:
-#line 197 "grammar.y"
-    {(yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1932 "y.tab.c"
+#line 193 "grammar.y"
+    { (yyval.stringValue) = "";}
+#line 1934 "y.tab.c"
     break;
 
   case 76:
-#line 198 "grammar.y"
+#line 197 "grammar.y"
     {(yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 1938 "y.tab.c"
+#line 1940 "y.tab.c"
     break;
 
   case 77:
+#line 198 "grammar.y"
+    {(yyval.stringValue) = (yyvsp[0].stringValue);}
+#line 1946 "y.tab.c"
+    break;
+
+  case 78:
 #line 199 "grammar.y"
     {
         (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1]  = '\"';
         (yyvsp[0].stringValue)[0]               = '\"';
         (yyval.stringValue) = (yyvsp[0].stringValue);
         }
-#line 1948 "y.tab.c"
-    break;
-
-  case 78:
-#line 204 "grammar.y"
-    { if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+3); sprintf((yyval.stringValue), "\'%s\'", (yyvsp[0].stringValue));add((yyval.stringValue),true);}
-#line 1954 "y.tab.c"
+#line 1956 "y.tab.c"
     break;
 
   case 79:
-#line 208 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); (yyvsp[-2].stringValue)[strlen((yyvsp[-2].stringValue)) - 1] = 0; sprintf((yyval.stringValue), "\"%s\",%s", (yyvsp[-2].stringValue)+1,(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1960 "y.tab.c"
+#line 204 "grammar.y"
+    { if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+3); sprintf((yyval.stringValue), "\'%s\'", (yyvsp[0].stringValue));add((yyval.stringValue),true);}
+#line 1962 "y.tab.c"
     break;
 
   case 80:
-#line 209 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+5); (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1] = 0; sprintf((yyval.stringValue), "\"%s\"", (yyvsp[0].stringValue)+1); add((yyval.stringValue),true);}
-#line 1966 "y.tab.c"
+#line 208 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); (yyvsp[-2].stringValue)[strlen((yyvsp[-2].stringValue)) - 1] = 0; sprintf((yyval.stringValue), "\"%s\",%s", (yyvsp[-2].stringValue)+1,(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1968 "y.tab.c"
     break;
 
   case 81:
-#line 213 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s,%s", (yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1972 "y.tab.c"
+#line 209 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+5); (yyvsp[0].stringValue)[strlen((yyvsp[0].stringValue)) - 1] = 0; sprintf((yyval.stringValue), "\"%s\"", (yyvsp[0].stringValue)+1); add((yyval.stringValue),true);}
+#line 1974 "y.tab.c"
     break;
 
   case 82:
-#line 214 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1978 "y.tab.c"
+#line 213 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+2+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "%s,%s", (yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1980 "y.tab.c"
     break;
 
   case 83:
-#line 218 "grammar.y"
-    { if(strlen((yyvsp[-2].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\',%s", (yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1984 "y.tab.c"
+#line 214 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1986 "y.tab.c"
     break;
 
   case 84:
-#line 219 "grammar.y"
-    { if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+5); sprintf((yyval.stringValue), "\'%s\'", (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
-#line 1990 "y.tab.c"
+#line 218 "grammar.y"
+    { if(strlen((yyvsp[-2].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[-2].stringValue))+5+strlen((yyvsp[0].stringValue))); sprintf((yyval.stringValue), "\'%s\',%s", (yyvsp[-2].stringValue),(yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1992 "y.tab.c"
     break;
 
   case 85:
+#line 219 "grammar.y"
+    { if(strlen((yyvsp[0].stringValue))!=1){yyerror("Incompatible initialization for type char."); YYABORT;}(yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+5); sprintf((yyval.stringValue), "\'%s\'", (yyvsp[0].stringValue)); add((yyval.stringValue),true);}
+#line 1998 "y.tab.c"
+    break;
+
+  case 86:
 #line 223 "grammar.y"
     {   
                                             if(!are_comparable((yyvsp[-3].stringValue), (yyvsp[-1].stringValue))) {
@@ -1999,101 +2007,101 @@ yyreduce:
                                             (yyval.stringValue) = malloc(strlen((yyvsp[-3].stringValue)) + strlen((yyvsp[-2].stringValue)) + strlen((yyvsp[-1].stringValue)) + 5);
                                             sprintf((yyval.stringValue), "(%s %s %s)", (yyvsp[-3].stringValue), (yyvsp[-2].stringValue), (yyvsp[-1].stringValue));
                                             add((yyval.stringValue),true);}
-#line 2003 "y.tab.c"
-    break;
-
-  case 86:
-#line 232 "grammar.y"
-    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); add((yyval.stringValue), true);}
-#line 2009 "y.tab.c"
+#line 2011 "y.tab.c"
     break;
 
   case 87:
-#line 241 "grammar.y"
-    { (yyval.stringValue) = (yyvsp[0].stringValue);}
-#line 2015 "y.tab.c"
+#line 232 "grammar.y"
+    { (yyval.stringValue) = malloc(strlen((yyvsp[0].stringValue))+1); sprintf((yyval.stringValue), "%s", (yyvsp[0].stringValue)); add((yyval.stringValue), true);}
+#line 2017 "y.tab.c"
     break;
 
   case 88:
-#line 242 "grammar.y"
-    { (yyval.stringValue) = "<";}
-#line 2021 "y.tab.c"
+#line 241 "grammar.y"
+    { (yyval.stringValue) = (yyvsp[0].stringValue);}
+#line 2023 "y.tab.c"
     break;
 
   case 89:
-#line 243 "grammar.y"
-    { (yyval.stringValue) = ">";}
-#line 2027 "y.tab.c"
+#line 242 "grammar.y"
+    { (yyval.stringValue) = "<";}
+#line 2029 "y.tab.c"
     break;
 
   case 90:
-#line 244 "grammar.y"
-    { (yyval.stringValue) = "<=";}
-#line 2033 "y.tab.c"
+#line 243 "grammar.y"
+    { (yyval.stringValue) = ">";}
+#line 2035 "y.tab.c"
     break;
 
   case 91:
-#line 245 "grammar.y"
-    { (yyval.stringValue) = ">=";}
-#line 2039 "y.tab.c"
+#line 244 "grammar.y"
+    { (yyval.stringValue) = "<=";}
+#line 2041 "y.tab.c"
     break;
 
   case 92:
-#line 246 "grammar.y"
-    { (yyval.stringValue) = "==";}
-#line 2045 "y.tab.c"
+#line 245 "grammar.y"
+    { (yyval.stringValue) = ">=";}
+#line 2047 "y.tab.c"
     break;
 
   case 93:
-#line 247 "grammar.y"
-    { (yyval.stringValue) = "!=";}
-#line 2051 "y.tab.c"
+#line 246 "grammar.y"
+    { (yyval.stringValue) = "==";}
+#line 2053 "y.tab.c"
     break;
 
   case 94:
-#line 248 "grammar.y"
-    { (yyval.stringValue) = "||";}
-#line 2057 "y.tab.c"
+#line 247 "grammar.y"
+    { (yyval.stringValue) = "!=";}
+#line 2059 "y.tab.c"
     break;
 
   case 95:
-#line 249 "grammar.y"
-    { (yyval.stringValue) = "&&";}
-#line 2063 "y.tab.c"
+#line 248 "grammar.y"
+    { (yyval.stringValue) = "||";}
+#line 2065 "y.tab.c"
     break;
 
   case 96:
-#line 253 "grammar.y"
-    { (yyval.stringValue) = "+";}
-#line 2069 "y.tab.c"
+#line 249 "grammar.y"
+    { (yyval.stringValue) = "&&";}
+#line 2071 "y.tab.c"
     break;
 
   case 97:
-#line 254 "grammar.y"
-    { (yyval.stringValue) = "-";}
-#line 2075 "y.tab.c"
+#line 253 "grammar.y"
+    { (yyval.stringValue) = "+";}
+#line 2077 "y.tab.c"
     break;
 
   case 98:
-#line 255 "grammar.y"
-    { (yyval.stringValue) = "/";}
-#line 2081 "y.tab.c"
+#line 254 "grammar.y"
+    { (yyval.stringValue) = "-";}
+#line 2083 "y.tab.c"
     break;
 
   case 99:
-#line 256 "grammar.y"
-    { (yyval.stringValue) = "*";}
-#line 2087 "y.tab.c"
+#line 255 "grammar.y"
+    { (yyval.stringValue) = "/";}
+#line 2089 "y.tab.c"
     break;
 
   case 100:
+#line 256 "grammar.y"
+    { (yyval.stringValue) = "*";}
+#line 2095 "y.tab.c"
+    break;
+
+  case 101:
 #line 257 "grammar.y"
     { (yyval.stringValue) = "%";}
-#line 2093 "y.tab.c"
+#line 2101 "y.tab.c"
     break;
 
 
-#line 2097 "y.tab.c"
+#line 2105 "y.tab.c"
 
       default: break;
     }

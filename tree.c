@@ -520,6 +520,9 @@ bool compatibleArray(char * v1,char * v2,int number){
     if(isOfKind(v2,KIND_ARRAY_STRING) && isOfKind(v1,KIND_STRING)){
         return true;
     }
+    if(isOfKind(v2, KIND_ARRAY_CHAR) && isOfKind(v1, KIND_CHAR)){
+        return true;
+    }
     return false;
 }
 bool correctArray(char * name,KIND kind,int size){
