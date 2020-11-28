@@ -2,8 +2,9 @@
 
 # Clux Programming Language
 
-Clux is a concise programming language oriented to  
-code with as few characters as possible. 
+Clux is a concise programming language oriented to code with as few characters as possible. 
+The goal is to put aside most words and write shorter (if a little abstract and hard to read) code.
+But why?   Mainly because Clux was inspired by Scratch, JavaScript and the not-long-enough-list of joke languages in Esolang. Again, the main goal is to make minimize character count in code, at any cost.
 
 It is extremely recommended for Golf Code competitions.
 
