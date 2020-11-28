@@ -511,7 +511,8 @@ bool checkReturnType(char * program, KIND kind){
     
 }
 bool compatibleArray(char * v1,char * v2,int number){
-    if(!enoughSpace(v2,number)){
+    
+    if(number!=0 && !enoughSpace(v2,number)){
         return false;
     }
     if(isOfKind(v2,KIND_ARRAY_INT) && isOfKind(v1,KIND_INT)){

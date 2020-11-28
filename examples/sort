@@ -13,22 +13,25 @@ i$ F numberSort(){
         m = l-i.
         (j<m)?-->{
             k = j+1.
-            (arr_j > arr_k)?->{
-                temp = arr_j.
-                arr_j = arr_k.
+            i$v1=arr_j.
+            i$v2=arr_k.
+            (v1 > v2)?->{
+                temp = v1.
+                arr_j = v2.
                 arr_k = temp.
             }
             j = j+ 1.
         }
         i = i+ 1.
     }
-
     i= 0.
     P[Imprimiendo su array\n].
-    (i < l){
-        P[en i = 'i' : 'arr_i'\n].
+    (i < l)?-->{
+        P[siendo i 'i' es 'arr_i'\n].
         i = i+1.
     }
+
+    
 
     R 0.
 
@@ -37,5 +40,6 @@ i$ F numberSort(){
 S{
     welcome().
     numberSort().
+    P[wwwwwwwwwww that is grass].
     R 0.
 }

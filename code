@@ -1,28 +1,45 @@
-i$F welcome(){
-    P[This code counts the amount of times a character appears in a string \n]. 
+i$ F welcome(){
+    P[Vamos a ordenar un array de numeros\n].
+    R 0.
 }
- S {
+
+i$ F numberSort(){
+    i$arr_10 = 10, 2, 7, 4, 6, 5, 1, 8, 9, 3.
+    i$l = 10.
+    i$i = 1. i$j. i$k. i$m.
+    i$temp. 
+    (i<l)?-->{
+        j = 0.
+        m = l-i.
+        (j<m)?-->{
+            k = j+1.
+            i$v1=arr_j.
+            i$v2=arr_k.
+            (v1 > v2)?->{
+                temp = v1.
+                arr_j = v2.
+                arr_k = temp.
+            }
+            j = j+ 1.
+        }
+        i = i+ 1.
+    }
+    i= 0.
+    P[Imprimiendo su array\n].
+    (i < l)?-->{
+        P[siendo i 'i' es 'arr_i'\n].
+        i = i+1.
+    }
+
+    
+
+    R 0.
+
+}
+
+S{
     welcome().
-  
- 	i$count=0.
- 	i$i=0.
-
- 	P[Enter a string: ]. 
- 	G(s, 1000).
-
- 	P[Enter a character to find its frequency: ].
- 	G(char, 1).
-
-    i$len = L(s).
-
- 	(i < len)?-->{
- 		i=i+1. 
-        c$c=s_i. 
- 		(char ~ c)?->{count=count+1.}
- 	}
-
- 	P[Frequency of 'char' = 'count'].
-
- 	R 0. 
-
- }
+    numberSort().
+    P[wwwwwwwwwww that is grass].
+    R 0.
+}

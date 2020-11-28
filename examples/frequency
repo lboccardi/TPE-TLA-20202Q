@@ -1,8 +1,9 @@
-F welcome(){
+i$ F welcome(){
     P[This code counts the amount of times a character appears in a string \n]. 
+    R 0.
 }
  S {
-     welcome().
+    welcome().
   
  	i$count=0.
  	i$i=0.
@@ -11,17 +12,19 @@ F welcome(){
  	G(s, 1000).
 
  	P[Enter a character to find its frequency: ].
- 	G(char, 1).
+ 	G(ch, 2).
 
     i$len = L(s).
-
+    i$aux = 0.
+    c$pattern = ch_aux.
  	(i < len)?-->{
- 		i=i+1. 
+ 		
         c$c=s_i. 
- 		(char ~ c)?->{count=count+1.}
+ 		(pattern ~ c)?->{count=count+1.}
+        i=i+1. 
  	}
 
- 	P[Frequency of 'char' = 'count'].
+ 	P[Frequency of 'ch' = 'count'].
 
  	R 0. 
 
