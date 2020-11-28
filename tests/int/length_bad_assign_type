@@ -1,4 +1,5 @@
 S{
     s$str='hola'. 
-    s$len = L(str).
+    c$len.
+    len = L(str).
 }
