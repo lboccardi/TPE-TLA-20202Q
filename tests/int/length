@@ -1,0 +1,6 @@
+S{
+    s$str='hola'.
+    i$a=L(str).
+
+    P['a'].
+}
