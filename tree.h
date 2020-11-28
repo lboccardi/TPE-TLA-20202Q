@@ -8,6 +8,7 @@ typedef enum KIND{
     KIND_CHAR,
     KIND_ARRAY_INT,
     KIND_ARRAY_STRING,
+    KIND_ARRAY_CHAR
 }KIND;
 
 typedef enum DATA_TYPE {

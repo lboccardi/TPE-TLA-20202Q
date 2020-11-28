@@ -29,7 +29,7 @@ void yyerror(const char *str)
 }
 
 /* Non Terminals */ 
-%type<stringValue> rule type op start arrow operator params out get function program assignment operation var call args digit_array alpha_array;
+%type<stringValue> rule type op start arrow operator params out get function program assignment operation var call args digit_array alpha_array char_array;
 
 /* Terminals */ 
 %token<stringValue>  DIGIT ALPHA SPACE_ALPHA STRING_VALUE;
@@ -46,8 +46,7 @@ void yyerror(const char *str)
 %token  ASSIGN;  
 %token  RETURN;
 %token  MAIN; 
-%token  STDIN STDOUT CONVERT LENGTH; 
-%token  FUNCTION; 
+%token  STDIN STDOUT CONVERT LENGTH FUNCTION; 
 %token  COMMA;
 %token  ARRAY;
 
@@ -147,6 +146,7 @@ var
     | CHAR ALPHA ASSIGN ESCAPE ALPHA                { if(strlen($5)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(7+strlen($2)+6+strlen($5));sprintf($$,"char %s=\'%s\'",$2,$5); add($$,true); addVar($2, KIND_CHAR,1);} 
     | INT ALPHA ARRAY DIGIT ASSIGN digit_array      { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(3+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","int",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
     | STRING ALPHA ARRAY DIGIT ASSIGN alpha_array   { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(7+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","char *",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
+    | CHAR ALPHA ARRAY DIGIT ASSIGN char_array      { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(array_is_incorrect($6,atoi($4))){yyerror("Bad initialization of array"); YYABORT;} $$ = malloc(7+strlen($2)+10+strlen($4)+strlen($6)); sprintf($$,"%s %s[%s]={%s}","char",$2,$4,$6);add($$,true); addVar($2, KIND_ARRAY_CHAR,atoi($4));}
     | INT ALPHA ASSIGN CONVERT OPEN_P ALPHA CLOSE_P { if(!isOfKind($6,KIND_STRING)){yyerror("Variable to convert should be string type."); YYABORT;} $$ = malloc(7+strlen($6)+3+strlen($2)+6); sprintf($$,"int %s = atoi(%s)",$2,$6); add($$,true); addVar($2, KIND_INT,1);}
     | INT ALPHA ASSIGN LENGTH OPEN_P ALPHA CLOSE_P  { if(!isOfKind($6,KIND_STRING)){yyerror("Variable should be string type."); YYABORT;}$$ = malloc(strlen($6)+strlen($2) +15); sprintf($$,"int %s=strlen(%s)",$2, $6); add($$,true);addVar($2, KIND_INT,1);}      
     | INT ALPHA ASSIGN ALPHA ARRAY DIGIT            { if(!correctArray($4,KIND_ARRAY_INT,atoi($6))){yyerror("Variables aren't compatible.");YYABORT;}$$ = malloc(3+strlen($2)+6+strlen($4)+strlen($6)); sprintf($$, "int %s=%s[%s]", $2, $4, $6);add($$,true);addVar($2, KIND_INT,1);}
@@ -154,14 +154,16 @@ var
     | INT ALPHA ASSIGN ALPHA ARRAY ALPHA            { if(!isOfKind($6,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray($4,KIND_ARRAY_INT,atoi($6))){yyerror("Variables aren't compatible.");YYABORT;}$$ = malloc(3+strlen($2)+6+strlen($4)+strlen($6)); sprintf($$, "int %s=%s[%s]", $2, $4, $6);add($$,true);addVar($2, KIND_INT,1);}
     | STRING ALPHA ASSIGN ALPHA ARRAY ALPHA         { if(!isOfKind($6,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray($4,KIND_ARRAY_STRING,atoi($6))){yyerror("Variables aren't compatible.");YYABORT;}$$ = malloc(7+strlen($2)+6+strlen($4)+strlen($6)); sprintf($$, "char * %s=%s[%s]", $2, $4, $6);add($$,true);addVar($2, KIND_STRING,1);}
     | CHAR ALPHA ASSIGN ALPHA                       { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}if(!isOfKind($4,KIND_CHAR)){yyerror("Variable should be char type."); YYABORT;}$$ = malloc(4+strlen($2)+6+strlen($4)); sprintf($$,"%s %s=%s","char",$2,$4); add($$,true); addVar($2, KIND_CHAR,1);}
-
+    | CHAR ALPHA ASSIGN ALPHA ARRAY DIGIT           { if(!correctArray($4,KIND_ARRAY_CHAR,atoi($6))){yyerror("Variables aren't compatible.");YYABORT;}$$ = malloc(4+strlen($2)+6+strlen($4)+strlen($6)); sprintf($$, "char %s=%s[%s]", $2, $4, $6);add($$,true);addVar($2, KIND_CHAR,1);}
+    | CHAR ALPHA ASSIGN ALPHA ARRAY ALPHA           { if(!isOfKind($6,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}if(!correctArray($4,KIND_ARRAY_CHAR,atoi($6))){yyerror("Variables aren't compatible.");YYABORT;}$$ = malloc(4+strlen($2)+6+strlen($4)+strlen($6)); sprintf($$, "char %s=%s[%s]", $2, $4, $6);add($$,true);addVar($2, KIND_CHAR,1);}
 
     | INT ALPHA                                 { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(3+strlen($2)+2); sprintf($$,"%s %s","int",$2);add($$,true); addVar($2, KIND_INT,1);}
     | CHAR ALPHA                                { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(5+strlen($2)+2); sprintf($$,"char %s",$2);add($$,true); addVar($2, KIND_CHAR,1);}
     | STRING ALPHA                              { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;}$$ = malloc(7+strlen($2)+2); sprintf($$,"%s %s","char *",$2);add($$,true); addVar($2, KIND_STRING,1);}
     | INT ALPHA ARRAY DIGIT                     { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(3+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","int",$2,$4);add($$,true); addVar($2, KIND_ARRAY_INT,atoi($4)); }
     | STRING ALPHA ARRAY DIGIT                  { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(7+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char *",$2,$4);add($$,true); addVar($2, KIND_ARRAY_STRING,atoi($4));}
-     
+    | CHAR ALPHA ARRAY DIGIT                    { if(checkIfVarExists($2)){yyerror("That variable already exists, please choose another name"); YYABORT;} $$ = malloc(4+strlen($2)+5+strlen($4)); sprintf($$,"%s %s[%s]","char",$2,$4);add($$,true); addVar($2, KIND_ARRAY_CHAR,atoi($4)); }
+ 
     | ALPHA ASSIGN ALPHA                        { if((!checkIfVarExists($1)||!checkIfVarExists($3))|| !are_comparable($1,$3)){yyerror("Variables aren't compatible."); YYABORT;}$$ = malloc(4+strlen($1)+6+strlen($3)); sprintf($$,"%s=%s",$1,$3); add($$,true);}
     | ALPHA ASSIGN ESCAPE ALPHA                 { if(!isOfKind($1,KIND_CHAR)){yyerror("Variable should be int type.");YYABORT;}if(strlen($4)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($1)+strlen($4)+10); sprintf($$, "%s=\'%s\'", $1, $4);add($$,true);}
     | ALPHA ASSIGN DIGIT                        { if(!isOfKind($1,KIND_INT)){yyerror("Variable should be int type.");YYABORT;}$$ = malloc(strlen($1)+strlen($3)+5); sprintf($$, "%s=%s", $1, $3);add($$,true);}
@@ -180,6 +182,7 @@ var
 
 
     | ALPHA ARRAY DIGIT ASSIGN DIGIT            { if (!isOfKind($1, KIND_ARRAY_INT)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
+    | ALPHA ARRAY DIGIT ASSIGN ESCAPE ALPHA      { if (!isOfKind($1, KIND_ARRAY_CHAR)){yyerror("Variable should be char array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } if(strlen($6)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($1) + strlen($3) + strlen($6) + 10 ); sprintf($$, "%s[%s]=\'%s\'", $1, $3, $6); add($$, true); }
     | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE     { if (!isOfKind($1, KIND_ARRAY_STRING)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); $5[strlen($5) - 1] = 0; sprintf($$, "%s[%s]=\"%s\"", $1, $3, $5+1); add($$, true); }
      
     ; 
@@ -210,7 +213,12 @@ digit_array
     : DIGIT COMMA digit_array   { $$ = malloc(strlen($1)+2+strlen($3)); sprintf($$, "%s,%s", $1,$3); add($$,true);}
     | DIGIT                     { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); add($$,true);}     
     ; 
-    
+
+char_array
+    : ESCAPE ALPHA COMMA char_array { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5+strlen($4)); sprintf($$, "\'%s\',%s", $2,$4); add($$,true);}
+    | ESCAPE ALPHA { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5); sprintf($$, "\'%s\'", $2); add($$,true);}
+    ;
+
 rule
     : OPEN_P rule operator rule CLOSE_P {   
                                             if(!are_comparable($2, $4)) {

@@ -1,7 +1,7 @@
 S{
-    s$a='holis'.
-    c$c='a.
-    i$b.
-    b=c.
+    c$c_3='a,'b,'c.
+    i$a=1.
+    c$b.
+    b=c_a.
     R 1.
 }
