@@ -66,6 +66,7 @@ typedef struct funct
     KIND args[50];
     int args_count;
     struct funct *next;
+    bool defined;
 } funct;
 
 typedef struct functions
@@ -87,6 +88,8 @@ void freeResources(bool error);
 void addVar(char *name, KIND kind, int size);
 
 void addFunction(char *name, KIND kind, char *args);
+
+void declareFunction(char *name, KIND kind, char *args);
 
 char *printfParser(char *s);
 

@@ -154,10 +154,41 @@ void addArgs(funct *f, char *args)
 
 void addFunction(char *name, KIND kind, char *args)
 {
+
+    /**check if function was declared but not defined **/
+    funct *auxIter = function_list.first;
+    while(auxIter->next != NULL){
+        if(strcmp(auxIter->name, name) == 0){
+            auxIter->defined = true;
+            return;
+        }
+    }
+
     funct *aux = malloc(sizeof(funct));
     /** save name and kind**/
     aux->name = name;
     aux->kind = kind;
+    aux->defined = true;
+    addArgs(aux, args);
+
+    if (function_list.first == NULL)
+    {
+        function_list.first = aux;
+    }
+    else
+    {
+        function_list.last->next = aux;
+    }
+    function_list.last = aux;
+    aux->next = NULL;
+}
+
+void declareFunction(char *name, KIND kind, char *args){
+    funct *aux = malloc(sizeof(funct));
+    /** save name and kind**/
+    aux->name = name;
+    aux->kind = kind;
+    aux->defined = false;
     addArgs(aux, args);
 
     if (function_list.first == NULL)
@@ -518,7 +549,7 @@ bool checkIfFunctionExists(char *name)
     while (curr != NULL)
     {
 
-        if (strcmp(curr->name, name) == 0)
+        if (strcmp(curr->name, name) == 0 && curr->defined)
         {
             return true;
         }

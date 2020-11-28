@@ -1,0 +1,29 @@
+
+i$ F primeCheck(i$n){
+    (n <= 1)?->{
+        R 0.
+    }
+    i$check=2.
+    i$aux.
+    (check<n)?-->{
+        aux=n%check.
+        (aux~0)?->{
+            R 0.
+        }
+        check = check +1.
+    }
+    R 1.
+}
+
+S{
+    i$nu=479001599.
+    i$res=primeCheck(nu).
+
+    (res~0)?->{
+        P['nu' no es primo\n].
+    }:{
+        P['nu' es primo\n].
+    }
+
+    R 0.
+}
