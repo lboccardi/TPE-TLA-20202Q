@@ -7,8 +7,9 @@
     Proveer un mecanismo de salida de datos:  STDOUT.
  */
 #include "compiler.h"
-#include <stdio.h>
+#include <stdlib.h>
 #include "y.tab.h"
+#include "tree.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,44 +19,53 @@ int main(int argc, char *argv[])
     }
 
     char *input_file_path = argv[1];
-
-    FILE *clux_file = fopen(input_file_path, "r");          //Read clux file
-    FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
-
+    char *name = "executable";
+    if (argc != 2)
+    {
+        name = argv[2];
+    }
+    FILE *clux_file = fopen(input_file_path, "r"); //Read clux file
     if (clux_file == NULL)
     {
         perror("Error opening clux file");
         exit(1);
     }
 
-    if (intermediate_file == NULL)
-    {
-        perror("Error creating intermediate code file");
-        exit(1);
-    }
+    yyin = clux_file;
 
     yyparse(); //Parse clux file
+    if (!program.error)
+    {
+        freeResources(false);
+        FILE *intermediate_file = fopen("intermediate.c", "w"); //Write intermediate code file
+        if (intermediate_file == NULL)
+        {
+            perror("Error creating intermediate code file");
+            exit(1);
+        }
+        generateIntermediateCodeFile(intermediate_file);
+        fclose(intermediate_file);
+        compile(name);
+    }
 
-    generateIntermediateCodeFile();
-
-    fclose(clux_file);
-    fclose(intermediate_file);
+    fclose(yyin);
 
     return 0;
 }
 
-extern void generateIntermediateCodeFile()
+void generateIntermediateCodeFile(FILE *intermediate_file)
 {
-    //generate C code to compile with gcc and obtain .out
-    //fprintf("intermdiate.c", "#include <stdio.h>");
-    char buffer[50];
-    sprintf(buffer, "gcc -S intermediate.c -o intermediate.s"); //generate Asm
+    fprintf(intermediate_file, "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n%s", program.first->information);
+}
 
-    if (system(buffer) != 0)
+void compile(char *name)
+{
+    char generateExec[100];
+    sprintf(generateExec, "gcc intermediate.c -o %s", name); //generate Exec
+
+    if (system(generateExec) != 0)
     {
-        fprintf(stderr, "Error while compiling intermediate file");
+        fprintf(stderr, "Error while generating executable file");
         exit(1);
     }
-
-    // sprintf(buffer, "gcc -c intermediate.s -o compiled"); //compiled file generated
 }

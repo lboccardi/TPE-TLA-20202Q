@@ -1,10 +1,13 @@
 %{
 #include "y.tab.h"
+#include "tree.h"
 %}
 
 alpha [A-Za-z]
 digit [0-9]
 varname {alpha}({alpha}|{digit})*
+space_alpha [\[]({alpha}|{digit}|[  \  \\ \n \t]|" "|"'"|"_"|":")*[\]]
+string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 
 %% 
 
@@ -13,14 +16,36 @@ varname {alpha}({alpha}|{digit})*
 "P"           return STDOUT; 
 "F"           return FUNCTION; 
 "R"           return RETURN;
-{digit}+	{ yylval.intValue = atoi(yytext);}; return DIGIT;
+"L"			  return LENGTH; 
+"C"		      return CONVERT; 			  
+
+{digit}+	{char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				add(str,true);
+				return DIGIT;
+            }
+
 {varname}   {char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);
 				yylval.stringValue = str;
+				add(str,true);
 				return ALPHA;
             }
+{string_value}   {char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				add(str,true);
+				return STRING_VALUE;
+            }
+{space_alpha}   {char* str = malloc(strlen(yytext) + 1);
+				strcpy(str, yytext);
+				yylval.stringValue = str;
+				add(str,true);
+				return SPACE_ALPHA;
+            }
 "."         return END;
-[ \t]+      ;
+[ \t \n]+      ;
 "("         return OPEN_P; 
 ")"         return CLOSE_P;
 "?"         return CONDITIONAL;
@@ -34,19 +59,20 @@ varname {alpha}({alpha}|{digit})*
 "<="        return LE;
 ">="        return GE;
 "~"         return EQ;
-"!"         return NOT;
+"!~"		return NE; 
 "|"         return OR;
 "&"         return AND;
 "="         return ASSIGN; 
 "i$"        return INT; 
 "s$"        return STRING; 
-[+\-*/]		{	char* str = malloc(strlen(yytext) + 1);
-				strcpy(str, yytext);
-				yylval.stringValue = str;
-				return OP;
-            }
+"+"         return PLUS;
+"%"         return MOD; 
+"-"         return MINUS;
+"*"         return TIMES;
+"/"         return DIV; 
 ","         return COMMA;
-
- 
+"_"         return ARRAY; 
+":"			return ELSE;
+<<EOF>>                         { yyterminate(); return 1; }
 %%
  

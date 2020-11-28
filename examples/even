@@ -1,0 +1,17 @@
+i$ F welcome(){
+    P[Escriba un numero:\n].
+    R 0.
+}
+i$ F isEven(s$ n){
+    i$a=C(n).
+    i$mod = a%2.
+    (mod~0)?->{R 1.}
+    R 0.
+}
+S{
+    welcome().
+    G(number,20).
+    i$answer = isEven(number).
+    (answer ~ 1)?->{ P[Si es par 'number'].}:{P[No es par 'number'\n].} 
+    R 1.
+}
