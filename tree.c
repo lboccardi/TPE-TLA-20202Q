@@ -133,9 +133,9 @@ void addArgs(funct * f, char * args){
     }
     char * curr = args;
     while (curr != NULL){
-        if(strncmp(args,"int",3)==0){
+        if(strncmp(args,"int",strlen("int"))==0){
             f->args[curr_amount++] = KIND_INT;
-        }else if(strncmp(args,"char *",5)==0){
+        }else if(strncmp(args,"char *",strlen("char *"))==0){
             f->args[curr_amount++] = KIND_STRING;
         }else{
             f->args[curr_amount++] = KIND_CHAR;
