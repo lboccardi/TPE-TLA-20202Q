@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "tree.h"
 
 code program;
@@ -172,6 +173,8 @@ char *printfParser(char *s)
     ans[0] = '\"';
 
     int i = 0, j = 1, k = 0, array_index = 0;
+    bool var_flag= false;
+    char var_name[strlen(s)];
     char name[strlen(s)];
     name[0] = 0;
     while (s[i] != '\0')
@@ -208,10 +211,21 @@ char *printfParser(char *s)
                     /* Apertura */
                     name[k++] = '[';
                     /* Me guardo los digits */
-                    while(s[i] >= '0' && s[i] <= '9') {
-                        name[k++] = s[i];
-                        array_index = 10*array_index + s[i++] - '0'; 
+                    if (isdigit(s[i])) {
+                        while (isdigit(s[i])) {
+                            name[k++] = s[i];
+                            array_index = 10 * array_index + s[i++] - '0';
+                        }
+                    } else {
+                        int var_index = 0;
+                        while (s[i] != '\'') {
+                            name[k++] = s[i];
+                            var_name[var_index++] = s[i++]; 
+                        }
+                        var_name[var_index] = '\0';
+                        var_flag = true;
                     }
+                    
                     /* Cierre */
                     name[k++] = ']';
                 } else {
@@ -238,10 +252,18 @@ char *printfParser(char *s)
                     char * token = strtok(token_aux, "[");
                     if (token != NULL) {
                         if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING)) {
-                            if (array_index >= curr->amount) {
-                                free(ans);
-                                return NULL;
+                            if (var_flag == false) {
+                                if (array_index >= curr->amount) {
+                                    free(ans);
+                                    return NULL;
+                                }
+                            } else {
+                                if (!checkIfVarExists(var_name) || !isOfKind(var_name, KIND_INT)) {
+                                    free(ans);
+                                    return NULL;
+                                }
                             }
+                            
                             strcpy(ans + j, curr->type);
                             j += 2;
                             flag = false;
