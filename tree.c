@@ -241,7 +241,11 @@ char *printfParser(char *s)
             {
                 if (strcmp(curr->name, name + pointer) == 0)
                 {
-                    strcpy(ans + j, curr->type);
+                    if (curr->kind == KIND_ARRAY_CHAR) {
+                        strcpy(ans + j, "%s");
+                    } else  {
+                        strcpy(ans + j, curr->type);
+                    }
                     j += 2;
                     flag = false;
                 } else {
