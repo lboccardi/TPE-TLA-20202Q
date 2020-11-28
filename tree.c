@@ -505,3 +505,15 @@ bool compatibleArray(char * v1,char * v2,int number){
     }
     return false;
 }
+bool correctArray(char * name,KIND kind,int size){
+    var * v = var_list.first;
+    while(v!=NULL){
+        if(strcmp(v->name,name)==0){
+            if(v->kind==kind && v->amount>size){
+                return true;
+            }
+            return false;
+        }
+    }
+    return false;
+}

@@ -1,26 +1,20 @@
 S{
-	i$first=0. i$second=0. i$next. i$i=0.
+	 i$i=1. i$t1=0. i$t2=0. i$next. 
 
-	P[Enter the number of terms: ].
-	G(n,20).
+	 P[Enter the number of terms: ].
 
-	P[First 'n' terms of Fibonacci series:\n].
-	i$c=C(n).
-	(i<c)?-->{
+	 G(n,10).
 
-		(i<=1)?->{
-	        next = i.
-		}:{
-			next = first + second.
-			first = second.
-			second = next.
-		}
+	 P[Fibonacci sequence: ]. 
 
-		P['next'\n].
+	 (i<=n)?{
+	 	i=i+1.
+	 	P['t1' ].
+	 	next = t1+t2. 
+	 	t1=t2.
+	 	t2=next.
+	 }
 
-		i=i+1.
-	}
-
-	R 0. 
+	 R 0.
 
 }
