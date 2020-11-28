@@ -16,6 +16,8 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 "P"           return STDOUT; 
 "F"           return FUNCTION; 
 "R"           return RETURN;
+"L"			  return LENGTH; 
+"C"		      return CONVERT; 			  
 
 {digit}+	{char* str = malloc(strlen(yytext) + 1);
 				strcpy(str, yytext);

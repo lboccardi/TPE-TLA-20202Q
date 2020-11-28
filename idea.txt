@@ -109,6 +109,7 @@ i$ F welcome(){
     R 0.
 }
 i$ F isEven(i$ n){
+    P[me llego 'n'\n].
     i$mod = n%2.
     (mod~0)?->{R 1.}
     R 0.
@@ -116,8 +117,8 @@ i$ F isEven(i$ n){
 S{
     welcome().
     G(number,20).
-    i$answer = isEven(number).
-    (answer ~ 1)?->{P[El numero 'number' si es par.]. R 0.}
-    P[El numero 'number' NO es par.]. 
+    i$answer = isEven(5).
+    (answer ~ 1)?->{ P[El numero 'number' si es par\n]. R 0.}
+    P[El numero 'number' NO es par]. 
     R 1.
 }

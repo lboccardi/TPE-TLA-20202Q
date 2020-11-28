@@ -1,12 +1,12 @@
 S{
 	i$first=0. i$second=0. i$next. i$i=0.
 
-	P[Enter the number of terms: \n].
+	P[Enter the number of terms: ].
 	G(n,20).
 
 	P[First 'n' terms of Fibonacci series:\n].
-
-	(i<n)?-->{
+	i$c=C(n).
+	(i<c)?-->{
 
 		(i<=1)?->{
 	        next = i.
@@ -16,7 +16,7 @@ S{
 			second = next.
 		}
 
-		P['next'].
+		P['next'\n].
 
 		i=i+1.
 	}

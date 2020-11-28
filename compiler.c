@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 void generateIntermediateCodeFile(FILE *intermediate_file)
 {
-    fprintf(intermediate_file, "#include <stdio.h> \n %s", program.first->information);
+    fprintf(intermediate_file, "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n%s", program.first->information);
 }
 
 void compile(char *name)

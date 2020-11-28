@@ -99,5 +99,5 @@ bool checkIfFunctionExists(char * name);
 bool checkArgsOk(char*name,char*args);
 void freeVars();
 bool checkReturnType(char * program, KIND kind);
-
+bool compatibleArray(char * v1,char * v2,int number);
 #endif
