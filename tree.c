@@ -135,15 +135,11 @@ void addArgs(funct *f, char *args)
         f->args_count = 0;
         return;
     }
-    char *curr = args;
-    while (curr != NULL)
-    {
-        if (strncmp(args, "int", 3) == 0)
-        {
+    char * curr = args;
+    while (curr != NULL){
+        if(strncmp(args,"int",strlen("int"))==0){
             f->args[curr_amount++] = KIND_INT;
-        }
-        else if (strncmp(args, "char *", 5) == 0)
-        {
+        }else if(strncmp(args,"char *",strlen("char *"))==0){
             f->args[curr_amount++] = KIND_STRING;
         }
         else
@@ -277,15 +273,11 @@ char *printfParser(char *s)
                     int token_aux_len = strlen(name + pointer) + 1;
                     char token_aux[token_aux_len];
                     strcpy(token_aux, name + pointer);
-                    char *token = strtok(token_aux, "[");
-                    if (token != NULL)
-                    {
-                        if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT || curr->kind == KIND_ARRAY_STRING))
-                        {
-                            if (var_flag == false)
-                            {
-                                if (array_index >= curr->amount && curr->amount != -1)
-                                {
+                    char * token = strtok(token_aux, "[");
+                    if (token != NULL) {
+                        if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING || curr->kind == KIND_ARRAY_CHAR)) {
+                            if (var_flag == false) {
+                                if (array_index >= curr->amount && curr->amount!=-1) {
                                     free(ans);
                                     return NULL;
                                 }

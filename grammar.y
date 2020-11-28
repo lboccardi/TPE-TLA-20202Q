@@ -78,8 +78,8 @@ type
     ;
 
 params 
-    : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); add($$,true); if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else{addVar($2, KIND_STRING,1);}}
-    | type ALPHA COMMA params   { $$ = malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); add($$,true);if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else{addVar($2, KIND_STRING,1);}} 
+    : type ALPHA                { $$ = malloc(strlen($1)+strlen($2) +2); sprintf($$, "%s %s", $1, $2); add($$,true); if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else if (strcmp($1, "char *") == 0) {addVar($2, KIND_STRING,1);} else { addVar($2, KIND_CHAR, 1); };  }
+    | type ALPHA COMMA params   { $$ = malloc(strlen($1)+strlen($2)+4+strlen($4)); sprintf($$, "%s %s, %s", $1, $2, $4); add($$,true);if(strcmp($1,"int")==0){addVar($2, KIND_INT,1);}else if (strcmp($1, "char *") == 0) {addVar($2, KIND_STRING,1);} else { addVar($2, KIND_CHAR, 1); };} 
     | /* lambda */              { $$ = ""; }
     ;
 
