@@ -255,7 +255,7 @@ char *printfParser(char *s)
                     strcpy(token_aux, name + pointer);
                     char * token = strtok(token_aux, "[");
                     if (token != NULL) {
-                        if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING)) {
+                        if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING || curr->kind == KIND_ARRAY_CHAR)) {
                             if (var_flag == false) {
                                 if (array_index >= curr->amount && curr->amount!=-1) {
                                     free(ans);
