@@ -5,6 +5,7 @@
 typedef enum KIND{
     KIND_STRING,
     KIND_INT,
+    KIND_CHAR,
     KIND_ARRAY_INT,
     KIND_ARRAY_STRING,
 }KIND;
@@ -14,8 +15,10 @@ typedef enum DATA_TYPE {
     UNDECLARED_VAR,
     STRING_LITERAL,
     INT_LITERAL,
+    CHAR_LITERAL,
     STRING_VAR,
-    INT_VAR
+    INT_VAR, 
+    CHAR_VAR
 } DATA_TYPE;
 
 typedef struct node

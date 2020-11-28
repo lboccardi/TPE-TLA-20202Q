@@ -99,10 +99,13 @@ void addVar(char *name, KIND kind,int size)
     {
         aux_type = "%d";
     }
-    else
+    else if(kind == KIND_STRING || kind == KIND_ARRAY_STRING)
     {
         aux_type = "%s";
+    }else {
+        aux_type = "%c"; 
     }
+
     strcpy(aux->type, aux_type);
     /** save name and kind**/
     aux->name = name;
@@ -120,6 +123,7 @@ void addVar(char *name, KIND kind,int size)
     var_list.last = aux;
     aux->next = NULL;
 }
+
 void addArgs(funct * f, char * args){
     int curr_amount = 0;
     if(*args == 0){
@@ -130,8 +134,10 @@ void addArgs(funct * f, char * args){
     while (curr != NULL){
         if(strncmp(args,"int",3)==0){
             f->args[curr_amount++] = KIND_INT;
-        }else{
+        }else if(strncmp(args,"char *",5)==0){
             f->args[curr_amount++] = KIND_STRING;
+        }else{
+            f->args[curr_amount++] = KIND_CHAR;
         }
         curr = strchr(args,',');
         args=curr+2;
@@ -281,6 +287,7 @@ unsigned int guess_data_type(char * s) {
     switch(*s) {
         /* Si el primer caracter indica que es un String */
         case '\'':
+            return CHAR_LITERAL; // HERE
         case '\"':
             return STRING_LITERAL;
         /* Si el primer caracter es un dígito */    
@@ -294,6 +301,7 @@ unsigned int guess_data_type(char * s) {
             if(checkIfVarExists(s)) {
                 if(isOfKind(s, KIND_STRING))    { return STRING_VAR; }
                 if(isOfKind(s, KIND_INT))       { return INT_VAR; }
+                if(isOfKind(s, KIND_CHAR))       { return CHAR_VAR; }
             }
             return UNDECLARED_VAR;
     }
@@ -318,7 +326,10 @@ bool are_comparable(char * s1, char * s2) {
             /* Int se compara con Int */
             case INT_LITERAL:
             case INT_VAR:
-                return (v2 == INT_LITERAL || v2 == INT_VAR);       
+                return (v2 == INT_LITERAL || v2 == INT_VAR); 
+            case CHAR_VAR:
+            case CHAR_LITERAL:
+                return (v2 == CHAR_VAR || v2 == CHAR_LITERAL);      
         }
         /* Code Unreachable */
         return false;
@@ -449,6 +460,9 @@ bool checkArgsOk(char*name,char*args){
                 if((type == STRING_LITERAL || type == STRING_VAR) && curr->args[i]!=KIND_STRING){
                     return false;
                 }
+                if((type == CHAR_VAR || type == CHAR_LITERAL ) && curr->args[i]!=KIND_CHAR){
+                    return false;
+                }
                 
                 if(*p2 == 0){
                     p1 = p2;
@@ -486,6 +500,9 @@ bool checkReturnType(char * program, KIND kind){
             return false;
         }
         if((type == STRING_LITERAL || type == STRING_VAR) && kind!=KIND_STRING){
+            return false;
+        }
+        if((type == CHAR_VAR || type == CHAR_LITERAL) && kind!=KIND_CHAR){
             return false;
         }
         p = strstr(c,"return");

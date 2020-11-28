@@ -64,7 +64,8 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 "&"         return AND;
 "="         return ASSIGN; 
 "i$"        return INT; 
-"s$"        return STRING; 
+"s$"        return STRING;
+"c$" 		return CHAR;
 "+"         return PLUS;
 "%"         return MOD; 
 "-"         return MINUS;
