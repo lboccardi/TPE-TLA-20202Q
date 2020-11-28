@@ -1,10 +1,11 @@
-i#CTE 1
-
+i$ F asad().
 i$ F asad(){
     R 0.
 }
 
+i#a 1
+
 S {
-    P['CTE'].
+    P['a'].
     R 0. 
 }

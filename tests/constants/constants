@@ -1,11 +1,12 @@
-i#in 100
-c#ch 'f
-s#str 'hola'
+i#IN 100
+c#CH 'f
+s#STR 'hola'
+
 S{
-    i$a=in.
-    P['in'\n].
+    i$a=IN.
+    P['IN'\n].
     P['a'\n].
-    P['ch'\n].
-    P['str'\n].
+    P['CH'\n].
+    P['STR'\n].
     R 0.
 }
