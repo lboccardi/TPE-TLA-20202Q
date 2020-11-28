@@ -185,6 +185,7 @@ var
 
     | ALPHA ARRAY DIGIT ASSIGN DIGIT            { if (!isOfKind($1, KIND_ARRAY_INT)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
     | ALPHA ARRAY DIGIT ASSIGN ESCAPE ALPHA      { if (!isOfKind($1, KIND_ARRAY_CHAR)){yyerror("Variable should be char array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } if(strlen($6)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($1) + strlen($3) + strlen($6) + 10 ); sprintf($$, "%s[%s]=\'%s\'", $1, $3, $6); add($$, true); }
+    | ALPHA ARRAY DIGIT ASSIGN ESCAPE DIGIT      { if (!isOfKind($1, KIND_ARRAY_CHAR)){yyerror("Variable should be char array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } if(strlen($6)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($1) + strlen($3) + strlen($6) + 10 ); sprintf($$, "%s[%s]=\'%s\'", $1, $3, $6); add($$, true); }
     | ALPHA ARRAY DIGIT ASSIGN STRING_VALUE     { if (!isOfKind($1, KIND_ARRAY_STRING)){yyerror("Variable should be string array type"); YYABORT;} if(! enoughSpace($1, atoi($3)) ) { yyerror("Array has not enough space"); YYABORT; } $$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); $5[strlen($5) - 1] = 0; sprintf($$, "%s[%s]=\"%s\"", $1, $3, $5+1); add($$, true); }
     | ALPHA ARRAY ALPHA ASSIGN ALPHA            { if(!compatibleArray($5,$1,0)){yyerror("Variables aren't compatible.");YYABORT;} if(!isOfKind($3,KIND_INT)){yyerror("Variable should be int type."); YYABORT;}$$ = malloc(strlen($1) + strlen($3) + strlen($5) + 4 ); sprintf($$, "%s[%s]=%s", $1, $3, $5); add($$, true); }
     ; 
@@ -219,6 +220,8 @@ digit_array
 char_array
     : ESCAPE ALPHA COMMA char_array { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5+strlen($4)); sprintf($$, "\'%s\',%s", $2,$4); add($$,true);}
     | ESCAPE ALPHA { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5); sprintf($$, "\'%s\'", $2); add($$,true);}
+    | ESCAPE DIGIT COMMA char_array { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5+strlen($4)); sprintf($$, "\'%s\',%s", $2,$4); add($$,true);}
+    | ESCAPE DIGIT { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+5); sprintf($$, "\'%s\'", $2); add($$,true);}
     ;
 
 rule
