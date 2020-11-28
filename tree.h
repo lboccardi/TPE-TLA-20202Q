@@ -21,7 +21,10 @@ typedef enum DATA_TYPE
     CHAR_LITERAL,
     STRING_VAR,
     INT_VAR,
-    CHAR_VAR
+    CHAR_VAR,
+    ARRAY_INT_VAR,
+    ARRAY_CHAR_VAR,
+    ARRAY_STRING_VAR,
 } DATA_TYPE;
 
 typedef struct node
@@ -106,7 +109,7 @@ void freeVars();
 bool checkReturnType(char *program, KIND kind);
 bool compatibleArray(char *v1, char *v2, int number);
 bool correctArray(char *name, KIND kind, int size);
-
+bool isAnArray(char * name);
 /* Checks if two arrays are of the same type in order to do a[i] = a[kj] */
 bool compatibleArrayAssignment(char *v1, char *v2, int n1, int n2);
 #endif

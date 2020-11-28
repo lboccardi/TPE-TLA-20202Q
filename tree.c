@@ -334,6 +334,7 @@ bool isOfKind(char *s, KIND kind)
 
 unsigned int guess_data_type(char *s)
 {
+    char * arr;
     switch (*s)
     {
     /* Si el primer caracter indica que es un String */
@@ -357,8 +358,8 @@ unsigned int guess_data_type(char *s)
         return DATA_TYPE_NONE;
     /* Si no, era una variable o era otra comparación del estilo "(? ? ?)" */
     default:
-        if (checkIfVarExists(s))
-        {
+        arr = strchr(s,'[');
+        if(arr==NULL){
             if (isOfKind(s, KIND_STRING))
             {
                 return STRING_VAR;
@@ -371,7 +372,25 @@ unsigned int guess_data_type(char *s)
             {
                 return CHAR_VAR;
             }
+        }else{
+            int p = arr-s;
+            char aux[p+3];
+            strncpy(aux,s,p);
+            aux[p]=0;
+            if (isOfKind(aux, KIND_ARRAY_STRING))
+            {
+                return ARRAY_STRING_VAR;
+            }
+            if (isOfKind(aux, KIND_ARRAY_INT))
+            {
+                return ARRAY_INT_VAR;
+            }
+            if (isOfKind(aux, KIND_ARRAY_CHAR))
+            {
+                return ARRAY_CHAR_VAR;
+            }
         }
+
         return UNDECLARED_VAR;
     }
 }
@@ -395,14 +414,17 @@ bool are_comparable(char *s1, char *s2)
         /* String se comapra a String */
         case STRING_LITERAL:
         case STRING_VAR:
-            return (v2 == STRING_LITERAL || v2 == STRING_VAR);
+        case ARRAY_STRING_VAR:
+            return (v2 == STRING_LITERAL || v2 == STRING_VAR || v2 == ARRAY_STRING_VAR);
         /* Int se compara con Int */
         case INT_LITERAL:
         case INT_VAR:
-            return (v2 == INT_LITERAL || v2 == INT_VAR);
+        case ARRAY_INT_VAR:
+            return (v2 == INT_LITERAL || v2 == INT_VAR || v2 == ARRAY_INT_VAR);
         case CHAR_VAR:
         case CHAR_LITERAL:
-            return (v2 == CHAR_VAR || v2 == CHAR_LITERAL);
+        case ARRAY_CHAR_VAR:
+            return (v2 == CHAR_VAR || v2 == CHAR_LITERAL || v2 == ARRAY_CHAR_VAR);
         }
         /* Code Unreachable */
         return false;
@@ -538,15 +560,15 @@ bool checkArgsOk(char *name, char *args)
                 {
                     return false;
                 }
-                if ((type == INT_LITERAL || type == INT_VAR) && curr->args[i] != KIND_INT)
+                if ((type == INT_LITERAL || type == INT_VAR || type == ARRAY_INT_VAR) && curr->args[i] != KIND_INT)
                 {
                     return false;
                 }
-                if ((type == STRING_LITERAL || type == STRING_VAR) && curr->args[i] != KIND_STRING)
+                if ((type == STRING_LITERAL || type == STRING_VAR || type == ARRAY_STRING_VAR) && curr->args[i] != KIND_STRING)
                 {
                     return false;
                 }
-                if ((type == CHAR_VAR || type == CHAR_LITERAL) && curr->args[i] != KIND_CHAR)
+                if ((type == CHAR_VAR || type == CHAR_LITERAL || type == ARRAY_CHAR_VAR) && curr->args[i] != KIND_CHAR)
                 {
                     return false;
                 }
@@ -588,15 +610,15 @@ bool checkReturnType(char *program, KIND kind)
         {
             return false;
         }
-        if ((type == INT_LITERAL || type == INT_VAR) && kind != KIND_INT)
+        if ((type == INT_LITERAL || type == INT_VAR || type == ARRAY_INT_VAR) && kind != KIND_INT)
         {
             return false;
         }
-        if ((type == STRING_LITERAL || type == STRING_VAR) && kind != KIND_STRING)
+        if ((type == STRING_LITERAL || type == STRING_VAR || type == ARRAY_STRING_VAR) && kind != KIND_STRING)
         {
             return false;
         }
-        if ((type == CHAR_VAR || type == CHAR_LITERAL) && kind != KIND_CHAR)
+        if ((type == CHAR_VAR || type == CHAR_LITERAL|| type == ARRAY_CHAR_VAR) && kind != KIND_CHAR)
         {
             return false;
         }
@@ -657,6 +679,23 @@ bool correctArray(char *name, KIND kind, int size)
         if (strcmp(v->name, name) == 0)
         {
             if (v->kind == kind && v->amount > size)
+            {
+                return true;
+            }
+            return false;
+        }
+        v = v->next;
+    }
+    return false;
+}
+
+bool isAnArray(char * name){
+    var *v = var_list.first;
+    while (v != NULL)
+    {
+        if (strcmp(v->name, name) == 0)
+        {
+            if (v->kind == KIND_ARRAY_CHAR ||v->kind == KIND_ARRAY_STRING ||v->kind == KIND_ARRAY_INT  )
             {
                 return true;
             }
