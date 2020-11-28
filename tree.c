@@ -561,6 +561,7 @@ bool correctArray(char * name,KIND kind,int size){
             }
             return false;
         }
+        v=v->next;
     }
     return false;
 }

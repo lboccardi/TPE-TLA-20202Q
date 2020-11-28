@@ -1,7 +1,8 @@
 S{
-    c$array_2.
-    array_1='1.
-
-
+c$b='a.
+i$d=1.
+s$e='holis'.
+c$array_2='1,'2.
+c$a=array_1.
     R 0.
 }
