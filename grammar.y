@@ -211,6 +211,7 @@ assignment
         $$ = $1;
         }
     | ESCAPE ALPHA   { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+3); sprintf($$, "\'%s\'", $2);add($$,true);}
+    | ESCAPE DIGIT   { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+3); sprintf($$, "\'%s\'", $2);add($$,true);}
     ;
 
 alpha_array
