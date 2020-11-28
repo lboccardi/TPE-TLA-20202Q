@@ -98,8 +98,6 @@ program
     : var END program                                       { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
     | call END program                                      { $$ = malloc(strlen($1)+3+strlen($3)); sprintf($$,"%s; %s",$1,$3); add($$,true);}
     | RETURN assignment END                                 { $$ = malloc(strlen($2) +9); sprintf($$, "return %s;", $2); add($$,true);} 
-    | RETURN ALPHA ARRAY DIGIT END                          { if(!isAnArray($2)) {yyerror("Not an array.");YYABORT;}$$ = malloc(strlen($2) +strlen($4)+15); sprintf($$, "return %s[%s];", $2,$4); add($$,true);} 
-    | RETURN ALPHA ARRAY ALPHA END                          { if(!isAnArray($2)) {yyerror("Not an array.");YYABORT;}if(!isOfKind($4,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}$$ = malloc(strlen($2) +strlen($4)+15); sprintf($$, "return %s[%s];", $2,$4); add($$,true);} 
     | get program                                           { $$ = malloc(strlen($1)+strlen($2)+5); sprintf($$,"%s %s",$1,$2); add($$, true);}
     | STDOUT out END program                                { char * print = printfParser($2); if(print==NULL){yyerror("Sintax error on P.\n Check if your variables exist."); YYABORT;} $$ = malloc(strlen($2)*2+5+strlen($4)+ 11); sprintf($$, "printf(%s);\n%s", print, $4); add($$,true); free(print);} 
     | OPEN_P rule operator rule CLOSE_P CONDITIONAL WHILE EXEC program END_EXEC program {   
@@ -213,6 +211,26 @@ assignment
         $$ = $1;
         }
     | ESCAPE ALPHA   { if(strlen($2)!=1){yyerror("Incompatible initialization for type char."); YYABORT;}$$ = malloc(strlen($2)+3); sprintf($$, "\'%s\'", $2);add($$,true);}
+    | ALPHA ARRAY DIGIT                 {
+                                         if(!isAnArray($1)) {
+                                                yyerror("Not an array.");
+                                                YYABORT;
+                                            }
+                                            $$ = malloc(strlen($1) + strlen($3) + 10);
+                                            sprintf($$, "%s[%s]", $1, $3);
+                                            add($$,true);
+                                        }
+    | ALPHA ARRAY ALPHA                 {
+                                         if(!isAnArray($1)) {
+                                                yyerror("Not an array.");
+                                                YYABORT;
+                                            }
+                                            if(!isOfKind($3,KIND_INT)){yyerror("Variable should be int type to de-reference.");YYABORT;}
+                                            $$ = malloc(strlen($1) + strlen($3) + 10);
+                                            sprintf($$, "%s[%s]", $1, $3);
+                                            add($$,true);
+                                        }
+
     ;
 
 var_init
@@ -247,15 +265,6 @@ rule
                                             $$ = malloc(strlen($2) + strlen($3) + strlen($4) + 5);
                                             sprintf($$, "(%s %s %s)", $2, $3, $4);
                                             add($$,true);}
-    | ALPHA ARRAY DIGIT                 {
-                                         if(!isAnArray($1)) {
-                                                yyerror("Not an array.");
-                                                YYABORT;
-                                            }
-                                            $$ = malloc(strlen($1) + strlen($3) + 10);
-                                            sprintf($$, "%s[%s]", $1, $3);
-                                            add($$,true);
-                                        }
 
     | assignment                        { $$ = malloc(strlen($1)+1); sprintf($$, "%s", $1); add($$, true);}
     ;
