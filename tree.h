@@ -48,6 +48,7 @@ typedef struct var
     char type[3]; // %d o %s
     KIND kind;
     int amount;
+    bool constant;
 
     struct var *next;
 } var;
@@ -87,6 +88,8 @@ void freeResources(bool error);
 
 void addVar(char *name, KIND kind, int size);
 
+void addConstant(char *name, KIND kind, int size);
+
 void addFunction(char *name, KIND kind, char *args);
 
 void declareFunction(char *name, KIND kind, char *args);
@@ -115,4 +118,6 @@ bool correctArray(char *name, KIND kind, int size);
 bool isAnArray(char * name);
 /* Checks if two arrays are of the same type in order to do a[i] = a[kj] */
 bool compatibleArrayAssignment(char *v1, char *v2, int n1, int n2);
+/*checks if an alpha is actually a constant*/
+bool isConstant(char *name);
 #endif

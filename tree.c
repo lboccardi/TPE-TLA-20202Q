@@ -114,6 +114,44 @@ void addVar(char *name, KIND kind, int size)
     aux->name = name;
     aux->kind = kind;
     aux->amount = size;
+    aux->constant =false;
+
+    if (var_list.first == NULL)
+    {
+        var_list.first = aux;
+    }
+    else
+    {
+        var_list.last->next = aux;
+    }
+    var_list.last = aux;
+    aux->next = NULL;
+}
+
+void addConstant(char *name, KIND kind, int size)
+{
+    var *aux = malloc(sizeof(var));
+    /** save type **/
+    char *aux_type;
+    if (kind == KIND_INT || kind == KIND_ARRAY_INT)
+    {
+        aux_type = "%d";
+    }
+    else if (kind == KIND_STRING || kind == KIND_ARRAY_STRING)
+    {
+        aux_type = "%s";
+    }
+    else
+    {
+        aux_type = "%c";
+    }
+
+    strcpy(aux->type, aux_type);
+    /** save name and kind**/
+    aux->name = name;
+    aux->kind = kind;
+    aux->amount = size;
+    aux->constant = true;
 
     if (var_list.first == NULL)
     {
@@ -733,6 +771,19 @@ bool isAnArray(char * name){
             return false;
         }
         v = v->next;
+    }
+    return false;
+}
+
+bool isConstant(char *name){
+    var *curr = var_list.first;
+    while (curr != NULL)
+    {
+        if (strcmp(curr->name, name) == 0)
+        {
+            return curr->constant;
+        }
+        curr = curr->next;
     }
     return false;
 }

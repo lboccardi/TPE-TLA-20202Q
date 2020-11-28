@@ -71,6 +71,9 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 "i$"        return INT; 
 "s$"        return STRING;
 "c$" 		return CHAR;
+"i#"		return INT_DEFINE;
+"c#"        return CHAR_DEFINE;
+"s#"		return STRING_DEFINE;
 "+"         return PLUS;
 "%"         return MOD; 
 "-"         return MINUS;
