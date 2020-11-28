@@ -20,7 +20,7 @@ extern int yylineno;
 
 void yyerror(const char *str)
 {
-  fprintf(stderr,"At line %d: error: %s\n",yylineno,str);
+  fprintf(stderr,"Error at line %d: %s\n",yylineno,str);
   freeResources(true); 
   program.error = true;
 } 

@@ -1,8 +1,11 @@
 %{
 #include "y.tab.h"
 #include "tree.h"
+
 %}
 
+%option nounput
+%option noinput
 %option yylineno
 
 alpha [A-Za-z]
