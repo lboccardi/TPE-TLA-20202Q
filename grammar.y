@@ -16,9 +16,11 @@ int yylex();
 
 int yydebug=1;
 
+extern int yylineno;
+
 void yyerror(const char *str)
 {
-  fprintf(stderr,"error: %s\n",str);
+  fprintf(stderr,"At line: %d. error: %s\n",yylineno,str);
   freeResources(true); 
   program.error = true;
 } 
