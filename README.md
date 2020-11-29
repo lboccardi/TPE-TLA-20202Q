@@ -32,3 +32,7 @@ Thanks for choosing our language and good luck !
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Clux cheat sheet 
+You can see all thing you will be able to do with Clux in the following essay 
+[embed]http://https://github.com/lboccardi/TPE-TLA-20202Q/blobl/master/Informe Clux.pdf[/embed]
