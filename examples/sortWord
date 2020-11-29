@@ -1,0 +1,28 @@
+i$ F welcome(){
+    P[Puede reordenar hasta 50 caracteres \n Escriba algo para ordenar:\n].
+    R 0.
+}
+
+S{
+    welcome().
+    G(w, 50).
+    i$l=L(w).
+    i$i = 1. i$j. i$k. i$m.
+    c$temp.
+    (i<l)?-->{
+        j = 0.
+        m = l-i.
+        (j<m)?-->{
+            k = j+1.
+            (w_j > w_k)?->{
+                temp = w_j.
+                w_j = w_k.
+                w_k = temp.
+            }
+            j = j+ 1.
+        }
+        i = i+ 1.
+    }
+    P['w'\n].
+    R 0.
+}

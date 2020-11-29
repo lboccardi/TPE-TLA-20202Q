@@ -1,0 +1,40 @@
+S{
+    i$first_4=1,2,3,4.
+    i$second_4=5,6,7,8.
+ 
+    i$i=0.
+    
+    P[Before swap: ].
+    (i<4)?-->{
+        P['first_i' ].
+        i = i+1.
+    }
+    i=0.
+    (i<4)?-->{
+        P['second_i' ].
+        i = i+1.
+    }
+
+    i=0.
+    P[\n After swap: ]. 
+    
+    (i<4)?-->{
+        i$aux = first_i.  
+        first_i = second_i.
+        second_i=aux.
+        i=i+1.
+    }
+
+    i=0.
+    (i<4)?-->{
+        P['first_i' ].
+        i = i+1.
+    }
+    i=0.
+    (i<4)?-->{
+        P['second_i' ].
+        i = i+1.
+    }
+
+    P[\n].
+}

@@ -1,0 +1,25 @@
+i$ F towerOfHanoi(i$n, c$from, c$to, c$aux).
+
+i$ F towerOfHanoi(i$n, c$from, c$to, c$aux){
+    (n~1)?->{
+        P[Move disk 1 from rod 'from' to rod 'to'\n].
+        R 0.
+    }
+
+    n = n-1.
+    towerOfHanoi(n, from, aux, to).
+    P[Move disk 'n' from rod 'from' to rod 'to'\n].
+    towerOfHanoi(n, aux, to, from).
+
+    R 0.
+}
+
+S{
+    i$numberOfDisks = 4.
+    i$res.
+    c$a='a.
+    c$b='b.
+    c$c='c.
+    res=towerOfHanoi(numberOfDisks, a, c, b).
+    R 0.
+}

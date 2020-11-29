@@ -1,0 +1,4 @@
+S{
+    i$str=1. 
+    i$len = L(str).
+}
