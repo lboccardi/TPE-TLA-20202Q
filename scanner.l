@@ -111,7 +111,7 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
             }
 [ \t \n]+      ;
 "'"         {last_escape = true;return ESCAPE;}
-[(){}?<>~|&=+%-*/,_.:]		{ return *yytext; }
+[<>~|&=%/,_.:]|\-|\(|\)|\{|\}|\?|\+|\*		{ return *yytext; }
 "->"        {last_escape = false; return IF; }
 "-->"       {last_escape = false; return WHILE;}
 "<="        {last_escape = false; return LE;}
