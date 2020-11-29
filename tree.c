@@ -195,11 +195,12 @@ void addFunction(char *name, KIND kind, char *args)
 
     /**check if function was declared but not defined **/
     funct *auxIter = function_list.first;
-    while(auxIter->next != NULL){
+    while(auxIter != NULL){
         if(strcmp(auxIter->name, name) == 0){
             auxIter->defined = true;
             return;
         }
+        auxIter = auxIter->next;
     }
 
     funct *aux = malloc(sizeof(funct));
