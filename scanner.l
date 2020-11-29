@@ -109,39 +109,20 @@ string_value [\']({alpha}|{digit}|[  \  \\ \n \t]|" "|"'")*[\']
 				last_escape = false;
 				return SPACE_ALPHA;
             }
-"."         {last_escape = false; return END;}
 [ \t \n]+      ;
-"("         {last_escape = false; return OPEN_P; }
-")"         {last_escape = false; return CLOSE_P;}
-"?"         {last_escape = false; return CONDITIONAL;}
-"{"         {last_escape = false; return EXEC; }
-"}"         {last_escape = false; return END_EXEC;}
-"->"        {last_escape = false; return IF; }
 "'"         {last_escape = true;return ESCAPE;}
+[<>~|&=%/,_.:]|\-|\(|\)|\{|\}|\?|\+|\*		{ return *yytext; }
+"->"        {last_escape = false; return IF; }
 "-->"       {last_escape = false; return WHILE;}
-"<"         {last_escape = false; return L;}
-">"         {last_escape = false; return G;}
 "<="        {last_escape = false; return LE;}
 ">="        {last_escape = false; return GE;}
-"~"         {last_escape = false; return EQ;}
 "!~"		{last_escape = false; return NE; }
-"|"         {last_escape = false; return OR;}
-"&"         {last_escape = false;return AND;}
-"="         {last_escape = false;return ASSIGN;} 
 "i$"        {last_escape = false;return INT;} 
 "s$"        {last_escape = false;return STRING;}
 "c$" 		{last_escape = false;return CHAR;}
 "i#"		{last_escape = false;return INT_DEFINE;}
 "c#"        {last_escape = false;return CHAR_DEFINE;}
 "s#"		{last_escape = false;return STRING_DEFINE;}
-"+"         {last_escape = false;return PLUS;}
-"%"         {last_escape = false;return MOD;} 
-"-"         {last_escape = false;return MINUS;}
-"*"         {last_escape = false;return TIMES;}
-"/"         {last_escape = false;return DIV;} 
-","         {last_escape = false;return COMMA;}
-"_"         {last_escape = false;return ARRAY; }
-":"			{last_escape = false;return ELSE;}
 <<EOF>>                         { yyterminate(); return 1; }
 %%
  

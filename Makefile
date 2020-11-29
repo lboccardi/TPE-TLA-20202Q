@@ -1,6 +1,6 @@
 PHONY = all clean
 CCFLAGS=-Wall -pedantic -std=c99 -ggdb -fsanitize=address -D_XOPEN_SOURCE=700
-YLFLAGS= -lfl -ll 
+YLFLAGS= -lfl
 
 all:
 	lex scanner.l
