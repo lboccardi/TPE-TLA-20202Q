@@ -14,8 +14,6 @@
 
 int yylex();
 
-int yydebug=1;
-
 extern int yylineno;
 
 void yyerror(const char *str)
@@ -59,6 +57,8 @@ void yyerror(const char *str)
 ** - $$ = malloc(...):  Alloc the necessary space for the String that will be generated for the compiler
 ** - sprintf($$, ...):  Store the C code string for compiling
 ** - add($$, true):     Save the allocked pointer in order to free it later
+** - addVar():          Stores variables in a similar way to a symbol table
+** - declareFunction(): Stores function name, params and return type
 */
 
 start 
@@ -1024,35 +1024,35 @@ var
   
     /* Integer declaration and assign to function */
     | INT ALPHA '=' call                     { 
-        if(checkIfVarExists($2)){
-            yyerror("That variable already exists, please choose another name"); 
-            YYABORT;
-        }
-        if(!functionReturnsKind($4, KIND_INT)){
-            yyerror("Function should return type int"); 
-            YYABORT;
-        } 
-        $$ = malloc(3+strlen($2)+3+strlen($4)); 
-        sprintf($$,"int %s=%s",$2,$4); 
-        add($$,true); 
-        addVar($2, KIND_INT,1,false);
-    }
+                                                if(checkIfVarExists($2)){
+                                                    yyerror("That variable already exists, please choose another name"); 
+                                                    YYABORT;
+                                                }
+                                                if(!functionReturnsKind($4, KIND_INT)){
+                                                    yyerror("Function should return type int"); 
+                                                    YYABORT;
+                                                } 
+                                                $$ = malloc(3+strlen($2)+3+strlen($4)); 
+                                                sprintf($$,"int %s=%s",$2,$4); 
+                                                add($$,true); 
+                                                addVar($2, KIND_INT,1,false);
+                                            }
 
     /* String declaration and assign to function */
     | STRING ALPHA '=' call                  { 
-        if(checkIfVarExists($2)){
-            yyerror("That variable already exists, please choose another name"); 
-            YYABORT;
-        }
-        if(!functionReturnsKind($4, KIND_STRING)){
-            yyerror("Function should return type string"); 
-            YYABORT;
-        } 
-        $$ = malloc(7+strlen($2)+3+strlen($4)); 
-        sprintf($$,"char* %s=%s",$2,$4); 
-        add($$,true); 
-        addVar($2, KIND_STRING,1,false);
-    }
+                                                if(checkIfVarExists($2)){
+                                                    yyerror("That variable already exists, please choose another name"); 
+                                                    YYABORT;
+                                                }
+                                                if(!functionReturnsKind($4, KIND_STRING)){
+                                                    yyerror("Function should return type string"); 
+                                                    YYABORT;
+                                                } 
+                                                $$ = malloc(7+strlen($2)+3+strlen($4)); 
+                                                sprintf($$,"char* %s=%s",$2,$4); 
+                                                add($$,true); 
+                                                addVar($2, KIND_STRING,1,false);
+                                            }
 
     /* Char declaration and assign to function */
     | CHAR ALPHA '=' call                    { 

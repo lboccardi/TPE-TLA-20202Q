@@ -20,25 +20,33 @@ void add(char *information, bool free)
     aux->free = free;
     aux->next = NULL;
     aux->information = information;
+    /* If first is null, aux is first node */
     if (program.first == NULL)
     {
         program.first = aux;
     }
     else
+    /* Else, insert at the end */
     {
         program.last->next = aux;
     }
+    /* Update last node */
     program.last = aux;
 }
 
 void freeVars(bool all)
 {
     var *curr = var_list.first;
+
+    /* Iteration among all nodes */
     while (curr != NULL)
     {
+        /* Save next node in curr, if any */
         var *aux = curr->next;
-        if(all||!curr->constant){
 
+        /* If all should be freed or variable has allocked data */
+        if(all||!curr->constant){
+          
           if(var_list.first == curr){
               var_list.first = curr->next;
           }else{
@@ -50,14 +58,18 @@ void freeVars(bool all)
           if(var_list.last == curr){
               var_list.last = curr->prev;
           }
+          /* Free current node */
           free(curr);
         }
         curr = aux;
     }
 }
+
 void freeFuncts()
 {
     funct *curr = function_list.first;
+    
+    /* Free all functions in list, one by one */
     while (curr != NULL)
     {
         funct *aux = curr->next;
@@ -65,6 +77,11 @@ void freeFuncts()
         curr = aux;
     }
 }
+
+
+/*  Wraps freeVars and freeFuncts, can be called with argument "error" indicating
+    whether or not the program finished nicely
+*/
 void freeResources(bool error)
 {
     node *curr = program.first;
@@ -75,6 +92,7 @@ void freeResources(bool error)
         return;
     }
 
+    /* Frees program information stored */
     while (curr->next != NULL)
     {
         node *aux = curr->next;
@@ -106,7 +124,7 @@ void freeResources(bool error)
 void addVar(char *name, KIND kind, int size,bool constant)
 {
     var *aux = malloc(sizeof(var));
-    /** save type **/
+    /* Save corresponding type */
     char *aux_type;
     if (kind == KIND_INT || kind == KIND_ARRAY_INT)
     {
@@ -122,7 +140,7 @@ void addVar(char *name, KIND kind, int size,bool constant)
     }
 
     strcpy(aux->type, aux_type);
-    /** save name and kind**/
+    /* Save auxiliary data */
     aux->name = name;
     aux->kind = kind;
     aux->amount = size;
@@ -145,12 +163,16 @@ void addVar(char *name, KIND kind, int size,bool constant)
 void addArgs(funct *f, char *args)
 {
     int curr_amount = 0;
+
+    /* If void parameter function */
     if (*args == 0)
     {
         f->args_count = 0;
         return;
     }
     char * curr = args;
+
+    /* Parses argument list storing position and variable type for later comparison*/
     while (curr != NULL){
         if(strncmp(args,"int",strlen("int"))==0){
             f->args[curr_amount++] = KIND_INT;
@@ -170,8 +192,9 @@ void addArgs(funct *f, char *args)
 void addFunction(char *name, KIND kind, char *args)
 {
 
-    /**check if function was declared but not defined **/
+    /* Check if function was declared but not defined */
     funct *auxIter = function_list.first;
+
     while(auxIter != NULL){
         if(strcmp(auxIter->name, name) == 0){
             auxIter->defined = true;
@@ -181,7 +204,8 @@ void addFunction(char *name, KIND kind, char *args)
     }
 
     funct *aux = malloc(sizeof(funct));
-    /** save name and kind**/
+    
+    /* Save name, kind and parameters */
     aux->name = name;
     aux->kind = kind;
     aux->defined = true;
@@ -201,7 +225,7 @@ void addFunction(char *name, KIND kind, char *args)
 
 void declareFunction(char *name, KIND kind, char *args){
     funct *aux = malloc(sizeof(funct));
-    /** save name and kind**/
+    /* save name and kind */
     aux->name = name;
     aux->kind = kind;
     aux->defined = false;
@@ -219,8 +243,12 @@ void declareFunction(char *name, KIND kind, char *args){
     aux->next = NULL;
 }
 
-char *printfParser(char *s)
-{ /** hola ''a12b5'' como estas --> \"hola %d como estas\",a12b5  **/
+/*  The general idea of this function is to convert our way of printing to STDOUT
+**  into C code equivalent. This is done via printf() functions, instead of systemcalls
+**  because it seemed much more flexible
+*/
+char * printfParser(char *s)
+{
 
     char *ans = malloc(strlen(s) * 2 + 5);
 
@@ -231,27 +259,33 @@ char *printfParser(char *s)
     char var_name[strlen(s)];
     char name[strlen(s)];
     name[0] = 0;
+
+    /* While string is not finished */
     while (s[i] != '\0')
     {
+        /* If it's a delimiter '[' or ']', advance pointer */
         if (s[i] == '[' || s[i] == ']')
         {
             i++;
         }
+        /* If it's not an escaping symbol, iterate further */
         else if (s[i] != '\'')
         {
             ans[j++] = s[i++];
         }
+        /* Check the closing escaping symbol */
         else if (s[i + 1] == '\'')
         {
             ans[j++] = s[i];
             i += 2;
         }
         else
+        /* Begin proper iteration, and parse variables */
         {
-            i++; //found a ' --> skip it
+            i++; /* Found a ', skip it */
 
             if (k != 0)
-            { //NO primera vez que encuentro una variable
+            { /* Separate more than one variables with a comma */
                 name[k++] = ',';
             }
             int pointer = k;
