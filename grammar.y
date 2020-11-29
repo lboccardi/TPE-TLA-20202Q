@@ -135,6 +135,10 @@ function
     :
     /* Integer Function Definition: i$ F f_name (...) { ... } */
     INT FUNCTION ALPHA '(' params ')' '{' program '}'       {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)) {
                                                                     yyerror("Function already declared."); 
                                                                     YYABORT;
@@ -152,6 +156,10 @@ function
 
     /* String Function Definition: s$ F f_name (...) { ... } */
     | STRING FUNCTION ALPHA '(' params ')' '{' program '}'  {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)){
                                                                     yyerror("Function already declared.");
                                                                     YYABORT;
@@ -169,6 +177,10 @@ function
 
     /* Character Function Definition: c$ F f_name (...) { ... } */                                                        
     | CHAR FUNCTION ALPHA '(' params ')' '{' program '}'    {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)){
                                                                     yyerror("Function already declared.");
                                                                     YYABORT;
@@ -186,6 +198,10 @@ function
 
     /* Integer Function Declaration: i$ F f_name (...) . */                                                        
     | INT FUNCTION ALPHA '(' params ')' '.'                 {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)){
                                                                     yyerror("Function already declared.");
                                                                     YYABORT;
@@ -199,6 +215,10 @@ function
 
     /* String Function Declaration: s$ F f_name (...) . */
     | STRING FUNCTION ALPHA '(' params ')' '.'              {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)){
                                                                     yyerror("Function already declared.");
                                                                     YYABORT;
@@ -212,6 +232,10 @@ function
 
     /* Character Function Declaration: c$ F f_name (...) . */
     | CHAR FUNCTION ALPHA '(' params ')' '.'                {
+                                                                if(strcmp($3, "main")==0){
+                                                                    yyerror("That name is not permitted. Please choose another one.");
+                                                                    YYABORT;
+                                                                }
                                                                 if(checkIfFunctionExists($3)){
                                                                     yyerror("Function already declared.");
                                                                     YYABORT;
