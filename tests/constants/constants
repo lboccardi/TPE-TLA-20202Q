@@ -1,0 +1,12 @@
+i#IN 100
+c#CH 'f
+s#STR 'hola'
+
+S{
+    i$a=IN.
+    P['IN'\n].
+    P['a'\n].
+    P['CH'\n].
+    P['STR'\n].
+    R 0.
+}

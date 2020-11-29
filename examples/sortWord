@@ -8,24 +8,21 @@ S{
     G(w, 50).
     i$l=L(w).
     i$i = 1. i$j. i$k. i$m.
-    c$temp. c$tempj. c$tempk.
+    c$temp.
     (i<l)?-->{
         j = 0.
         m = l-i.
         (j<m)?-->{
             k = j+1.
-            tempj = w_j.
-            tempj = w_k.
-            (tempj > tempk)?->{
+            (w_j > w_k)?->{
                 temp = w_j.
-               c$aux = w_k.
-                w_j = aux.
+                w_j = w_k.
                 w_k = temp.
             }
             j = j+ 1.
         }
         i = i+ 1.
     }
-
+    P['w'\n].
     R 0.
 }

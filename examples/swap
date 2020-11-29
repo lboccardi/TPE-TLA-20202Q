@@ -19,9 +19,8 @@ S{
     P[\n After swap: ]. 
     
     (i<4)?-->{
-        i$aux = first_i. 
-        i$temp= second_i.
-        first_i = temp.
+        i$aux = first_i.  
+        first_i = second_i.
         second_i=aux.
         i=i+1.
     }
@@ -38,7 +37,4 @@ S{
     }
 
     P[\n].
-
- 
-
 }
