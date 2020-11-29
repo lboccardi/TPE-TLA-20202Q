@@ -142,43 +142,6 @@ void addVar(char *name, KIND kind, int size,bool constant)
     aux->next = NULL;
 }
 
-void addConstant(char *name, KIND kind, int size)
-{
-    var *aux = malloc(sizeof(var));
-    /** save type **/
-    char *aux_type;
-    if (kind == KIND_INT || kind == KIND_ARRAY_INT)
-    {
-        aux_type = "%d";
-    }
-    else if (kind == KIND_STRING || kind == KIND_ARRAY_STRING)
-    {
-        aux_type = "%s";
-    }
-    else
-    {
-        aux_type = "%c";
-    }
-
-    strcpy(aux->type, aux_type);
-    /** save name and kind**/
-    aux->name = name;
-    aux->kind = kind;
-    aux->amount = size;
-    aux->constant = true;
-
-    if (var_list.first == NULL)
-    {
-        var_list.first = aux;
-    }
-    else
-    {
-        var_list.last->next = aux;
-    }
-    var_list.last = aux;
-    aux->next = NULL;
-}
-
 void addArgs(funct *f, char *args)
 {
     int curr_amount = 0;

@@ -89,8 +89,6 @@ void freeResources(bool error);
 
 void addVar(char *name, KIND kind, int size,bool constant);
 
-void addConstant(char *name, KIND kind, int size);
-
 void addFunction(char *name, KIND kind, char *args);
 
 void declareFunction(char *name, KIND kind, char *args);
