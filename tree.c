@@ -291,15 +291,17 @@ char * printfParser(char *s)
             int pointer = k;
             while (s[i] != '\'' && s[i] != '\0')
             {
-                /* Si la variable era un array */
+                /* If _ was found, it is an array variable */
                 if (s[i] == '_')
                 {
-                    /* Salteo el '_' */
+                    /* Skip '_' */
                     i++;
                     array_index = 0;
-                    /* Apertura */
+
+                    /* Opening symbol */
                     name[k++] = '[';
-                    /* Me guardo los digits */
+
+                    /* Save index, whether it's a digit or a variable */
                     if (isdigit(s[i]))
                     {
                         while (isdigit(s[i]))
@@ -320,12 +322,12 @@ char * printfParser(char *s)
                         var_flag = true;
                     }
 
-                    /* Cierre */
+                    /* Closing symbol */
                     name[k++] = ']';
                 }
                 else
                 {
-                    /* Si no es un array */
+                    /* Else, save var name as it was given */
                     name[k++] = s[i++];
                 }
             }
@@ -333,10 +335,13 @@ char * printfParser(char *s)
             name[k] = 0;
             var *curr = var_list.first;
             bool flag = true;
+
+            /* Check if variable exists in program, and assign it to the right part of the printf() function */
             while (curr != NULL && flag)
             {
                 if (strcmp(curr->name, name + pointer) == 0)
                 {
+                    /* Just copy it, and take into account that a char array var is a %s */
                     if (curr->kind == KIND_ARRAY_CHAR)
                     {
                         strcpy(ans + j, "%s");
@@ -350,14 +355,18 @@ char * printfParser(char *s)
                 }
                 else
                 {
-                    /* Si falla, es porque estoy en un caso arr[N] chequear el strtok */
+                    /* If it fails, perhaps it's because variable is of type arr[index], so parse both parts with strtok */
                     int token_aux_len = strlen(name + pointer) + 1;
                     char token_aux[token_aux_len];
                     strcpy(token_aux, name + pointer);
                     char * token = strtok(token_aux, "[");
+                    
+                    /* If variable was indeed a dereferenced aray */
                     if (token != NULL) {
+                        /* Check name belongs to a declared variable */
                         if (strcmp(curr->name, token) == 0 && (curr->kind == KIND_ARRAY_INT ||curr->kind == KIND_ARRAY_STRING || curr->kind == KIND_ARRAY_CHAR)) {
                             if (var_flag == false) {
+                                /* If it was dereferenced by a numeric index, check it doesn't exceed size */
                                 if (array_index >= curr->amount && curr->amount!=-1) {
                                     free(ans);
                                     return NULL;
@@ -365,6 +374,7 @@ char * printfParser(char *s)
                             }
                             else
                             {
+                                /* Check that given variable is an integer, an that it exists */
                                 if (!checkIfVarExists(var_name) || !isOfKind(var_name, KIND_INT))
                                 {
                                     free(ans);
@@ -372,6 +382,7 @@ char * printfParser(char *s)
                                 }
                             }
 
+                            /* Store value to the right side of the printf() function */
                             strcpy(ans + j, curr->type);
                             j += 2;
                             flag = false;
@@ -387,6 +398,7 @@ char * printfParser(char *s)
             }
         }
     }
+    /* Finish the production and terminate the strings */
     ans[j] = 0;
     sprintf(ans + j, "\"");
     if (name[0] != 0)
@@ -400,8 +412,10 @@ bool isOfKind(char *s, KIND kind)
     var *curr = var_list.first;
     while (curr != NULL)
     {
+        /* Compare name with stores variables */
         if (strcmp(curr->name, s) == 0)
         {
+            /* Get returning type */
             if (curr->kind == kind)
             {
                 return true;
@@ -418,12 +432,13 @@ unsigned int guess_data_type(char *s)
     char * arr;
     switch (*s)
     {
-    /* Si el primer caracter indica que es un String */
+    /* If first character is a: ' -> Character literal */
     case '\'':
-        return CHAR_LITERAL; // HERE
+        return CHAR_LITERAL;
+    /* If first character is a: " -> String literal */
     case '\"':
         return STRING_LITERAL;
-    /* Si el primer caracter es un dígito */
+    /* If first character is a digit -> Integer literal */
     case '0':
     case '1':
     case '2':
@@ -435,9 +450,10 @@ unsigned int guess_data_type(char *s)
     case '8':
     case '9':
         return INT_LITERAL;
+    /* If first character is a ( -> It is a comparison */
     case '(':
         return DATA_TYPE_NONE;
-    /* Si no, era una variable o era otra comparación del estilo "(? ? ?)" */
+    /* By default, check if argument was a variable, and check if exists */
     default:
         arr = strchr(s,'[');
         if(arr==NULL){
@@ -471,7 +487,7 @@ unsigned int guess_data_type(char *s)
                 return ARRAY_CHAR_VAR;
             }
         }
-
+        /* If none matched, var was not declared */
         return UNDECLARED_VAR;
     }
 }
@@ -479,7 +495,7 @@ unsigned int guess_data_type(char *s)
 bool are_comparable(char *s1, char *s2)
 {
     unsigned int v1, v2;
-    /* Si ambas variables eran tipos de dato atómicos */
+    /* Guess corresponding data type */
     v1 = guess_data_type(s1);
     v2 = guess_data_type(s2);
 
@@ -492,16 +508,17 @@ bool are_comparable(char *s1, char *s2)
     {
         switch (v1)
         {
-        /* String se comapra a String */
+        /* String compares with String */
         case STRING_LITERAL:
         case STRING_VAR:
         case ARRAY_STRING_VAR:
             return (v2 == STRING_LITERAL || v2 == STRING_VAR || v2 == ARRAY_STRING_VAR);
-        /* Int se compara con Int */
+        /* Integer compares with Integer */
         case INT_LITERAL:
         case INT_VAR:
         case ARRAY_INT_VAR:
             return (v2 == INT_LITERAL || v2 == INT_VAR || v2 == ARRAY_INT_VAR);
+        /* Character compares with Character */
         case CHAR_VAR:
         case CHAR_LITERAL:
         case ARRAY_CHAR_VAR:
@@ -511,14 +528,17 @@ bool are_comparable(char *s1, char *s2)
         return false;
     }
 
-    /* Si llega acá, alguna de las dos era una comparación, por ende son comparables */
+    /* If reaches this line, productions were comparable */
     return true;
 }
 
 bool array_is_incorrect(const char *str, int amount)
 {
+    /* Get next comma character */
     char *curr = strchr(str, ',');
     int curr_amount = 0;
+
+    /* While it has commas, keep comparing to the array size */
     while (curr != NULL)
     {
         curr_amount++;
@@ -526,6 +546,7 @@ bool array_is_incorrect(const char *str, int amount)
         {
             return true;
         }
+        /* Get next comma */
         curr = strchr(curr + 1, ',');
     }
 
@@ -536,13 +557,17 @@ bool array_is_incorrect(const char *str, int amount)
 
     return false;
 }
+
 bool enoughSpace(const char *s, int amount)
 {
     var *curr = var_list.first;
+    /* Check every variable */
     while (curr != NULL)
     {
+        /* If matches */ 
         if (strcmp(curr->name, s) == 0)
         {
+            /* Compare declared amount with given amount */
             if (curr->amount > amount || curr->amount == -1)
             {
                 return true;
@@ -563,10 +588,14 @@ bool functionReturnsKind(char *s, KIND kind)
     char *p = strchr(string, '(');
     *p = 0;
     funct *curr = function_list.first;
+
+    /* Check for every function */
     while (curr != NULL)
     {
+        /* If current functions matches name*/
         if (strcmp(curr->name, string) == 0)
         {
+            /* Check defined returning data type */
             if (curr->kind == kind)
             {
                 return true;
@@ -581,9 +610,10 @@ bool functionReturnsKind(char *s, KIND kind)
 bool checkIfVarExists(char *name)
 {
     var *curr = var_list.first;
+    /* Check for every var */
     while (curr != NULL)
     {
-
+        /* If var exists */
         if (strcmp(curr->name, name) == 0)
         {
             return true;
@@ -591,14 +621,19 @@ bool checkIfVarExists(char *name)
 
         curr = curr->next;
     }
+
+    /* If none matched */
     return false;
 }
+
+
 bool checkIfFunctionExists(char *name)
 {
     funct *curr = function_list.first;
+    /* Check for every function */
     while (curr != NULL)
     {
-
+        /* If function exists */
         if (strcmp(curr->name, name) == 0 && curr->defined)
         {
             return true;
@@ -606,22 +641,31 @@ bool checkIfFunctionExists(char *name)
 
         curr = curr->next;
     }
+    /* If none matched*/
     return false;
 }
+
 bool checkArgsOk(char *name, char *args)
 {
     funct *curr = function_list.first;
+    /* Check every function */
     while (curr != NULL)
     {
+        /* If function matches */
         if (strcmp(curr->name, name) == 0)
         {
+            /* Begin parsing args and checking*/
             char *p2 = strchr(args, ',');
+
+
             if (p2 != NULL && curr->args_count == 0)
             {
                 return false;
             }
             char *p1 = args;
             int i;
+
+            /* For every argument */
             for (i = 0; i < curr->args_count; i++)
             {
                 if (*p1 == 0)
@@ -636,7 +680,10 @@ bool checkArgsOk(char *name, char *args)
                 char aux[strlen(args) + 1];
                 strncpy(aux, p1, copy_size);
                 aux[copy_size] = 0;
+                /* Get corresponding data type */
                 unsigned int type = guess_data_type(aux);
+
+                /* Compare it with the one declared */
                 if (type == UNDECLARED_VAR || type == DATA_TYPE_NONE)
                 {
                     return false;
@@ -655,15 +702,18 @@ bool checkArgsOk(char *name, char *args)
                 }
 
                 if (*p2 == 0)
+                /* If finished parsing*/
                 {
                     p1 = p2;
                 }
                 else
+                /* Get next one */
                 {
                     p1 = p2 + 1;
                     p2 = strchr(p1, ',');
                 }
             }
+            /* If the amount given differs */
             if (i == curr->args_count && *p1 == 0)
             {
                 return true;
@@ -674,10 +724,13 @@ bool checkArgsOk(char *name, char *args)
     }
     return false;
 }
+
+
 bool checkReturnType(char *program, KIND kind)
 {
     int size = strlen("return ");
     char *p = strstr(program, "return");
+    /* Parse corresponding return statement */
     while (p != NULL)
     {
         char *c = p + size;
@@ -686,7 +739,11 @@ bool checkReturnType(char *program, KIND kind)
         char aux[copy_size + 1];
         strncpy(aux, c, copy_size);
         aux[copy_size] = 0;
+
+        /* Get data type according to production */
         unsigned int type = guess_data_type(aux);
+
+        /* Compare it with corresponding function type */
         if (type == UNDECLARED_VAR)
         {
             return false;
@@ -707,6 +764,8 @@ bool checkReturnType(char *program, KIND kind)
     }
     return true;
 }
+
+/* Function is pretty explainable by itself, just compares productions */
 bool compatibleArray(char *v1, char *v2, int number)
 {
 
@@ -729,6 +788,7 @@ bool compatibleArray(char *v1, char *v2, int number)
     return false;
 }
 
+/* Function is pretty explainable by itself, just compares productions */
 bool compatibleArrayAssignment(char *v1, char *v2, int n1, int n2)
 {
 
@@ -752,13 +812,17 @@ bool compatibleArrayAssignment(char *v1, char *v2, int n1, int n2)
     return false;
 }
 
+
 bool correctArray(char *name, KIND kind, int size)
 {
     var *v = var_list.first;
+    /* Checks every var */
     while (v != NULL)
     {
+        /* If one matches */
         if (strcmp(v->name, name) == 0)
         {
+            /* Check correct data type and size not overflowing */
             if (v->kind == kind && v->amount > size)
             {
                 return true;
@@ -767,15 +831,19 @@ bool correctArray(char *name, KIND kind, int size)
         }
         v = v->next;
     }
+    /* If none matched */
     return false;
 }
 
 bool isAnArray(char * name){
     var *v = var_list.first;
+    /* For every var */
     while (v != NULL)
     {
+        /* If one matches name */
         if (strcmp(v->name, name) == 0)
         {
+            /* Check data type corresponds to an array */
             if (v->kind == KIND_ARRAY_CHAR ||v->kind == KIND_ARRAY_STRING ||v->kind == KIND_ARRAY_INT  )
             {
                 return true;
@@ -784,18 +852,23 @@ bool isAnArray(char * name){
         }
         v = v->next;
     }
+    /* If none matched */
     return false;
 }
 
 bool isConstant(char *name){
     var *curr = var_list.first;
+    /* For every declared variable */
     while (curr != NULL)
     {
+        /* If one matched */
         if (strcmp(curr->name, name) == 0)
         {
+            /* Constants are subcases of variables */
             return curr->constant;
         }
         curr = curr->next;
     }
+    /* If none matched */
     return false;
 }
