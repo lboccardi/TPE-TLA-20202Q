@@ -13,11 +13,9 @@ i$ F numberSort(){
         m = l-i.
         (j<m)?-->{
             k = j+1.
-            i$v1=arr_j.
-            i$v2=arr_k.
-            (v1 > v2)?->{
-                temp = v1.
-                arr_j = v2.
+            (arr_j > arr_k)?->{
+                temp = arr_j.
+                arr_j = arr_k.
                 arr_k = temp.
             }
             j = j+ 1.

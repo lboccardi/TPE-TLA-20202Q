@@ -444,7 +444,7 @@ unsigned int guess_data_type(char *s)
     default:
         arr = strchr(s,'[');
         if(arr==NULL){
-            if (isOfKind(s, KIND_STRING))
+            if (isOfKind(s, KIND_STRING) || isOfKind(s, KIND_ARRAY_CHAR))
             {
                 return STRING_VAR;
             }
