@@ -31,17 +31,29 @@ void add(char *information, bool free)
     program.last = aux;
 }
 
-void freeVars()
+void freeVars(bool all)
 {
     var *curr = var_list.first;
     while (curr != NULL)
     {
         var *aux = curr->next;
-        free(curr);
+        if(all||!curr->constant){
+
+          if(var_list.first == curr){
+              var_list.first = curr->next;
+          }else{
+              curr->prev->next=curr->next;
+              if(curr->next!=NULL){
+                  curr->next->prev=curr->prev;
+              }
+          }
+          if(var_list.last == curr){
+              var_list.last = curr->prev;
+          }
+          free(curr);
+        }
         curr = aux;
     }
-    var_list.first = NULL;
-    var_list.last = NULL;
 }
 void freeFuncts()
 {
@@ -56,7 +68,7 @@ void freeFuncts()
 void freeResources(bool error)
 {
     node *curr = program.first;
-    freeVars();
+    freeVars(true);
     freeFuncts();
     if (curr == NULL)
     {
@@ -91,7 +103,7 @@ void freeResources(bool error)
     }
 }
 
-void addVar(char *name, KIND kind, int size)
+void addVar(char *name, KIND kind, int size,bool constant)
 {
     var *aux = malloc(sizeof(var));
     /** save type **/
@@ -114,14 +126,16 @@ void addVar(char *name, KIND kind, int size)
     aux->name = name;
     aux->kind = kind;
     aux->amount = size;
-    aux->constant =false;
+    aux->constant =constant;
 
     if (var_list.first == NULL)
     {
         var_list.first = aux;
+        aux->prev=NULL;
     }
     else
     {
+        aux->prev=var_list.last;
         var_list.last->next = aux;
     }
     var_list.last = aux;

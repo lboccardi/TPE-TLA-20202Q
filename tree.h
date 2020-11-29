@@ -51,6 +51,7 @@ typedef struct var
     bool constant;
 
     struct var *next;
+    struct var *prev;
 } var;
 
 typedef struct variables
@@ -86,7 +87,7 @@ void add(char *information, bool free);
 
 void freeResources(bool error);
 
-void addVar(char *name, KIND kind, int size);
+void addVar(char *name, KIND kind, int size,bool constant);
 
 void addConstant(char *name, KIND kind, int size);
 
@@ -111,7 +112,7 @@ bool functionReturnsKind(char *s, KIND kind);
 bool checkIfVarExists(char *name);
 bool checkIfFunctionExists(char *name);
 bool checkArgsOk(char *name, char *args);
-void freeVars();
+void freeVars(bool finished);
 bool checkReturnType(char *program, KIND kind);
 bool compatibleArray(char *v1, char *v2, int number);
 bool correctArray(char *name, KIND kind, int size);

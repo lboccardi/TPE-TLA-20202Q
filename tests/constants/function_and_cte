@@ -1,10 +1,15 @@
+i#a 1
+i#b 4
+c#d 'c
 i$ F asad(){
+    i$e=2.
     R 0.
 }
 
-i#a 1
+
 
 S {
+    i$e=2.
     P['a'].
     R 0. 
 }
