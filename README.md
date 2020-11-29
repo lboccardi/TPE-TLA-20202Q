@@ -24,7 +24,10 @@ make all
 ./executable 
 ```
 in which 'example' is the code you want to run and 'executable' is the name of the compiled file. 
- 
+
+## Code Examples 
+In order to get started you can see examples in the folder 'examples' of the git repo. 
+Thanks for choosing our languge and good luck !
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
