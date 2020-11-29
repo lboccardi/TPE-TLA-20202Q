@@ -35,4 +35,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Clux cheat sheet 
 You can see all things you will be able to do with Clux in the following essay 
-https://github.com/lboccardi/TPE-TLA-20202Q/blobl/master/Informe.pdf
+https://github.com/lboccardi/TPE-TLA-20202Q/blob/master/Informe.pdf
